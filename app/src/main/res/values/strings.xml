@@ -3,4 +3,33 @@
     <string name="ultronHeading">ULTRON</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="edit_board_details">Edit Board Details</string>
+    <string name="wifi_ssid">Wifi SSID</string>
+    <string name="wifi_ssid2">Wifi SSID</string>
+    <string name="no_security">No Security</string>
+    <string name="wep_wpa">WEP/WPA</string>
+    <string name="job_name">Job Name</string>
+    <string name="ultron_test">Ultron Test</string>
+    <string name="client_name">Client Name</string>
+    <string name="ultron_technology">Ultron Technology</string>
+    <string name="job_client">JOB/CLIENT</string>
+    <string name="network">NETWORK</string>
+    <string name="cancel">Cancel</string>
+    <string name="update">Update</string>
+    <string name="engineer_logout">Engineer Logout</string>
+    <string name="cancel2">Cancel</string>
+    <string name="client_name2">Client Name</string>
+    <string name="ultron_test2">Ultron Test</string>
+    <string name="job_name2">Job Name</string>
+    <string name="ultron_technology2">Ultron Technology</string>
+    <string name="enabled">Enabled</string>
+    <string name="cancel3">Cancel</string>
+    <string name="update2">Update</string>
+    <string name="higher">Higher</string>
+    <string name="lower">Lower</string>
+    <string name="close">Close</string>
+    <string name="_30">30</string>
+    <string name="loader">Loader</string>
+    <string name="quieter">Quieter</string>
+    <string name="close2">Close</string>
 </resources>
