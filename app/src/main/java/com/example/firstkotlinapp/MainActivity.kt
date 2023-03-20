@@ -13,6 +13,6 @@ import com.example.firstkotlinapp.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.callpressdelay)
+        setContentView(R.layout.engineer_details)
     }
 }
