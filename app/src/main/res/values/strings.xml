@@ -8,7 +8,7 @@
     <string name="wifi_ssid2">Wifi SSID</string>
     <string name="no_security">No Security</string>
     <string name="wep_wpa">WEP/WPA</string>
-    <string name="job_name">Job Name</string>
+<!--    <string name="job_name">Job Name</string>-->
     <string name="ultron_test">Ultron Test</string>
     <string name="client_name">Client Name</string>
     <string name="ultron_technology">Ultron Technology</string>
@@ -46,7 +46,6 @@
     <string name="login_status">Engineer Login</string>
     <string name="engineer_status">Edit your profile details</string>
     <string name="enter_login">Enter your Engineer PIN code in the boxes below and then press \"Login"\ to continue</string>
-    <string name="cancel">Cancel</string>
     <string name="login">Login</string>
     <string name="connected">Connected</string>
     <string name="disconnect">Disconnect</string>
@@ -56,7 +55,6 @@
     <string name="wifi_connect">Wifi is available on device</string>
     <string name="wifi_notConnected">Wifi is not connected</string>
     <string name="job_name">Job Number</string>
-    <string name="ultron_test">Ultron Test</string>
     <string name="client">Client</string>
     <string name="technology">Ultron Technologies</string>
     <string name="board">Board Capabilities</string>
