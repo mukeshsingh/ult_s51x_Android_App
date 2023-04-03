@@ -21,13 +21,13 @@
             android:text="@string/app_tester"
             android:textColor="#000000"
             android:textSize="30dp"
-            app:layout_constraintBottom_toTopOf="@+id/back"
+            app:layout_constraintBottom_toTopOf="@+id/cvLiftFound"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/back"
+            android:id="@+id/cvLiftFound"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:layout_marginStart="25dp"
@@ -69,7 +69,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
+            android:id="@+id/cvStairLift"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:layout_marginStart="25dp"
@@ -79,7 +79,7 @@
             app:cardElevation="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/back">
+            app:layout_constraintTop_toBottomOf="@+id/cvLiftFound">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -111,7 +111,7 @@
 
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView6"
+            android:id="@+id/cvProfile"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:layout_marginStart="25dp"
@@ -121,7 +121,7 @@
             app:cardElevation="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView2">
+            app:layout_constraintTop_toBottomOf="@+id/cvFindLift">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -154,6 +154,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cvLogin"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:layout_marginStart="25dp"
@@ -165,7 +166,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView6">
+            app:layout_constraintTop_toBottomOf="@+id/cvProfile">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -197,7 +198,7 @@
 
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView2"
+            android:id="@+id/cvFindLift"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:layout_marginStart="25dp"
@@ -207,7 +208,7 @@
             app:cardElevation="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView">
+            app:layout_constraintTop_toBottomOf="@+id/cvStairLift">
 
             <RelativeLayout
                 android:layout_width="match_parent"

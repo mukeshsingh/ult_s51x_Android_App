@@ -13,6 +13,8 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+        <item name="colorPrimaryDark">@color/purple_200</item>
+        <item name="colorAccent">@color/darkBlue</item>
     </style>
 
     <style name="AppBottomSheetDialogTheme"
@@ -20,8 +22,11 @@
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
     </style>
 
+
         <style name="AppModalStyle"
             parent="Widget.Design.BottomSheet.Modal">
             <item name="android:background">@drawable/roundbottomsheet</item>
         </style>
+
+
 </resources>
