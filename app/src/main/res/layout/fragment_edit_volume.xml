@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/container1"
+    tools:context=".fragments.EditVolumeFragment">
+
+    <View
+        android:id="@+id/colored_bar9"
+        android:layout_width="12dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="147dp"
+        android:background="#A30579"
+        app:layout_constraintStart_toEndOf="@+id/colored_bar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/colored_bar10"
+        android:layout_width="12dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="147dp"
+        android:background="#A30579"
+        app:layout_constraintStart_toEndOf="@+id/colored_bar2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/colored_bar2"
+        android:layout_width="12dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="147dp"
+        android:background="#A30579"
+        app:layout_constraintStart_toEndOf="@+id/colored_bar9"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/colored_bar7"
+        android:layout_width="12dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="147dp"
+        android:background="#A30579"
+        app:layout_constraintStart_toEndOf="@+id/colored_bar8"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/colored_bar8"
+        android:layout_width="12dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="147dp"
+        android:background="#A30579"
+        app:layout_constraintStart_toEndOf="@+id/colored_bar10"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/colored_bar3"
+        android:layout_width="12dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="147dp"
+        android:layout_marginEnd="101dp"
+        android:background="#A30579"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/colored_bar11"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/colored_bar"
+        android:layout_width="12dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="147dp"
+        android:background="#A30579"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/colored_bar5"
+        android:layout_width="12dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="147dp"
+        android:background="#A30579"
+        app:layout_constraintStart_toEndOf="@+id/colored_bar6"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/colored_bar6"
+        android:layout_width="12dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="147dp"
+        android:background="#A30579"
+        app:layout_constraintStart_toEndOf="@+id/colored_bar7"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/colored_bar11"
+        android:layout_width="12dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="147dp"
+        android:background="#A30579"
+        app:layout_constraintStart_toEndOf="@+id/colored_bar5"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="36dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Call Press Delay"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="215dp"
+        android:layout_marginTop="99dp"
+        android:layout_marginEnd="38dp"
+        android:layout_marginBottom="613dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/higher"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintStart_toEndOf="@+id/textView13"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="96dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/lower"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="185dp"
+        android:text="@string/close"
+        android:textColor="#0972EB"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="180dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/_30"
+        android:textColor="@color/black"
+        android:textSize="50sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colored_bar10" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
