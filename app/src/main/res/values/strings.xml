@@ -82,4 +82,6 @@
     <string name="callpress">Call Press Delay (seconds)</string>
     <string name="enterName">Enter the name you\'d\ like to use in the App</string>
     <string name="edit_sim_detail">Edit SIM Detail</string>
+
+    <string name="preference_file_key">com.ultrontech.s515liftconfigure.PREFERENCES_KEY</string>
 </resources>
