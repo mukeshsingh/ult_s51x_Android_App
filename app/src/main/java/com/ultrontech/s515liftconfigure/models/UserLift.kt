@@ -13,12 +13,12 @@ enum class LiftConnectionState {
 }
 
 enum class CommsBoardType {
-    s515,
-    s510,
-    unknownCommsBoard,
+    S515,
+    S510,
+    UnknownCommsBoard,
 }
 
-
+@Serializable
 data class BoardCapabilitySet(
     var rawValue: UInt
 ) {
@@ -37,11 +37,22 @@ data class BoardCapabilitySet(
     }
 }
 
+@Serializable
 data class BoardInfo (
     var board_type  : CommsBoardType,
     var dip : UInt,
     var capabilities : BoardCapabilitySet
-)
+) {
+    companion object{
+        fun commsBoardType(bt: Int): CommsBoardType {
+            return when(bt) {
+                0x1 -> CommsBoardType.S515
+                0x2 -> CommsBoardType.S510
+                else -> CommsBoardType.UnknownCommsBoard
+            }
+        }
+    }
+}
 
 enum class BoardType {
     d1504,
@@ -103,17 +114,12 @@ data class PhoneDate (
     var mins : Int,
 
     var targetDate : Date?
-){
+)
 
-//    var label : String {
-//        // TODO - return in locale format
-//
-//    }
-}
 @Serializable
 data class PINNumber (
     var length : Int,
-    var digits : UIntArray,
+    var digits : IntArray,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -136,7 +142,7 @@ data class PINNumber (
     fun code(): UInt {
         var c: UInt = 0u
         digits.forEach {
-            c += (c shl 8) + (it and 255u)
+            c += (c shl 8) + (it.toUInt() and 255u)
         }
         return c
     }

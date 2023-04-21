@@ -39,14 +39,18 @@
     <string name="bluetooth_status">Bluetooth is available</string>
     <string name="stair_status">Stairlift</string>
     <string name="lift_status">View and edit lift details</string>
-    <string name="find_status">Find Lift</string>
+    <string name="find_lift_title">Find Lift</string>
+    <string name="find_lift_desc">Search for a lift in range</string>
     <string name="search_status">Search for a lift in a range</string>
     <string name="profile_status">My Profile</string>
     <string name="details_status">Edit your profile details</string>
-    <string name="login_status">Engineer Login</string>
-    <string name="engineer_status">Edit your profile details</string>
+    <string name="engineer_logged_in_title">Engineer Logout</string>
+    <string name="engineer_logged_out_title">Engineer Login</string>
+    <string name="engineer_logged_in_desc">Logout of your account</string>
+    <string name="engineer_logged_out_desc">Login as an engineer</string>
     <string name="enter_login">Enter your Engineer PIN code in the boxes below and then press \"Login"\ to continue</string>
     <string name="login">Login</string>
+    <string name="btn_add_this_lift">Add this Lift</string>
     <string name="connected">Connected</string>
     <string name="disconnect">Disconnect</string>
     <string name="engineer_detail">Engineer detail</string>
@@ -84,4 +88,10 @@
     <string name="edit_sim_detail">Edit SIM Detail</string>
 
     <string name="preference_file_key">com.ultrontech.s515liftconfigure.PREFERENCES_KEY</string>
+
+    <string name="permission_reason_dialog_title">Lifts</string>
+    <string name="permission_reason_msg">Lifts App need location permission to find bluetooth enabled lifts.</string>
+    <string name="add_lift_txt_lift_name">Savaria VLink</string>
+    <string name="add_lift_txt_title">Enter the PIN number</string>
+    <string name="add_lift_txt_desc">You need to enter the PIN number associated with this device to be able to connect and add it to your lift.</string>
 </resources>

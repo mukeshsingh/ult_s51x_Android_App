@@ -17,10 +17,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:fontFamily="sans-serif-condensed-medium"
             android:text="@string/app_tester"
             android:textColor="#000000"
-            android:textSize="30dp"
+            android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@+id/cvLiftFound"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,24 +46,23 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginTop="15dp"
-                    android:layout_marginRight="30dp"
-                    android:fontFamily="sans-serif-thin"
+                    android:layout_marginEnd="30dp"
                     android:text="@string/card_status"
                     android:textColor="@color/black"
-                    android:textSize="25dp"></TextView>
+                    android:textSize="25sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="0dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginEnd="30dp"
                     android:layout_marginBottom="12dp"
                     android:text="@string/bluetooth_status"
-                    android:textColor="@color/black"></TextView>
+                    android:textColor="@color/black" />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
@@ -88,24 +86,23 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginTop="15dp"
-                    android:layout_marginRight="30dp"
-                    android:fontFamily="serif"
+                    android:layout_marginEnd="30dp"
                     android:text="@string/stair_status"
                     android:textColor="@color/black"
-                    android:textSize="25dp"></TextView>
+                    android:textSize="25sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="0dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginEnd="30dp"
                     android:layout_marginBottom="12dp"
                     android:text="@string/lift_status"
-                    android:textColor="@color/black"></TextView>
+                    android:textColor="@color/black" />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
@@ -130,24 +127,23 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginTop="15dp"
-                    android:layout_marginRight="30dp"
-                    android:fontFamily="casual"
+                    android:layout_marginEnd="30dp"
                     android:text="@string/profile_status"
                     android:textColor="@color/black"
-                    android:textSize="25dp"></TextView>
+                    android:textSize="25sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="0dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginEnd="30dp"
                     android:layout_marginBottom="12dp"
                     android:text="@string/details_status"
-                    android:textColor="@color/black"></TextView>
+                    android:textColor="@color/black" />
 
             </RelativeLayout>
 
@@ -173,26 +169,27 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:id="@+id/txtEngineerLoginTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginTop="15dp"
-                    android:layout_marginRight="30dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="@string/login_status"
+                    android:layout_marginEnd="30dp"
+                    android:text="@string/engineer_logged_out_title"
                     android:textColor="@color/black"
-                    android:textSize="25dp"></TextView>
+                    android:textSize="25sp" />
 
                 <TextView
+                    android:id="@+id/txtEngineerLoginDesc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="0dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginEnd="30dp"
                     android:layout_marginBottom="12dp"
-                    android:text="@string/engineer_status"
-                    android:textColor="@color/black"></TextView>
+                    android:text="@string/engineer_logged_out_desc"
+                    android:textColor="@color/black" />
 
             </RelativeLayout>
 
@@ -217,24 +214,23 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginTop="15dp"
-                    android:layout_marginRight="30dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:text="@string/find_status"
+                    android:layout_marginEnd="30dp"
+                    android:text="@string/find_lift_title"
                     android:textColor="@color/black"
-                    android:textSize="25dp"></TextView>
+                    android:textSize="25sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="0dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginEnd="30dp"
                     android:layout_marginBottom="12dp"
-                    android:text="@string/engineer_status"
-                    android:textColor="@color/black"></TextView>
+                    android:text="@string/find_lift_desc"
+                    android:textColor="@color/black" />
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>

@@ -8,7 +8,7 @@ tools:context=".fragments.LoginPinFragment">
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_height="420dp"
     android:background="#C9FEDA"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
@@ -16,16 +16,41 @@ tools:context=".fragments.LoginPinFragment">
     app:layout_constraintStart_toStartOf="parent">
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/txt_lift_name"
         android:layout_width="316dp"
         android:layout_height="45dp"
-        android:layout_marginStart="30dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="30dp"
-        android:text="@string/enter_login"
+        android:layout_marginHorizontal="30dp"
+        android:text="@string/add_lift_txt_lift_name"
+        android:gravity="center"
+        android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="316dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginHorizontal="30dp"
+        android:text="@string/add_lift_txt_title"
+        android:gravity="center"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_lift_name" />
+
+    <TextView
+        android:id="@+id/txt_desc"
+        android:layout_width="316dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="30dp"
+        android:text="@string/add_lift_txt_desc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_title" />
 
     <LinearLayout
         android:id="@+id/llPinLayout"
@@ -34,7 +59,7 @@ tools:context=".fragments.LoginPinFragment">
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView13"
+        app:layout_constraintTop_toBottomOf="@+id/txt_desc"
         >
         <EditText
             android:id="@+id/edtPin1"
@@ -113,39 +138,13 @@ tools:context=".fragments.LoginPinFragment">
             android:layout_weight="1"
             android:layout_marginStart="5dp"
             android:layout_marginTop="52dp"
-            android:layout_marginEnd="5dp"
-            android:background="@drawable/password_border"
-            android:ems="10"
-            android:inputType="number"
-            android:textAlignment="center"
-            android:textSize="30sp" />
-
-        <EditText
-            android:id="@+id/edtPin7"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="52dp"
-            android:layout_marginEnd="5dp"
-            android:background="@drawable/password_border"
-            android:ems="10"
-            android:inputType="number"
-            android:textAlignment="center"
-            android:textSize="30sp" />
-        <EditText
-            android:id="@+id/edtPin8"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="52dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/password_border"
             android:ems="10"
             android:inputType="number"
             android:textAlignment="center"
             android:textSize="30sp" />
+
     </LinearLayout>
     <Button
         android:id="@+id/btnCancel"
@@ -153,8 +152,10 @@ tools:context=".fragments.LoginPinFragment">
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginTop="50dp"
+        android:background="@drawable/btn_background"
         android:text="@string/cancel"
-        android:textColor="#2196F3"
+        android:textSize="16dp"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/llPinLayout" />
 
@@ -164,8 +165,10 @@ tools:context=".fragments.LoginPinFragment">
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="25dp"
+        android:background="@drawable/btn_background"
         android:text="@string/login"
-        android:textColor="#4CAF50"
+        android:textSize="16dp"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/llPinLayout" />
 

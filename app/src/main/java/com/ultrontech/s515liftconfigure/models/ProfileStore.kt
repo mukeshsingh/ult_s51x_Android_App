@@ -6,10 +6,10 @@ import java.util.UUID
 
 @Serializable
 data class ProfileStore (
-    var userDevices : Array<UserLift>,
-    var userName: String,
-    var hasEngineerCapability: Boolean,
-    var allowBiometrics: Boolean
+    var userDevices : Array<UserLift> = emptyArray(),
+    var userName: String = "",
+    var hasEngineerCapability: Boolean = false,
+    var allowBiometrics: Boolean = false
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -30,7 +30,23 @@ data class ProfileStore (
         result = 31 * result + userName.hashCode()
         result = 31 * result + hasEngineerCapability.hashCode()
         result = 31 * result + allowBiometrics.hashCode()
+
         return result
+    }
+
+    init {
+        with(S515LiftConfigureApp) {
+            with(sharedPreferences) {
+                userName = getString(KEY_PROFILE_USER_NAME, KEY_EMPTY_STRING).toString()
+                hasEngineerCapability = getBoolean(KEY_PROFILE_ENGINEER_LOGGED_IN, KEY_FALSE)
+                allowBiometrics = getBoolean(KEY_PROFILE_USER_USE_BIO, KEY_FALSE)
+                val storeDevices = getString(KEY_PROFILE_USER_DEVICES, null)
+                userDevices
+                if (storeDevices != null) {
+                    userDevices = json.decodeFromString(storeDevices)
+                }
+            }
+        }
     }
 
     fun find(existingWithId : String): UserLift? {
@@ -117,6 +133,7 @@ data class ProfileStore (
                 val editor = edit()
                 with(editor) {
                     putString(KEY_PROFILE_USER_DEVICES, json.encodeToString(userDevices))
+                    commit()
                 }
             }
         }
@@ -126,17 +143,38 @@ data class ProfileStore (
 
     fun login(engineerCode : String): Boolean {
         var result = false
-        val cx = engineerCode.toUInt()
-        if (cx == EngineerTokenKey) {
-            hasEngineerCapability = true
-            result = true
+
+        with(S515LiftConfigureApp) {
+            with(sharedPreferences) {
+                val editor = edit()
+
+                with(editor) {
+                    val cx = engineerCode.toUInt()
+                    if (cx == EngineerTokenKey) {
+                        hasEngineerCapability = true
+                        result = true
+                        putBoolean(KEY_PROFILE_ENGINEER_LOGGED_IN, true)
+                        commit()
+                    }
+                }
+            }
         }
 
         return result
     }
 
     fun logout() {
-        hasEngineerCapability = false
+        with(S515LiftConfigureApp) {
+            with(sharedPreferences) {
+                val editor = edit()
+
+                with(editor) {
+                    hasEngineerCapability = false
+                    putBoolean(KEY_PROFILE_ENGINEER_LOGGED_IN, false)
+                    commit()
+                }
+            }
+        }
     }
 
     companion object{

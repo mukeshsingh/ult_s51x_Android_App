@@ -11,4 +11,5 @@
     <color name="grey">#808080</color>
     <color name="lightGrey">#B6B6B4</color>
     <color name="darkBlue">#146FDF</color>
+    <color name="cancelBtnBkg">#2D3458</color>
 </resources>
