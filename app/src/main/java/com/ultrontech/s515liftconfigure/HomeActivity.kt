@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.os.IBinder
 import android.provider.Settings
 import android.util.Log
+import android.view.LayoutInflater
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,8 +25,15 @@ import com.ultrontech.s515liftconfigure.fragments.EditSimFragment
 import com.ultrontech.s515liftconfigure.fragments.LoginPinFragment
 import com.ultrontech.s515liftconfigure.fragments.LogoutFragment
 import com.ultrontech.s515liftconfigure.models.LiftDevice
+import com.ultrontech.s515liftconfigure.models.ProfileStore
+import com.ultrontech.s515liftconfigure.models.UserLift
+import org.w3c.dom.Text
 
 class HomeActivity : AppCompatActivity() {
+    private lateinit var llUserLifts: LinearLayout
+    private lateinit var inflater: LayoutInflater
+    private lateinit var userName: TextView
+
     private val serviceConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(
             componentName: ComponentName,
@@ -59,15 +68,16 @@ class HomeActivity : AppCompatActivity() {
 
         var isLoggedIn = false
 
-        val openLift = findViewById<CardView>(R.id.cvStairLift)
+        llUserLifts = findViewById<LinearLayout>(R.id.ll_home_lifts)
         val findLift = findViewById<CardView>(R.id.cvFindLift)
         val userProfile = findViewById<CardView>(R.id.cvProfile)
         val enterLoginPin = findViewById<CardView>(R.id.cvLogin)
 
-        openLift.setOnClickListener {
-            val intent = Intent(this, EngineerDetailsActivity::class.java)
-            startActivity(intent)
-        }
+        userName = findViewById(R.id.txt_user_name)
+        userName.text = S515LiftConfigureApp.profileStore.userName
+
+        inflater = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        showUserDevices()
 
         findLift.setOnClickListener {
             val intent = Intent(this, FindLiftActivity::class.java)
@@ -94,6 +104,23 @@ class HomeActivity : AppCompatActivity() {
         registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
 
         scanLifts()
+    }
+
+    private fun showUserDevices() {
+        S515LiftConfigureApp.profileStore.userDevices.forEach {
+            val cardView = inflater.inflate(R.layout.home_lift_list_item, null, false)
+            val liftName = cardView.findViewById<TextView>(R.id.txt_lift_name)
+            val liftMsg = cardView.findViewById<TextView>(R.id.txt_lift_msg)
+            liftName.text = it.liftName
+            liftMsg.text = resources.getString(R.string.lift_status)
+
+            cardView.setOnClickListener {
+                val intent = Intent(this, EngineerDetailsActivity::class.java)
+                startActivity(intent)
+            }
+
+            llUserLifts.addView(cardView,)
+        }
     }
 
     private val requestPermissionLauncher =
@@ -246,12 +273,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
-        if (bluetoothService != null) {
-            if (BluetoothLeService.service!!.waitIdle(LiftBT.GATT_TIMEOUT)) {
-            }
-            if (BluetoothLeService.service!!.waitIdle(LiftBT.GATT_TIMEOUT)) {
-            }
-        }
+        userName.text = S515LiftConfigureApp.profileStore.userName
     }
 
     override fun onPause() {

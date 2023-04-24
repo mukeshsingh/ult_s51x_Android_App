@@ -22,18 +22,11 @@ enum class CommsBoardType {
 data class BoardCapabilitySet(
     var rawValue: UInt
 ) {
-    init {
-        gsm           = BoardCapabilitySet(1u shl 0)
-        diagnostics   = BoardCapabilitySet(1u shl 1)
-        wifi          = BoardCapabilitySet(1u shl 2)
-        wifi_softap   = BoardCapabilitySet(1u shl 3)
-    }
-
     companion object {
-        lateinit var gsm: BoardCapabilitySet
-        lateinit var diagnostics: BoardCapabilitySet
-        lateinit var wifi: BoardCapabilitySet
-        lateinit var wifi_softap: BoardCapabilitySet
+        var gsm: BoardCapabilitySet = BoardCapabilitySet(1u shl 0)
+        var diagnostics: BoardCapabilitySet = BoardCapabilitySet(1u shl 1)
+        var wifi: BoardCapabilitySet = BoardCapabilitySet(1u shl 2)
+        var wifi_softap: BoardCapabilitySet = BoardCapabilitySet(1u shl 3)
     }
 }
 
@@ -157,7 +150,7 @@ data class PINNumber (
     }
 }
 
-@kotlinx.serialization.Serializable
+@Serializable
 data class UserLift(
     var id: String = UUID.randomUUID().toString(),
     var liftId: String,

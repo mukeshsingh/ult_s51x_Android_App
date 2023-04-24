@@ -7,19 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import com.ultrontech.s515liftconfigure.FindLiftActivity
 import com.ultrontech.s515liftconfigure.R
 import com.ultrontech.s515liftconfigure.S515LiftConfigureApp
 import com.ultrontech.s515liftconfigure.bluetooth.ScanDisplayItem
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class LiftListAdapter(private val context: Context,
-                      private val lifts: kotlin.collections.List<ScanDisplayItem>
+                      private val lifts: List<ScanDisplayItem>
 ) : BaseAdapter() {
     var findLiftActivity: FindLiftActivity = context as FindLiftActivity
     var selectedId: UUID? = null
@@ -41,22 +39,25 @@ class LiftListAdapter(private val context: Context,
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val liftView = inflater.inflate(R.layout.lift_list_item, parent, false)
+        val cardView = liftView.findViewById<CardView>(R.id.cvLiftFound)
         val liftRegStatus = liftView.findViewById<TextView>(R.id.lift_register_status)
         val txtLiftName = liftView.findViewById<TextView>(R.id.txt_lift_name)
         val txtLiftModel = liftView.findViewById<TextView>(R.id.txt_lift_model)
         val btnAddLift = liftView.findViewById<Button>(R.id.btnAddLift)
 
         val userLift = S515LiftConfigureApp.profileStore.find(lifts[position].id)
-        if (userLift == null) {
-            liftRegStatus.visibility = View.GONE
-            btnAddLift.visibility = View.VISIBLE
+        if (userLift != null) {
+            liftRegStatus.visibility = View.VISIBLE
+            btnAddLift.visibility = View.GONE
+            cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.listItemRegisteredBkg))
         } else {
             liftRegStatus.visibility = View.GONE
             btnAddLift.visibility = View.VISIBLE
+            cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.listItemBkg))
         }
 
         btnAddLift.setOnClickListener {
-            findLiftActivity.showAddLiftDialog()
+            findLiftActivity.showAddLiftDialog(lifts[position])
         }
         txtLiftName.text = lifts[position].name
         txtLiftModel.text = lifts[position].modelNumber

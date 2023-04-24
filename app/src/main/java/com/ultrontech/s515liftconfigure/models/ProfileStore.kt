@@ -41,7 +41,7 @@ data class ProfileStore (
                 hasEngineerCapability = getBoolean(KEY_PROFILE_ENGINEER_LOGGED_IN, KEY_FALSE)
                 allowBiometrics = getBoolean(KEY_PROFILE_USER_USE_BIO, KEY_FALSE)
                 val storeDevices = getString(KEY_PROFILE_USER_DEVICES, null)
-                userDevices
+
                 if (storeDevices != null) {
                     userDevices = json.decodeFromString(storeDevices)
                 }
@@ -51,7 +51,7 @@ data class ProfileStore (
 
     fun find(existingWithId : String): UserLift? {
         return userDevices.find {
-            it.liftId === existingWithId
+            it.liftId == existingWithId
         }
     }
 
@@ -72,7 +72,7 @@ data class ProfileStore (
             return false
         }
 
-        userDevices.plus(lift)
+        userDevices = userDevices.plus(lift)
         return saveDevices()
     }
 
@@ -161,6 +161,20 @@ data class ProfileStore (
         }
 
         return result
+    }
+
+    fun update(userName: String) {
+        this.userName = userName
+        with(S515LiftConfigureApp) {
+            with(sharedPreferences) {
+                val editor = edit()
+
+                with(editor) {
+                    putString(KEY_PROFILE_USER_NAME, userName)
+                    commit()
+                }
+            }
+        }
     }
 
     fun logout() {

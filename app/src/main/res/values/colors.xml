@@ -12,4 +12,6 @@
     <color name="lightGrey">#B6B6B4</color>
     <color name="darkBlue">#146FDF</color>
     <color name="cancelBtnBkg">#2D3458</color>
+    <color name="listItemBkg">#B8DEDD</color>
+    <color name="listItemRegisteredBkg">#5BB450</color>
 </resources>

@@ -1,10 +1,10 @@
 package com.ultrontech.s515liftconfigure.watcher
 
-import android.app.Activity
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import com.ultrontech.s515liftconfigure.hideKeyboard
 
 class PinTextWatcher internal constructor(private var currentIndex: Int, private var editTexts: Array<EditText>, private var context: Context): TextWatcher {
     private var isFirst = false
@@ -41,7 +41,8 @@ class PinTextWatcher internal constructor(private var currentIndex: Int, private
         if (!isLast) editTexts[currentIndex + 1].requestFocus()
         if (isAllEditTextsFilled() && isLast) { // isLast is optional
             editTexts[currentIndex].clearFocus()
-            hideKeyboard()
+
+            context.hideKeyboard(editTexts[currentIndex])
         }
     }
 
@@ -54,11 +55,5 @@ class PinTextWatcher internal constructor(private var currentIndex: Int, private
             if (editText.text.toString().trim { it <= ' ' }.isEmpty()) return false
 
         return true
-    }
-
-    private fun hideKeyboard() {
-        if ((context as Activity).currentFocus != null) {
-            hideKeyboard()
-        }
     }
 }

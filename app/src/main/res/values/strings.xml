@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">First Kotlin app</string>
+    <string name="app_name">Lifts</string>
     <string name="ultronHeading">ULTRON</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -34,7 +34,7 @@
     <string name="close2">Close</string>
     <string name="app_heading">ULTRON</string>
     <string name="app_subHeading">Technologies</string>
-    <string name="app_tester">Ultron Tester</string>
+    <string name="profile_name_hint">Enter your name</string>
     <string name="card_status">Status</string>
     <string name="bluetooth_status">Bluetooth is available</string>
     <string name="stair_status">Stairlift</string>
@@ -50,6 +50,7 @@
     <string name="engineer_logged_out_desc">Login as an engineer</string>
     <string name="enter_login">Enter your Engineer PIN code in the boxes below and then press \"Login"\ to continue</string>
     <string name="login">Login</string>
+    <string name="Connect">Connect</string>
     <string name="btn_add_this_lift">Add this Lift</string>
     <string name="connected">Connected</string>
     <string name="disconnect">Disconnect</string>

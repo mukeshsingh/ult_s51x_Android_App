@@ -10,7 +10,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ultrontech.s515liftconfigure.FindLiftActivity
 import com.ultrontech.s515liftconfigure.R
 import com.ultrontech.s515liftconfigure.S515LiftConfigureApp
+import com.ultrontech.s515liftconfigure.bluetooth.ScanDisplayItem
 import com.ultrontech.s515liftconfigure.listener.PinOnKeyListener
+import com.ultrontech.s515liftconfigure.models.PINNumber
+import com.ultrontech.s515liftconfigure.models.UserLift
 import com.ultrontech.s515liftconfigure.watcher.PinTextWatcher
 
 class AddLiftFragment : BottomSheetDialogFragment() {
@@ -22,6 +25,7 @@ class AddLiftFragment : BottomSheetDialogFragment() {
     private lateinit var p5: EditText
     private lateinit var p6: EditText
     private lateinit var editTexts: Array<EditText>
+    var lift: ScanDisplayItem? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +35,7 @@ class AddLiftFragment : BottomSheetDialogFragment() {
         FindLiftActivity = (activity as FindLiftActivity)
 
         val view = inflater.inflate(R.layout.fragment_add_lift, container, false)
-        val loginButton = view.findViewById<Button>(R.id.btnLogin)
+        val connectButton = view.findViewById<Button>(R.id.btnConnect)
         val cancelButton = view.findViewById<Button>(R.id.btnCancel)
 
         p1 = view.findViewById(R.id.edtPin1)
@@ -43,14 +47,19 @@ class AddLiftFragment : BottomSheetDialogFragment() {
 
         editTexts = arrayOf(p1, p2, p3, p4, p5, p6)
 
-        loginButton.setOnClickListener {
+        connectButton.setOnClickListener {
             with(S515LiftConfigureApp) {
-                val result = profileStore.login("${p1.text}${p2.text}${p3.text}${p4.text}${p5.text}${p6.text}")
+                val pinStr = "${p1.text}${p2.text}${p3.text}${p4.text}${p5.text}${p6.text}".trim()
 
-                if (result) {
-                    (activity as FindLiftActivity).supportFragmentManager.beginTransaction()
-                        .remove(this@AddLiftFragment).commit()
-                    (activity as FindLiftActivity).connectLift()
+                if (pinStr.length == 6) {
+                    val accessKey = pinStr.map { it.digitToInt() }.toIntArray()
+                    val userLift = lift?.let { lft -> UserLift(liftId = lft.id, liftName = lft.name, accessKey = PINNumber(6, accessKey)) }
+                    if (userLift != null) {
+                        profileStore.add(userLift)
+                    }
+
+                    (activity as FindLiftActivity).liftConnected()
+                    (activity as FindLiftActivity).supportFragmentManager.beginTransaction().remove(this@AddLiftFragment).commit()
                 }
             }
         }

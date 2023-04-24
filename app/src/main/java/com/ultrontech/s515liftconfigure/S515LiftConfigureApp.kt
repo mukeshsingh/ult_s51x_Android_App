@@ -1,8 +1,12 @@
 package com.ultrontech.s515liftconfigure
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.Fragment
 import com.ultrontech.s515liftconfigure.models.ProfileStore
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -52,4 +56,17 @@ class S515LiftConfigureApp: Application() {
         const val KEY_TRUE = true
         const val KEY_FALSE = false
     }
+}
+
+fun Fragment.hideKeyboard() {
+    view?.let { activity?.hideKeyboard() }
+}
+
+fun Activity.hideKeyboard() {
+    hideKeyboard()
+}
+
+fun Context.hideKeyboard(view: View) {
+    val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 }

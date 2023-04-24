@@ -54,14 +54,14 @@
             app:layout_constraintVertical_bias="0.183"
             tools:layout_editor_absoluteX="0dp"></View>
 
-        <TextView
-            android:id="@+id/textView42"
+        <EditText
+            android:id="@+id/edt_profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             android:fontFamily="sans-serif-black"
-            android:text="@string/app_tester"
+            android:hint="@string/profile_name_hint"
             android:textColor="#000000"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
