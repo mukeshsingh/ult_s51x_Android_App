@@ -9,7 +9,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/black">
 
         <TextView
             android:id="@+id/txt_user_name"
@@ -61,6 +62,16 @@
                     android:layout_marginBottom="12dp"
                     android:text="@string/bluetooth_status"
                     android:textColor="@color/black" />
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginBottom="14dp"
+                    app:srcCompat="@drawable/dot_radiowaves_up_forward" />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
@@ -90,7 +101,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/home_card_bg_grey">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -113,6 +125,16 @@
                     android:text="@string/details_status"
                     android:textColor="@color/black" />
 
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="17dp"
+                    android:layout_marginBottom="18dp"
+                    app:srcCompat="@drawable/person_text_rectangle" />
+
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
@@ -134,7 +156,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/home_card_bg_grey">
 
                 <TextView
                     android:id="@+id/txtEngineerLoginTitle"
@@ -144,7 +167,7 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="30dp"
                     android:text="@string/engineer_logged_out_title"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="25sp" />
 
                 <TextView
@@ -157,7 +180,17 @@
                     android:layout_marginEnd="30dp"
                     android:layout_marginBottom="12dp"
                     android:text="@string/engineer_logged_out_desc"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
+
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="14dp"
+                    app:srcCompat="@drawable/wrench_and_screwdriver_fill" />
 
             </RelativeLayout>
 
@@ -177,7 +210,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/home_card_bg_grey">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -199,6 +233,16 @@
                     android:layout_marginBottom="12dp"
                     android:text="@string/find_lift_desc"
                     android:textColor="@color/black" />
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginBottom="15dp"
+                    app:srcCompat="@drawable/magnifyingglass" />
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
@@ -213,7 +257,21 @@
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ultron_logo_dark" />
+            app:srcCompat="@drawable/ultron_logo_white" />
+
+        <TextView
+            android:id="@+id/tvEngineerMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="64dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Engineer Mode Enabled"
+            android:textFontWeight="200"
+            android:textSize="25sp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/cvLiftFound"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
