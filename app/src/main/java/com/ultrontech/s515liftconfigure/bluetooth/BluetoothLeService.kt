@@ -100,7 +100,30 @@ class BluetoothLeService : Service() {
         }
     }
 
-    private fun find(address: String) : ScannedDevice? {
+    fun authorise(lift : ScannedDevice, userLift : UserLift) {
+        Log.d(TAG, "Connect to Device : ${lift.name}")
+
+        if (!lift.connected || lift.authControl == null) {
+            return
+        }
+
+        with(S515LiftConfigureApp) {
+            if (waitIdle(LiftBT.GATT_TIMEOUT)) {
+                var token = if (profileStore.hasEngineerCapability) ProfileStore.EngineerTokenKey else userLift.accessKey.code()
+                var b1 = ((token shr 24) and 0xffu).toByte()
+                var b2 = ((token shr 16) and 0xffu).toByte()
+                var b3 = ((token shr 8) and 0xffu).toByte()
+                var b4 = ((token and 0xffu)).toByte()
+
+                var command :ByteArray = byteArrayOf(S515BTCommand.btCmdAuthenticate.toByte(), 0x04, b1, b2, b3, b4)
+                var data =  command
+                lift.authControl!!.value = data
+                writeCharacteristic(lift.authControl)
+            }
+        }
+    }
+
+    fun find(address: String) : ScannedDevice? {
         return devices[address]
     }
 
@@ -666,24 +689,24 @@ class BluetoothLeService : Service() {
             "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_GATT_SERVICES_AUTHENTICATED"
         const val ACTION_GATT_READ_DATA =
             "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_GATT_READ_DATA"
-        const val ACTION_AUTHENTICATION_DATA =
-            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_AUTHENTICATION_DATA"
-        const val ACTION_LEVEL_DATA =
-            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_LEVEL_DATA"
-        const val ACTION_INFO_DATA =
-            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_INFO_DATA"
-        const val ACTION_PHONE_CONFIG_DATA =
-            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_PHONE_CONFIG_DATA"
-        const val ACTION_PHONE_SLOT_DATA =
-            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_PHONE_SLOT_DATA"
-        const val ACTION_CLEAR_PHONE_SLOT_DATA =
-            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_CLEAR_PHONE_SLOT_DATA"
-        const val ACTION_JOB_DATA =
-            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_JOB_DATA"
-        const val ACTION_WIFI_DETAIL_DATA =
-            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_WIFI_DETAIL_DATA"
-        const val ACTION_SSID_LIST_DATA =
-            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_SSID_LIST_DATA"
+        const val ACTION_UPDATE_AUTHENTICATION =
+            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_UPDATE_AUTHENTICATION"
+        const val ACTION_UPDATE_LEVEL =
+            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_UPDATE_LEVEL"
+        const val ACTION_UPDATE_INFO =
+            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_UPDATE_INFO"
+        const val ACTION_UPDATE_PHONE_CONFIG =
+            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_UPDATE_PHONE_CONFIG"
+        const val ACTION_UPDATE_PHONE_SLOT =
+            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_UPDATE_PHONE_SLOT"
+        const val ACTION_CLEAR_PHONE_SLOT =
+            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_CLEAR_PHONE_SLOT"
+        const val ACTION_UPDATE_JOB =
+            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_UPDATE_JOB"
+        const val ACTION_UPDATE_WIFI_DETAIL =
+            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_UPDATE_WIFI_DETAIL"
+        const val ACTION_UPDATE_SSID_LIST =
+            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_UPDATE_SSID_LIST"
         const val ACTION_LIFT_LIST_UPDATED = "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_LIFT_LIST_UPDATED"
 
         const val TAG = "BluetoothLeService: "
@@ -695,7 +718,7 @@ class BluetoothLeService : Service() {
 fun BluetoothLeService.processAuth(data : ByteArray, device : ScannedDevice) {
     if (data.isNotEmpty()) {
         device.authorised = data[0] as UInt == BluetoothLeService.DataOK
-        broadcastUpdate(BluetoothLeService.ACTION_AUTHENTICATION_DATA, device.authorised.toString())
+        broadcastUpdate(BluetoothLeService.ACTION_UPDATE_AUTHENTICATION, device.authorised.toString())
     }
 }
 
@@ -704,7 +727,7 @@ fun BluetoothLeService.processLevel(data : ByteArray, device : ScannedDevice) {
         val obj = JSONObject()
         obj.put("volume", data[1] as Int)
         obj.put("Sensitivity", data[2] as Int)
-        broadcastUpdate(BluetoothLeService.ACTION_LEVEL_DATA, obj.toString() )
+        broadcastUpdate(BluetoothLeService.ACTION_UPDATE_LEVEL, obj.toString() )
     }
 }
 
@@ -717,7 +740,7 @@ fun BluetoothLeService.processInfo(data : ByteArray, device: ScannedDevice) {
         val board = BoardInfo(BoardInfo.commsBoardType(bt.toInt()), dip.toUInt(), BoardCapabilitySet(cap.toUInt()))
         val json = S515LiftConfigureApp.json
 
-        broadcastUpdate(BluetoothLeService.ACTION_INFO_DATA, json.encodeToString(BoardInfo.serializer(), board) )
+        broadcastUpdate(BluetoothLeService.ACTION_UPDATE_INFO, json.encodeToString(BoardInfo.serializer(), board) )
     } else {
          Log.d(BluetoothLeService.TAG, "[INFO] - no data received")
     }
@@ -752,7 +775,7 @@ fun BluetoothLeService.processPhoneConfig(data : ByteArray, device: ScannedDevic
         obj.put("simType", simType)
         obj.put("simPin", pin)
 
-        broadcastUpdate(BluetoothLeService.ACTION_PHONE_CONFIG_DATA, obj.toString() )
+        broadcastUpdate(BluetoothLeService.ACTION_UPDATE_PHONE_CONFIG, obj.toString() )
     } else {
          Log.d(BluetoothLeService.TAG, "[PHONE-CONFIG] - no data received")
     }
@@ -764,11 +787,11 @@ fun BluetoothLeService.processPhone(data : ByteArray, device: ScannedDevice) {
         Log.d(BluetoothLeService.TAG, "[PHONE READ: $data")
 
         for (idx in 0 until 5) {
-            val mult = (idx * 42) ;
+            val mult = (idx * 42)
             val flag = data[1 + mult].toInt() shl 8 + data[mult].toInt()
 
             if ((flag and 0x01) == 0x00) {
-                broadcastUpdate(BluetoothLeService.ACTION_CLEAR_PHONE_SLOT_DATA, (idx + 1).toString() )
+                broadcastUpdate(BluetoothLeService.ACTION_CLEAR_PHONE_SLOT, (idx + 1).toString() )
             } else {
                 val numCallCount = data[3 + mult].toInt() shl 8 + data[2 + mult]
 
@@ -802,7 +825,7 @@ fun BluetoothLeService.processPhone(data : ByteArray, device: ScannedDevice) {
                 obj.put("lastDialled", lastDialled)
                 obj.put("lastVoice", lastVoice)
 
-                broadcastUpdate(BluetoothLeService.ACTION_PHONE_SLOT_DATA, obj.toString() )
+                broadcastUpdate(BluetoothLeService.ACTION_UPDATE_PHONE_SLOT, obj.toString() )
             }
         }
     } else {
@@ -830,7 +853,7 @@ fun BluetoothLeService.processJob(data: ByteArray, device: ScannedDevice) {
         obj.put("job", job)
         obj.put("client", client)
 
-        broadcastUpdate(BluetoothLeService.ACTION_JOB_DATA, obj.toString() )
+        broadcastUpdate(BluetoothLeService.ACTION_UPDATE_JOB, obj.toString() )
     } else {
         Log.d(BluetoothLeService.TAG, "[JOB/CLIENT] - no data received")
     }
@@ -854,7 +877,7 @@ fun BluetoothLeService.processWifiDetail(data: ByteArray, device: ScannedDevice)
         obj.put("wifiConnected", wifiConnected)
         obj.put("ssid", ssid)
 
-        broadcastUpdate(BluetoothLeService.ACTION_WIFI_DETAIL_DATA, obj.toString() )
+        broadcastUpdate(BluetoothLeService.ACTION_UPDATE_WIFI_DETAIL, obj.toString() )
     } else {
          Log.d(BluetoothLeService.TAG, "[Wifi] - no data received")
     }
@@ -875,11 +898,28 @@ fun BluetoothLeService.processSSIDList(data: ByteArray, device: ScannedDevice) {
             }
         }
 
-        broadcastUpdate(BluetoothLeService.ACTION_SSID_LIST_DATA, null )
+        broadcastUpdate(BluetoothLeService.ACTION_UPDATE_SSID_LIST, null )
     } else {
          Log.d(BluetoothLeService.TAG, "[SSID List] - no data received")
     }
 }
 
+object S515BTCommand {
+    const val btCmdAuthenticate             = 0x01
+    const val btCmdAuthModify               = 0x02
+    const val btCmdSetVolume                = 0x03
+    const val btCmdSetMicrophoneSensitivity = 0x04
+    const val btCmdSetVolumeAndSensitivity  = 0x05
+    const val btCmdWritePhoneNumber         = 0x06
+    const val btCmdClearPhoneNumber         = 0x07
+    const val btCmdSetCallPressDelay        = 0x08
+    const val btCmdSetDialTimeoutDelay      = 0x09
+    const val btCmdSetModemSimType          = 0x0a
+    const val btCmdSetJobAndClient          = 0x0b
+    const val btCmdSetSSIDAndKey            = 0x0c
+    const val btCmdClearSSIDAndKey          = 0x0d
+    const val btCmdDisconnect               = 0x0e
+    const val btCmdSetSIMPin                = 0x0f
+}
 
 

@@ -15,10 +15,9 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView3"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:layout_marginStart="25dp"
+            android:layout_height="150dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="29dp"
-            android:layout_marginEnd="25dp"
             android:elevation="10dp"
             app:cardCornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,35 +32,62 @@
 
                 <TextView
                     android:id="@+id/textView53"
-                    android:layout_width="114dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="5dp"
                     android:fontFamily="sans-serif-light"
                     android:text="@string/connected"
                     android:textColor="#2196F3"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.497"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_lift_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="sans-serif-light"
+                    android:text="@string/ultron_test"
+                    android:textColor="#2196F3"
+                    android:textSize="25sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/textView3"
-                    android:layout_width="75dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="10dp"
                     android:text="@string/disconnect"
                     android:textColor="#2196F3"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView53" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/btn_background"
+                    android:backgroundTint="#F10000"
+                    android:text="@string/btn_remove"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                </Button>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

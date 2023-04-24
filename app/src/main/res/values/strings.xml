@@ -95,4 +95,5 @@
     <string name="add_lift_txt_lift_name">Savaria VLink</string>
     <string name="add_lift_txt_title">Enter the PIN number</string>
     <string name="add_lift_txt_desc">You need to enter the PIN number associated with this device to be able to connect and add it to your lift.</string>
+    <string name="btn_remove">Remove</string>
 </resources>

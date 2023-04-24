@@ -78,11 +78,11 @@ enum class PhoneNumberType {
 data class PhoneContact (
     var populated : Boolean = false,
     var enabled : Boolean = false,
-    var number : String?,
-    var callCount : Int?,
-    var contactName : String?,
-    var lastDialled : PhoneDate?,
-    var lastVoice : PhoneDate?,
+    var number : String? = null,
+    var callCount : Int? = 0,
+    var contactName : String? = null,
+    var lastDialled : PhoneDate? = null,
+    var lastVoice : PhoneDate? = null,
     var numberType : PhoneNumberType
 )
 

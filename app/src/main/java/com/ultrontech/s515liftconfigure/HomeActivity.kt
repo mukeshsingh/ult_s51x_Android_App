@@ -107,19 +107,20 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun showUserDevices() {
-        S515LiftConfigureApp.profileStore.userDevices.forEach {
+        S515LiftConfigureApp.profileStore.userDevices.forEach {userLift ->
             val cardView = inflater.inflate(R.layout.home_lift_list_item, null, false)
             val liftName = cardView.findViewById<TextView>(R.id.txt_lift_name)
             val liftMsg = cardView.findViewById<TextView>(R.id.txt_lift_msg)
-            liftName.text = it.liftName
+            liftName.text = userLift.liftName
             liftMsg.text = resources.getString(R.string.lift_status)
 
             cardView.setOnClickListener {
                 val intent = Intent(this, EngineerDetailsActivity::class.java)
+                intent.extras?.putString(INTENT_LIFT_ID, userLift.liftId)
                 startActivity(intent)
             }
 
-            llUserLifts.addView(cardView,)
+            llUserLifts.addView(cardView)
         }
     }
 
@@ -318,6 +319,7 @@ class HomeActivity : AppCompatActivity() {
 
     companion object {
         const val TAG = "HomeActivity"
+        const val INTENT_LIFT_ID = "com.ultrontech.s515liftconfigure.INTENT_LIFT_ID"
     }
 
     private var state: BluetoothState = BluetoothState.Connecting
