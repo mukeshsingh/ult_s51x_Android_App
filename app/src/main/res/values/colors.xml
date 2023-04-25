@@ -17,4 +17,5 @@
     <color name="home_card_bg_grey">#727677</color>
     <color name="magnify_color">#838788</color>
     <color name="person_text_color">#838788</color>
+    <color name="red">#F10000</color>
 </resources>

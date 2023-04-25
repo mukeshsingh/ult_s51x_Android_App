@@ -39,12 +39,14 @@ class EngineerDetailsActivity : AppCompatActivity() {
     var lift    : UserLift? = null
 
     lateinit var liftName: TextView
+    lateinit var deviceStatus: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_engineer_details)
 
         liftName = findViewById(R.id.txt_lift_name)
+        deviceStatus = findViewById(R.id.txt_device_status)
 
         val liftId = intent.extras?.getString(HomeActivity.INTENT_LIFT_ID)
         if (liftId != null) {

@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Lifts</string>
     <string name="ultronHeading">ULTRON</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="edit_board_details">Edit Board Details</string>
     <string name="wifi_ssid">Wifi SSID</string>
@@ -54,6 +53,12 @@
     <string name="btn_add_this_lift">Add this Lift</string>
     <string name="connected">Connected</string>
     <string name="disconnect">Disconnect</string>
+    <string name="device_disconnect">Connected</string>
+    <string name="device_disconnect_no_auth">Not Authorised</string>
+    <string name="device_connect_error">Problem Connecting</string>
+    <string name="device_connect_retry">Retry Connect</string>
+    <string name="device_not_disconnect">Not Connected</string>
+    <string name="device_name">Your lift</string>
     <string name="engineer_detail">Engineer detail</string>
     <string name="dollor">$542</string>
     <string name="ssid">No SSID configured</string>

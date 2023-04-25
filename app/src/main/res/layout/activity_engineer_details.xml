@@ -31,7 +31,7 @@
 
 
                 <TextView
-                    android:id="@+id/textView53"
+                    android:id="@+id/txt_device_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -60,17 +60,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/textView3"
+                <Button
+                    android:id="@+id/btn_disconnect"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="10dp"
+                    android:background="@drawable/btn_background_blue"
                     android:text="@string/disconnect"
-                    android:textColor="#2196F3"
+                    android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
 
@@ -79,9 +79,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/btn_background"
-                    android:backgroundTint="#F10000"
+                    android:background="@drawable/btn_background_red"
                     android:text="@string/btn_remove"
+                    android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
 
@@ -265,7 +265,7 @@
                         android:id="@+id/button11"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="0.8"
                         android:text="@string/gsm"
                         android:textColor="#000000"
                         android:textSize="16sp"
@@ -281,7 +281,7 @@
                         android:id="@+id/button12"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.6"
+                        android:layout_weight="1.2"
                         android:paddingVertical="5dp"
                         android:layout_marginHorizontal="4dp"
                         android:text="@string/diagnose"
@@ -297,7 +297,7 @@
                         android:id="@+id/button13"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="0.8"
                         android:paddingVertical="5dp"
                         android:text="@string/wifi"
                         android:textColor="#000000"
@@ -313,7 +313,7 @@
                         android:id="@+id/button14"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="0.9"
                         android:paddingVertical="5dp"
                         android:text="@string/ap"
                         android:textColor="#000000"
