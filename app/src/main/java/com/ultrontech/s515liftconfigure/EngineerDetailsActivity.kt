@@ -46,7 +46,6 @@ class EngineerDetailsActivity : AppCompatActivity() {
 
         liftName = findViewById(R.id.txt_lift_name)
 
-
         val liftId = intent.extras?.getString(HomeActivity.INTENT_LIFT_ID)
         if (liftId != null) {
             lift = S515LiftConfigureApp.profileStore.find(liftId)

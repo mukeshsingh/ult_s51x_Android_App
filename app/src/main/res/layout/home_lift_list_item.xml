@@ -5,26 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <androidx.cardview.widget.CardView
-        android:id="@+id/cvStairLift"
+        android:id="@+id/cvLiftFound"
         android:layout_width="match_parent"
         android:layout_height="110dp"
-        android:layout_marginStart="25dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="25dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="20dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            style="@style/statusCardDesign">
 
             <TextView
                 android:id="@+id/txt_lift_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="30dp"
                 android:text="@string/stair_status"
                 android:textColor="@color/black"
                 android:textSize="25sp" />
@@ -35,9 +32,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="30dp"
-                android:layout_marginBottom="12dp"
                 android:text="@string/lift_status"
                 android:textColor="@color/black" />
         </RelativeLayout>
