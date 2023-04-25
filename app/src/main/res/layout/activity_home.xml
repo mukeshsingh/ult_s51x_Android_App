@@ -4,13 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C9FEDA"
+    android:background="@color/black"
     tools:context=".HomeActivity" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/black">
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="198dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/txt_user_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ultron_logo_white" />
+
+        <TextView
+            android:id="@+id/tvEngineerMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="Engineer Mode Enabled"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textFontWeight="200"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toTopOf="@+id/cvLiftFound"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/txt_user_name"
@@ -40,14 +66,14 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                style="@style/statusCardDesign"
+                >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="30dp"
                     android:text="@string/card_status"
                     android:textColor="@color/black"
                     android:textSize="25sp" />
@@ -57,9 +83,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginBottom="12dp"
                     android:text="@string/bluetooth_status"
                     android:textColor="@color/black" />
 
@@ -69,8 +92,6 @@
                     android:layout_height="80dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginBottom="14dp"
                     app:srcCompat="@drawable/dot_radiowaves_up_forward" />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
@@ -102,14 +123,13 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/home_card_bg_grey">
+                android:background="@color/home_card_bg_grey"
+                style="@style/statusCardDesign">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="30dp"
                     android:text="@string/profile_status"
                     android:textColor="@color/black"
                     android:textSize="25sp" />
@@ -119,9 +139,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginBottom="12dp"
                     android:text="@string/details_status"
                     android:textColor="@color/black" />
 
@@ -131,8 +148,7 @@
                     android:layout_height="80dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="17dp"
-                    android:layout_marginBottom="18dp"
+
                     app:srcCompat="@drawable/person_text_rectangle" />
 
             </RelativeLayout>
@@ -157,15 +173,14 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/home_card_bg_grey">
+                android:background="@color/home_card_bg_grey"
+                style="@style/statusCardDesign">
 
                 <TextView
                     android:id="@+id/txtEngineerLoginTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="30dp"
                     android:text="@string/engineer_logged_out_title"
                     android:textColor="@color/white"
                     android:textSize="25sp" />
@@ -176,9 +191,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginBottom="12dp"
                     android:text="@string/engineer_logged_out_desc"
                     android:textColor="@color/white" />
 
@@ -188,8 +200,6 @@
                     android:layout_height="85dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginBottom="14dp"
                     app:srcCompat="@drawable/wrench_and_screwdriver_fill" />
 
             </RelativeLayout>
@@ -211,14 +221,13 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/home_card_bg_grey">
+                android:background="@color/home_card_bg_grey"
+                style="@style/statusCardDesign">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="30dp"
                     android:text="@string/find_lift_title"
                     android:textColor="@color/black"
                     android:textSize="25sp" />
@@ -228,9 +237,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginBottom="12dp"
                     android:text="@string/find_lift_desc"
                     android:textColor="@color/black" />
 
@@ -240,37 +246,12 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginBottom="15dp"
                     app:srcCompat="@drawable/magnifyingglass" />
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="198dp"
-            android:layout_height="53dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/txt_user_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ultron_logo_white" />
 
-        <TextView
-            android:id="@+id/tvEngineerMode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="Engineer Mode Enabled"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textFontWeight="200"
-            android:textSize="25sp"
-            app:layout_constraintBottom_toTopOf="@+id/cvLiftFound"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

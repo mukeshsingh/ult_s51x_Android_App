@@ -29,5 +29,12 @@
             <item name="android:background">@drawable/roundbottomsheet</item>
         </style>
 
+    <style name="statusCardDesign">
+        <item name="android:paddingStart">17dp</item>
+        <item name="android:paddingEnd">17dp</item>
+        <item name="android:paddingTop">13dp</item>
+        <item name="android:paddingBottom">13dp</item>
+    </style>
+
 
 </resources>
