@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C9FEDA"
+    android:background="@color/black"
     tools:context=".HomeActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#C9FEDA">
+        android:background="@color/black">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView3"
@@ -27,7 +27,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/card_bg_color_grey">
 
 
                 <TextView
@@ -105,7 +106,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/card_bg_color_grey">
 
                 <TextView
                     android:id="@+id/textView17"
@@ -115,7 +117,7 @@
                     android:layout_marginStart="33dp"
                     android:layout_marginTop="25dp"
                     android:text="@string/engineer_detail"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:textSize="25sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -138,7 +140,7 @@
                     android:layout_marginStart="33dp"
                     android:layout_marginTop="10dp"
                     android:text="@string/ssid"
-                    android:textColor="#F10000"
+                    android:textColor="@color/custom_pink"
                     android:textSize="22sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView17" />
@@ -150,7 +152,7 @@
                     android:layout_marginStart="34dp"
                     android:layout_marginTop="10dp"
                     android:text="@string/wifi_connect"
-                    android:textColor="#5EB000"
+                    android:textColor="@color/custom_pink"
                     android:textColorHighlight="#4BCE50"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView46" />
@@ -185,7 +187,7 @@
                     android:layout_marginStart="33dp"
                     android:layout_marginTop="40dp"
                     android:text="@string/job_name"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:textSize="10sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView55" />
@@ -197,7 +199,7 @@
                     android:layout_marginStart="33dp"
                     android:layout_marginTop="10dp"
                     android:text="@string/ultron_test"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView56" />
@@ -209,7 +211,7 @@
                     android:layout_marginStart="33dp"
                     android:layout_marginTop="20dp"
                     android:text="@string/client"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:textSize="10sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView62" />
@@ -221,7 +223,7 @@
                     android:layout_marginStart="33dp"
                     android:layout_marginTop="10dp"
                     android:text="@string/technology"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView71" />
@@ -233,7 +235,7 @@
                     android:layout_marginStart="34dp"
                     android:layout_marginTop="40dp"
                     android:text="@string/board"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:textSize="10sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView72" />
@@ -267,7 +269,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
                         android:text="@string/gsm"
-                        android:textColor="#000000"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         android:paddingVertical="5dp"
                         android:textAlignment="center"
@@ -285,7 +287,7 @@
                         android:paddingVertical="5dp"
                         android:layout_marginHorizontal="4dp"
                         android:text="@string/diagnose"
-                        android:textColor="#000000"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textAlignment="center"
                         app:backgroundTint="#4CAF50"
@@ -300,7 +302,7 @@
                         android:layout_weight="0.8"
                         android:paddingVertical="5dp"
                         android:text="@string/wifi"
-                        android:textColor="#000000"
+                        android:textColor="@color/white"
                         android:layout_marginHorizontal="4dp"
                         android:textSize="16sp"
                         android:textAlignment="center"
@@ -316,7 +318,7 @@
                         android:layout_weight="0.9"
                         android:paddingVertical="5dp"
                         android:text="@string/ap"
-                        android:textColor="#000000"
+                        android:textColor="@color/white"
                         android:layout_marginHorizontal="4dp"
                         android:textSize="16sp"
                         android:textAlignment="center"
@@ -331,10 +333,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="184dp"
-                    android:fontFamily="sans-serif-medium"
                     android:text="@string/edit"
-                    android:textColor="#3F51B5"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
+                    android:padding="15dp"
+                    android:background="@drawable/btn_background_blue"
                     android:layout_marginVertical="20dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -350,7 +353,8 @@
             android:id="@+id/constraintLayout5"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView">
+            app:layout_constraintTop_toBottomOf="@+id/cardView"
+            android:background="@color/card_bg_color_grey">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -358,7 +362,6 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="10dp"
-                android:background="@drawable/cardcorner"
                 android:padding="5dp"
                 app:circularflow_radiusInDP="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -376,7 +379,7 @@
                     android:layout_marginTop="4dp"
                     android:fontFamily="sans-serif-condensed-medium"
                     android:text="@string/user_contact"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -388,7 +391,7 @@
                     android:layout_marginStart="72dp"
                     android:layout_marginTop="40dp"
                     android:text="@string/number"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -399,7 +402,7 @@
                     android:layout_marginStart="72dp"
                     android:layout_marginTop="12dp"
                     android:text="@string/callmade"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView6" />
@@ -411,7 +414,7 @@
                     android:layout_marginStart="71dp"
                     android:layout_marginTop="4dp"
                     android:text="@string/last_call"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView10" />
@@ -423,7 +426,7 @@
                     android:layout_marginStart="72dp"
                     android:layout_marginTop="5dp"
                     android:text="@string/last_call"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView20" />
@@ -442,13 +445,15 @@
 
                 <TextView
                     android:id="@+id/textView25"
-                    android:layout_width="30dp"
-                    android:layout_height="17dp"
-                    android:layout_marginTop="144dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="130dp"
                     android:layout_marginEnd="32dp"
                     android:text="@string/edit"
-                    android:textColor="#2196F3"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
+                    android:padding="12dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_background_blue"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -468,7 +473,7 @@
                     android:layout_marginStart="72dp"
                     android:layout_marginTop="24dp"
                     android:text="@string/andy"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view" />
 
@@ -479,7 +484,7 @@
                     android:layout_marginStart="72dp"
                     android:layout_marginTop="15dp"
                     android:text="@string/number"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView26" />
@@ -491,19 +496,22 @@
                     android:layout_marginStart="72dp"
                     android:layout_marginTop="4dp"
                     android:text="@string/callmade"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView27" />
 
                 <TextView
                     android:id="@+id/textView31"
-                    android:layout_width="27dp"
-                    android:layout_height="19dp"
-                    android:layout_marginTop="136dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="130dp"
                     android:layout_marginEnd="32dp"
                     android:text="@string/edit"
-                    android:textColor="#2196F3"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:padding="12dp"
+                    android:background="@drawable/btn_background_blue"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view" />
 
@@ -514,7 +522,7 @@
                     android:layout_marginStart="72dp"
                     android:layout_marginTop="4dp"
                     android:text="@string/last_call"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView28" />
@@ -548,7 +556,7 @@
                     android:layout_marginStart="72dp"
                     android:layout_marginTop="24dp"
                     android:text="@string/nonumber"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view2" />
 
@@ -566,12 +574,15 @@
 
                 <TextView
                     android:id="@+id/textView35"
-                    android:layout_width="34dp"
-                    android:layout_height="17dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="56dp"
                     android:layout_marginEnd="32dp"
                     android:text="@string/edit"
-                    android:textColor="#2196F3"
+                    android:textSize="16sp"
+                    android:padding="12dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_background_blue"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view2" />
 
@@ -591,7 +602,7 @@
                     android:layout_marginStart="82dp"
                     android:layout_marginTop="24dp"
                     android:text="@string/app_heading"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view3" />
 
@@ -602,7 +613,7 @@
                     android:layout_marginStart="81dp"
                     android:layout_marginTop="15dp"
                     android:text="@string/number"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView36" />
 
@@ -613,7 +624,7 @@
                     android:layout_marginStart="82dp"
                     android:layout_marginTop="4dp"
                     android:text="@string/last_call"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView38" />
 
@@ -624,7 +635,7 @@
                     android:layout_marginStart="81dp"
                     android:layout_marginTop="15dp"
                     android:text="@string/callmade"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView37" />
 
@@ -635,7 +646,7 @@
                     android:layout_marginStart="81dp"
                     android:layout_marginTop="4dp"
                     android:text="@string/last_call"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView39" />
 
@@ -652,12 +663,15 @@
 
                 <TextView
                     android:id="@+id/textView44"
-                    android:layout_width="32dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="164dp"
                     android:layout_marginEnd="32dp"
                     android:text="@string/edit"
-                    android:textColor="#2196F3"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:padding="12dp"
+                    android:background="@drawable/btn_background_blue"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view3" />
 
@@ -678,7 +692,7 @@
                     android:layout_marginStart="82dp"
                     android:layout_marginTop="34dp"
                     android:text="@string/rozers"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view4" />
 
@@ -689,7 +703,7 @@
                     android:layout_marginStart="82dp"
                     android:layout_marginTop="15dp"
                     android:text="@string/number"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView45" />
 
@@ -700,7 +714,7 @@
                     android:layout_marginStart="82dp"
                     android:layout_marginTop="15dp"
                     android:text="@string/callmade"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView47" />
 
@@ -711,7 +725,7 @@
                     android:layout_marginStart="82dp"
                     android:layout_marginTop="4dp"
                     android:text="@string/last_call"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView48" />
 
@@ -722,7 +736,7 @@
                     android:layout_marginStart="82dp"
                     android:layout_marginTop="4dp"
                     android:text="@string/last_call"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView49" />
 
@@ -744,7 +758,10 @@
                     android:layout_marginTop="164dp"
                     android:layout_marginEnd="32dp"
                     android:text="@string/edit"
-                    android:textColor="#2196F3"
+                    android:textSize="16sp"
+                    android:padding="12dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_background_blue"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view4" />
 
@@ -757,7 +774,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#C9FEDA"
+            android:background="@color/card_bg_color_grey"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout5">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -779,7 +796,7 @@
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="96dp"
                     android:text="@string/timeout"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -791,7 +808,7 @@
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="6dp"
                     android:text="@string/second"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView57" />
@@ -804,7 +821,7 @@
                     android:layout_marginTop="44dp"
                     android:layout_marginEnd="30dp"
                     android:text="@string/thirty"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:textSize="70sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView57"
@@ -817,7 +834,10 @@
                     android:layout_marginTop="32dp"
                     android:layout_marginBottom="10dp"
                     android:text="@string/edit"
-                    android:textColor="#2196F3"
+                    android:textSize="16sp"
+                    android:padding="12dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_background_blue"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.498"
@@ -846,7 +866,7 @@
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="96dp"
                     android:text="@string/callpress"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -859,7 +879,7 @@
                     android:layout_marginTop="44dp"
                     android:layout_marginEnd="30dp"
                     android:text="@string/three"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:textSize="70sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView61"
@@ -871,7 +891,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:text="@string/edit"
-                    android:textColor="#2196F3"
+                    android:textSize="16sp"
+                    android:padding="12dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_background_blue"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.498"
@@ -900,7 +923,7 @@
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="92dp"
                     android:text="@string/volume"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -912,7 +935,7 @@
                     android:layout_marginTop="44dp"
                     android:layout_marginEnd="30dp"
                     android:text="@string/one"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:textSize="70sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -923,7 +946,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:text="@string/edit"
-                    android:textColor="#2196F3"
+                    android:textSize="16sp"
+                    android:padding="12dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_background_blue"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -950,7 +976,7 @@
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="92dp"
                     android:text="@string/micro"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -961,7 +987,7 @@
                     android:layout_marginTop="44dp"
                     android:layout_marginEnd="30dp"
                     android:text="@string/one"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:textSize="70sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -972,7 +998,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:text="@string/edit"
-                    android:textColor="#2196F3"
+                    android:textSize="16sp"
+                    android:padding="12dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_background_blue"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
