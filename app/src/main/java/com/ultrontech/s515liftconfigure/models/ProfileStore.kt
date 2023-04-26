@@ -151,7 +151,7 @@ data class ProfileStore (
                 val editor = edit()
 
                 with(editor) {
-                    val cx = engineerCode.toUInt()
+                    val cx = engineerCode.toInt()
                     if (cx == EngineerTokenKey) {
                         hasEngineerCapability = true
                         result = true
@@ -194,6 +194,6 @@ data class ProfileStore (
     }
 
     companion object{
-        val EngineerTokenKey : UInt = 0x5B300B1u
+        val EngineerTokenKey : Int = 0x5B300B1
     }
 }

@@ -22,9 +22,7 @@
             app:cardCornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            >
-
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -124,8 +122,7 @@
             app:cardCornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView3"
-            >
+            app:layout_constraintTop_toBottomOf="@+id/cardView3">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -158,39 +155,50 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView46"
+                    android:id="@+id/txt_ssid_configured_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="33dp"
                     android:layout_marginTop="10dp"
-                    android:text="@string/ssid"
+                    android:text="@string/ssid_not_configured"
                     android:textColor="@color/custom_pink"
                     android:textSize="22sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
                 <TextView
-                    android:id="@+id/textView54"
+                    android:id="@+id/txt_ssid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="33dp"
+                    android:text="@string/ssid_not_configured"
+                    android:textColor="@color/custom_pink"
+                    android:textSize="22sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_ssid_configured_label" />
+
+                <TextView
+                    android:id="@+id/txt_wifi_available_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="34dp"
                     android:layout_marginTop="10dp"
-                    android:text="@string/wifi_connect"
+                    android:text="@string/wifi_available_status"
                     android:textColor="@color/custom_pink"
                     android:textColorHighlight="#4BCE50"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView46" />
+                    app:layout_constraintTop_toBottomOf="@+id/txt_ssid" />
 
                 <TextView
-                    android:id="@+id/textView55"
+                    android:id="@+id/txt_wifi_connected_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="33dp"
                     android:layout_marginTop="5dp"
-                    android:text="@string/wifi_notConnected"
+                    android:text="@string/wifi_not_connected"
                     android:textColor="#FF0000"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView54" />
+                    app:layout_constraintTop_toBottomOf="@+id/txt_wifi_available_status" />
 
                 <View
                     android:id="@+id/view7"
@@ -200,12 +208,12 @@
                     android:background="@color/grey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView55">
+                    app:layout_constraintTop_toBottomOf="@+id/txt_wifi_connected_status">
 
                 </View>
 
                 <TextView
-                    android:id="@+id/textView56"
+                    android:id="@+id/txt_job_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="33dp"
@@ -214,10 +222,10 @@
                     android:textColor="@color/white"
                     android:textSize="10sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView55" />
+                    app:layout_constraintTop_toBottomOf="@+id/txt_wifi_connected_status" />
 
                 <TextView
-                    android:id="@+id/textView62"
+                    android:id="@+id/txt_job"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="33dp"
@@ -226,10 +234,10 @@
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView56" />
+                    app:layout_constraintTop_toBottomOf="@+id/txt_job_label" />
 
                 <TextView
-                    android:id="@+id/textView71"
+                    android:id="@+id/txt_client_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="33dp"
@@ -238,10 +246,10 @@
                     android:textColor="@color/white"
                     android:textSize="10sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView62" />
+                    app:layout_constraintTop_toBottomOf="@+id/txt_job" />
 
                 <TextView
-                    android:id="@+id/textView72"
+                    android:id="@+id/txt_client"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="33dp"
@@ -250,7 +258,7 @@
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView71" />
+                    app:layout_constraintTop_toBottomOf="@+id/txt_client_label" />
 
                 <TextView
                     android:id="@+id/textView73"
@@ -262,7 +270,7 @@
                     android:textColor="@color/white"
                     android:textSize="10sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView72" />
+                    app:layout_constraintTop_toBottomOf="@+id/txt_client" />
 
                 <View
                     android:id="@+id/view6"
@@ -289,7 +297,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView73">
 
                     <TextView
-                        android:id="@+id/button11"
+                        android:id="@+id/txt_cap_gsm"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="4dp"
@@ -305,7 +313,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/textView73" />
 
                     <TextView
-                        android:id="@+id/button12"
+                        android:id="@+id/txt_cap_diagnostics"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="4dp"
@@ -317,11 +325,11 @@
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         app:backgroundTint="#4CAF50"
-                        app:layout_constraintStart_toEndOf="@+id/button11"
+                        app:layout_constraintStart_toEndOf="@+id/txt_cap_gsm"
                         app:layout_constraintTop_toBottomOf="@+id/textView73" />
 
                     <TextView
-                        android:id="@+id/button13"
+                        android:id="@+id/txt_cap_wifi"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="4dp"
@@ -333,11 +341,11 @@
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         app:backgroundTint="#4CAF50"
-                        app:layout_constraintStart_toEndOf="@+id/button12"
+                        app:layout_constraintStart_toEndOf="@+id/txt_cap_diagnostics"
                         app:layout_constraintTop_toBottomOf="@+id/textView73" />
 
                     <TextView
-                        android:id="@+id/button14"
+                        android:id="@+id/txt_cap_wifi_ap"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="4dp"
@@ -349,12 +357,12 @@
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         app:backgroundTint="#4CAF50"
-                        app:layout_constraintStart_toEndOf="@+id/button13"
+                        app:layout_constraintStart_toEndOf="@+id/txt_cap_wifi"
                         app:layout_constraintTop_toBottomOf="@+id/textView73" />
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/textView74"
+                    android:id="@+id/btn_board_edit"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="20dp"

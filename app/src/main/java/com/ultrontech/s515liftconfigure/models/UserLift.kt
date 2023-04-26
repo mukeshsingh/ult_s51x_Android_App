@@ -22,6 +22,9 @@ enum class CommsBoardType {
 data class BoardCapabilitySet(
     var rawValue: UInt
 ) {
+    fun getAll(): Array<BoardCapabilitySet> {
+        return arrayOf(gsm, diagnostics, wifi, wifi_softap)
+    }
     companion object {
         var gsm: BoardCapabilitySet = BoardCapabilitySet(1u shl 0)
         var diagnostics: BoardCapabilitySet = BoardCapabilitySet(1u shl 1)
@@ -36,6 +39,17 @@ data class BoardInfo (
     var dip : UInt,
     var capabilities : BoardCapabilitySet
 ) {
+    override fun toString(): String {
+        return "board_type: ${getBoardType()}, dip: $dip, capebilities: ${capabilities.getAll().joinToString { it.toString() }}"
+    }
+
+    fun getBoardType(): String {
+        return when(board_type) {
+            CommsBoardType.S510 -> "S510"
+            CommsBoardType.S515 -> "S515"
+            CommsBoardType.UnknownCommsBoard -> "Unknown Comms Board"
+        }
+    }
     companion object{
         fun commsBoardType(bt: Int): CommsBoardType {
             return when(bt) {
@@ -133,7 +147,11 @@ data class PhoneDate (
     var mins : Int,
 
     var targetDate : Date?
-)
+) {
+    override fun toString(): String {
+        return "$year-$month-$day $hour:$mins -> $targetDate"
+    }
+}
 
 @Serializable
 data class PINNumber (
@@ -158,10 +176,10 @@ data class PINNumber (
         return result
     }
 
-    fun code(): UInt {
-        var c: UInt = 0u
+    fun code(): Int {
+        var c: Int = 0
         digits.forEach {
-            c += (c shl 8) + (it.toUInt() and 255u)
+            c += (c shl 8) + (it and 255)
         }
         return c
     }
@@ -173,6 +191,10 @@ data class PINNumber (
         }
 
         return c
+    }
+
+    override fun toString(): String {
+        return "Length: $length -> Pin: ${digits.joinToString { it.toString() }}"
     }
 }
 

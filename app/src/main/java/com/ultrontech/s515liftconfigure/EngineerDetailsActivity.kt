@@ -19,6 +19,23 @@ class EngineerDetailsActivity : AppCompatActivity() {
     private lateinit var btnEdit: Button
     private lateinit var btnConnect: Button
     private lateinit var btnRemove: Button
+
+    private lateinit var liftModel: TextView
+    private lateinit var ssidConfiguredLabel: TextView
+    private lateinit var wifiSsid: TextView
+    private lateinit var wifiAvailableStatus: TextView
+    private lateinit var wifiConnectedStatus: TextView
+
+    private lateinit var jobLabel: TextView
+    private lateinit var job: TextView
+    private lateinit var clientLabel: TextView
+    private lateinit var client: TextView
+
+    private lateinit var capGSM: TextView
+    private lateinit var capDiagnostics: TextView
+    private lateinit var capWifi: TextView
+    private lateinit var capWifiAP: TextView
+
     private val bluetoothLeService: BluetoothLeService = BluetoothLeService.service!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +47,21 @@ class EngineerDetailsActivity : AppCompatActivity() {
         btnConnect = findViewById(R.id.btn_connect)
         btnEdit = findViewById(R.id.btn_edit)
         btnRemove = findViewById(R.id.btn_remove)
+        liftModel = findViewById(R.id.txt_lift_model)
+        ssidConfiguredLabel = findViewById(R.id.txt_ssid_configured_label)
+        wifiSsid = findViewById(R.id.txt_ssid)
+        wifiAvailableStatus = findViewById(R.id.txt_wifi_available_status)
+        wifiConnectedStatus= findViewById(R.id.txt_wifi_connected_status)
+
+        job = findViewById(R.id.txt_job)
+        jobLabel = findViewById(R.id.txt_job_label)
+        client = findViewById(R.id.txt_client)
+        clientLabel = findViewById(R.id.txt_client_label)
+
+        capGSM = findViewById(R.id.txt_cap_gsm)
+        capDiagnostics = findViewById(R.id.txt_cap_diagnostics)
+        capWifi = findViewById(R.id.txt_cap_wifi)
+        capWifiAP = findViewById(R.id.txt_cap_wifi_ap)
 
         btnRemove.setOnClickListener {
             bluetoothLeService.device.lift?.let { it1 ->
@@ -39,7 +71,7 @@ class EngineerDetailsActivity : AppCompatActivity() {
         }
     }
 
-    fun linkDevice () {
+    private fun linkDevice () {
         val liftId = intent.extras?.getString(HomeActivity.INTENT_LIFT_ID)
         if (liftId != null) {
             val lift = S515LiftConfigureApp.profileStore.find(liftId)
@@ -90,6 +122,34 @@ class EngineerDetailsActivity : AppCompatActivity() {
         }
     }
 
+    fun updateWifiDetail() {
+        with(bluetoothLeService) {
+
+        }
+    }
+
+    fun updateJob() {
+        with(bluetoothLeService) {
+            if (device.job != null) {
+                jobLabel.visibility= View.VISIBLE
+                job.text = device.job
+                jobLabel.text = resources.getString(R.string.job_name)
+            } else {
+                jobLabel.visibility= View.GONE
+                job.text = resources.getString(R.string.job_not_configured)
+            }
+
+            if (device.client != null) {
+                clientLabel.visibility= View.VISIBLE
+                client.text = device.client
+                clientLabel.text = resources.getString(R.string.client)
+            } else {
+                clientLabel.visibility= View.GONE
+                client.text = resources.getString(R.string.job_not_configured)
+            }
+        }
+    }
+
     private val deviceUpdateReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
@@ -118,9 +178,11 @@ class EngineerDetailsActivity : AppCompatActivity() {
                 }
                 BluetoothLeService.ACTION_UPDATE_JOB -> {
                     Log.d(HomeActivity.TAG, "ACTION_UPDATE_JOB.")
+                    updateJob()
                 }
                 BluetoothLeService.ACTION_UPDATE_WIFI_DETAIL -> {
                     Log.d(HomeActivity.TAG, "ACTION_UPDATE_WIFI_DETAIL.")
+                    updateWifiDetail()
                 }
                 BluetoothLeService.ACTION_UPDATE_SSID_LIST -> {
                     Log.d(HomeActivity.TAG, "ACTION_UPDATE_SSID_LIST.")
@@ -130,6 +192,9 @@ class EngineerDetailsActivity : AppCompatActivity() {
                 }
                 BluetoothLeService.ACTION_BLUETOOTH_OFF -> {
                     finish()
+                }
+                BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED -> {
+                    bluetoothLeService?.updateServices()
                 }
             }
         }
@@ -148,6 +213,7 @@ class EngineerDetailsActivity : AppCompatActivity() {
             addAction(BluetoothLeService.ACTION_UPDATE_INFO)
             addAction(BluetoothLeService.ACTION_UPDATE_LEVEL)
             addAction(BluetoothLeService.ACTION_CLEAR_PHONE_SLOT)
+            addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED)
         }
     }
 }

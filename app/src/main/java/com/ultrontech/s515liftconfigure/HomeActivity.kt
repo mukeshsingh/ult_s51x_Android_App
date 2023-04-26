@@ -228,24 +228,15 @@ class HomeActivity : AppCompatActivity() {
 
                 BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED -> {
                     bluetoothService?.updateServices()
-
-                    if (bluetoothService?.waitIdle(LiftBT.GATT_TIMEOUT) != null) {
-//                        bluetoothService?.authenticate()
-                    }
                 }
 
                 BluetoothLeService.ACTION_GATT_SERVICES_AUTHENTICATED -> {
                     // Show all the supported services and characteristics on the user interface.
                     updateConnectionState(BluetoothState.Connected)
-
-                    if (bluetoothService?.waitIdle(LiftBT.GATT_TIMEOUT) != null) {
-//                        bluetoothService?.readControlState()
-                    }
                 }
 
                 BluetoothLeService.ACTION_BLUETOOTH_DEVICE_FOUND -> {
                     Log.d(TAG, "Device found.")
-//                    bluetoothService?.connect(device.pinCode, device.deviceName ?: "")
                 }
             }
         }

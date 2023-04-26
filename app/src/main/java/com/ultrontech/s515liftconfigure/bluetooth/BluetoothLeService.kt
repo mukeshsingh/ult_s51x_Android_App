@@ -8,10 +8,7 @@ import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
 import android.content.*
 import android.content.pm.PackageManager
-import android.os.Binder
-import android.os.Handler
-import android.os.IBinder
-import android.os.Looper
+import android.os.*
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import com.ultrontech.s515liftconfigure.HomeActivity
@@ -122,6 +119,12 @@ class BluetoothLeService : Service() {
     fun link(d: Device) {
         device = d
 
+        updateConnectionState()
+
+        broadcastUpdate(ACTION_CONNECTION_UPDATE, null)
+    }
+
+    fun updateConnectionState() {
         val lift = device.lift?.liftId?.let { find(it) }
 
         if (lift?.connected == true && lift?.authorised == true) {
@@ -132,23 +135,6 @@ class BluetoothLeService : Service() {
             device.connectionState = LiftConnectionState.not_connected
         } else {
             device.connectionState = LiftConnectionState.connect_error
-        }
-
-        broadcastUpdate(ACTION_CONNECTION_UPDATE, null)
-    }
-
-    fun authenticate() {
-        val btService = mBluetoothGatt?.getService(LiftBT.configurationServiceUUID)
-        var success: Boolean? = false
-        if (btService != null) {
-            val characteristic =
-                btService?.getCharacteristic(LiftBT.authCharUUID)
-
-            if (characteristic != null) {
-                characteristic?.value = mAccessAuthKey.toByteArray(Charsets.UTF_8)
-                success = writeCharacteristic(characteristic)
-                Log.d(TAG, "Characteristic written: $success")
-            }
         }
     }
 
@@ -165,17 +151,16 @@ class BluetoothLeService : Service() {
         with(S515LiftConfigureApp) {
             if (waitIdle(LiftBT.GATT_TIMEOUT)) {
                 var token = if (profileStore.hasEngineerCapability) ProfileStore.EngineerTokenKey else userLift.accessKey.code()
-                var b1 = ((token shr 24) and 0xffu).toByte()
-                var b2 = ((token shr 16) and 0xffu).toByte()
-                var b3 = ((token shr 8) and 0xffu).toByte()
-                var b4 = ((token and 0xffu)).toByte()
+                var b1 = ((token shr 24) and 0xff).toByte()
+                var b2 = ((token shr 16) and 0xff).toByte()
+                var b3 = ((token shr 8) and 0xff).toByte()
+                var b4 = ((token and 0xff)).toByte()
 
                 var command :ByteArray = byteArrayOf(S515BTCommand.btCmdAuthenticate.toByte(), 0x04, b1, b2, b3, b4)
-                var data =  command
 
-                lift?.authControl!!.value = data
+                lift?.authControl!!.value = command
 
-                val success = writeCharacteristic(lift?.authControl)
+                val success = writeCharacteristic(lift?.authControl!!, value = command)
                 Log.d(Companion.TAG, "Characteristic written: $success")
             }
         }
@@ -245,7 +230,7 @@ class BluetoothLeService : Service() {
 
             val device = find(mAddress!!)
             if (newState == BluetoothProfile.STATE_CONNECTED) {
-                timer.cancel()
+                if (timer != null) timer.cancel()
                 // successfully connected to the GATT Server
 
                 device?.connected = true
@@ -341,6 +326,9 @@ class BluetoothLeService : Service() {
 
     private var bytes: ByteArray? = null
     private fun publish(characteristic: BluetoothGattCharacteristic?) {
+        if (LiftBT.authCharUUID == characteristic?.uuid) {
+            Log.d(TAG, "Hello")
+        }
         if (LiftBT.isChunkedResponse(characteristic?.uuid)) {
             val data = characteristic?.value
             if (data != null && data.count() > 7) {
@@ -373,7 +361,6 @@ class BluetoothLeService : Service() {
             with(characteristic) {
                 val data = this?.value
                 val dataString = String(data!!, Charsets.UTF_8)
-                Log.w(TAG, "Got data: $dataString")
 
                 when (this?.uuid) {
                     LiftBT.authCharUUID -> devices[mAddress]?.let { processAuth(data, it) }
@@ -387,7 +374,7 @@ class BluetoothLeService : Service() {
                         )
                     }
                     LiftBT.jobCharUUID -> devices[mAddress]?.let { processJob(data, it) }
-                    LiftBT.wifiCharUUID -> devices[mAddress]?.let { processWifiDetail(data, it) }
+                    LiftBT.wifiCharUUID -> devices[mAddress]?.let { processWifiDetail(data) }
                     LiftBT.ssidsCharUUID -> devices[mAddress]?.let { processSSIDList(data, it) }
 
                     LiftBT.modelNumberCharUUID -> {
@@ -437,13 +424,25 @@ class BluetoothLeService : Service() {
         return false
     }
 
-    private fun writeCharacteristic(characteristic: BluetoothGattCharacteristic?): Boolean {
-        if (!checkGatt()) return false
+    private fun writeCharacteristic(characteristic: BluetoothGattCharacteristic, value: ByteArray): Int? {
+        if (!checkGatt()) return 0
         if (waitIdle(LiftBT.GATT_TIMEOUT)) {
             mBusy = true
-            return checkPermission() && mBluetoothGatt?.writeCharacteristic(characteristic) ?: false
+            if (checkPermission()) {
+                characteristic?.let {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        return mBluetoothGatt?.writeCharacteristic(
+                                it,
+                                value,
+                                BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT
+                            )
+                    } else {
+                        return if (mBluetoothGatt?.writeCharacteristic(it) == true) 1 else 0
+                    }
+                }
+            }
         }
-        return false
+        return 0
     }
 
     fun checkPermission(): Boolean {
@@ -779,22 +778,30 @@ class BluetoothLeService : Service() {
 }
 
 fun BluetoothLeService.processAuth(data : ByteArray, device : ScannedDevice) {
+    Log.d(BluetoothLeService.TAG, "Got data Auth: $data")
+
     if (data.isNotEmpty()) {
-        device.authorised = data[0] as UInt == BluetoothLeService.DataOK
+        device.authorised = data[0].toUInt() == BluetoothLeService.DataOK
+
+        updateConnectionState()
+
+        broadcastUpdate(BluetoothLeService.ACTION_CONNECTION_UPDATE, device.authorised.toString())
         broadcastUpdate(BluetoothLeService.ACTION_UPDATE_AUTHENTICATION, device.authorised.toString())
     }
 }
 
 fun BluetoothLeService.processLevel(data : ByteArray, device : ScannedDevice) {
-    if (data.isNotEmpty() && data[0] as UInt == BluetoothLeService.DataOK && data.size == 3) {
+    Log.d(BluetoothLeService.TAG, "Got data level: $data")
+    if (data.isNotEmpty() && data[0].toUInt() == BluetoothLeService.DataOK && data.size == 3) {
         val obj = JSONObject()
-        obj.put("volume", data[1] as Int)
-        obj.put("Sensitivity", data[2] as Int)
+        obj.put("volume", data[1].toInt())
+        obj.put("Sensitivity", data[2].toInt())
         broadcastUpdate(BluetoothLeService.ACTION_UPDATE_LEVEL, obj.toString() )
     }
 }
 
 fun BluetoothLeService.processInfo(data : ByteArray, device: ScannedDevice) {
+    Log.d(BluetoothLeService.TAG, "Got data Info: $data")
     if (data.isNotEmpty()) {
         Log.d(BluetoothLeService.TAG, "[INFO] Board information READ: (data.hexEncodedString())")
         val bt = data[1]
@@ -803,6 +810,8 @@ fun BluetoothLeService.processInfo(data : ByteArray, device: ScannedDevice) {
         val board = BoardInfo(BoardInfo.commsBoardType(bt.toInt()), dip.toUInt(), BoardCapabilitySet(cap.toUInt()))
         val json = S515LiftConfigureApp.json
 
+        Log.d(BluetoothLeService.TAG, "Got data Info: $board")
+
         broadcastUpdate(BluetoothLeService.ACTION_UPDATE_INFO, json.encodeToString(BoardInfo.serializer(), board) )
     } else {
          Log.d(BluetoothLeService.TAG, "[INFO] - no data received")
@@ -810,6 +819,7 @@ fun BluetoothLeService.processInfo(data : ByteArray, device: ScannedDevice) {
 }
 
 fun BluetoothLeService.processPhoneConfig(data : ByteArray, device: ScannedDevice) {
+    Log.d(BluetoothLeService.TAG, "Got data Phone Config: $data")
     if (data.isNotEmpty()) {
         val callDialTimeout = data[1].toUInt()
         val callStartDelay = data[2].toUInt()
@@ -828,9 +838,7 @@ fun BluetoothLeService.processPhoneConfig(data : ByteArray, device: ScannedDevic
         var pin: PINNumber? = null
         if (simPinActive == 0x01) pin = PINNumber(simPinLength.toInt(), intArrayOf(p1, p2, p3, p4, p5, p6, p7, p8))
 
-        Log.d(BluetoothLeService.TAG, "[PHONE READ: $data")
-        Log.d(BluetoothLeService.TAG, "[PHONE] phone detail READ: (Dial Timeout=$callDialTimeout")
-        Log.d(BluetoothLeService.TAG, "[PHONE] phone detail READ: (Start Delay=$callStartDelay")
+        Log.d(BluetoothLeService.TAG, "[PHONE] phone detail READ: (Start Delay=$callStartDelay, Timeout=$callDialTimeout, simType: $simType, pin: $pin")
 
         val obj = JSONObject()
         obj.put("pressDelay", callStartDelay)
@@ -846,6 +854,7 @@ fun BluetoothLeService.processPhoneConfig(data : ByteArray, device: ScannedDevic
 
 
 fun BluetoothLeService.processPhone(data : ByteArray, device: ScannedDevice) {
+    Log.d(BluetoothLeService.TAG, "Got data Phone: $data")
     if (data.isNotEmpty()) {
         Log.d(BluetoothLeService.TAG, "[PHONE READ: $data")
 
@@ -887,6 +896,7 @@ fun BluetoothLeService.processPhone(data : ByteArray, device: ScannedDevice) {
                 obj.put("numCallCount", numCallCount)
                 obj.put("lastDialled", lastDialled)
                 obj.put("lastVoice", lastVoice)
+                Log.d(BluetoothLeService.TAG, "[Phone phoneSlot: ${idx + 1}, phoneNo: ${phoneNum.decodeToString()}, enabled: $enabled, numCallCount: $numCallCount, lastDialled: $lastDialled, lastVoice: $lastVoice")
 
                 broadcastUpdate(BluetoothLeService.ACTION_UPDATE_PHONE_SLOT, obj.toString() )
             }
@@ -897,6 +907,7 @@ fun BluetoothLeService.processPhone(data : ByteArray, device: ScannedDevice) {
 }
 
 fun BluetoothLeService.processDelay(data: ByteArray, device: ScannedDevice) {
+    Log.d(BluetoothLeService.TAG, "Got data Delay: $data")
     if (data.isNotEmpty()) {
         Log.d(BluetoothLeService.TAG, "[Call Delays READ: $data")
     } else {
@@ -905,12 +916,13 @@ fun BluetoothLeService.processDelay(data: ByteArray, device: ScannedDevice) {
 }
 
 fun BluetoothLeService.processJob(data: ByteArray, device: ScannedDevice) {
+    Log.d(BluetoothLeService.TAG, "Got data Job: $data")
     if (data.isNotEmpty()) {
         Log.d(BluetoothLeService.TAG, "[JOB/CLIENT] Job/Client READ: data")
 
         val job = data.copyOfRange(1, 60 + 1)
         val client = data.copyOfRange(61, data.size)
-        Log.d(BluetoothLeService.TAG, "[JOB/CLIENT] Job=$job, client=$client")
+        Log.d(BluetoothLeService.TAG, "[JOB/CLIENT] Job=${job.decodeToString()}, client=${client.decodeToString()}")
 
         val obj = JSONObject()
         obj.put("job", job)
@@ -922,7 +934,8 @@ fun BluetoothLeService.processJob(data: ByteArray, device: ScannedDevice) {
     }
 }
 
-fun BluetoothLeService.processWifiDetail(data: ByteArray, device: ScannedDevice) {
+fun BluetoothLeService.processWifiDetail(data: ByteArray) {
+    Log.d(BluetoothLeService.TAG, "Got data Wifi Detail: $data")
     if (data.isNotEmpty()) {
         val security = data[1]
         val wstatus = data[2]
@@ -933,20 +946,24 @@ fun BluetoothLeService.processWifiDetail(data: ByteArray, device: ScannedDevice)
         val wifiConnected = (wstatus.toInt() and 0x02) == 0x02
         val ssidPresent = (wstatus.toInt() and 0x04) == 0x04
 
-        Log.d(BluetoothLeService.TAG, "[Wifi] SSID READ: $data - SSID=$ssid")
-
         val obj = JSONObject()
         obj.put("wifiAvailable", wifiAvailable)
         obj.put("wifiConnected", wifiConnected)
         obj.put("ssid", ssid)
+        Log.d(BluetoothLeService.TAG, "[Wifi] SSID READ: ${data.decodeToString()} - SSID=$ssid")
 
-        broadcastUpdate(BluetoothLeService.ACTION_UPDATE_WIFI_DETAIL, obj.toString() )
+        device.wifiAvailable = wifiAvailable
+        device.wifiConnected = wifiConnected
+        device.connectedSSID = ssid
+
+        broadcastUpdate(BluetoothLeService.ACTION_UPDATE_WIFI_DETAIL)
     } else {
          Log.d(BluetoothLeService.TAG, "[Wifi] - no data received")
     }
 }
 
 fun BluetoothLeService.processSSIDList(data: ByteArray, device: ScannedDevice) {
+    Log.d(BluetoothLeService.TAG, "Got data SSID List: $data")
     if (data.isNotEmpty()) {
          Log.d(BluetoothLeService.TAG, "[SSID List] READ: $data")
 
@@ -957,7 +974,7 @@ fun BluetoothLeService.processSSIDList(data: ByteArray, device: ScannedDevice) {
             for (s in 0 until numSSIDs) {
                 val se = 2 + s * 34
                 val sx = data.copyOfRange(se, se + 34)
-                 Log.d(BluetoothLeService.TAG, "SSID($s) = ($sx)")
+                Log.d(BluetoothLeService.TAG, "SSID($s) = (${sx.decodeToString()})")
             }
         }
 
