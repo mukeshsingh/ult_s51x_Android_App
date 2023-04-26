@@ -18,6 +18,8 @@
     <color name="magnify_color">#838788</color>
     <color name="person_text_color">#838788</color>
     <color name="red">#F10000</color>
+    <color name="transparent">#00000000</color>
+    <color name="dark_grey">#80000000</color>
     <color name="card_bg_color_grey">#727677</color>
     <color name="custom_pink">#FBB4C1</color>
 </resources>
