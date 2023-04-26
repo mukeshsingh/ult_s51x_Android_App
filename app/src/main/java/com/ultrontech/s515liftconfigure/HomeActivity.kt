@@ -77,7 +77,6 @@ class HomeActivity : AppCompatActivity() {
         userName.text = S515LiftConfigureApp.profileStore.userName
 
         inflater = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        showUserDevices()
 
         findLift.setOnClickListener {
             val intent = Intent(this, FindLiftActivity::class.java)
@@ -107,6 +106,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun showUserDevices() {
+        llUserLifts.removeAllViews()
+
         S515LiftConfigureApp.profileStore.userDevices.forEach {userLift ->
             val cardView = inflater.inflate(R.layout.home_lift_list_item, null, false)
             val liftName = cardView.findViewById<TextView>(R.id.txt_lift_name)
@@ -116,7 +117,7 @@ class HomeActivity : AppCompatActivity() {
 
             cardView.setOnClickListener {
                 val intent = Intent(this, EngineerDetailsActivity::class.java)
-                intent.extras?.putString(INTENT_LIFT_ID, userLift.liftId)
+                intent.putExtra(INTENT_LIFT_ID, userLift.liftId)
                 startActivity(intent)
             }
 
@@ -275,6 +276,7 @@ class HomeActivity : AppCompatActivity() {
         super.onResume()
         registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
         userName.text = S515LiftConfigureApp.profileStore.userName
+        showUserDevices()
     }
 
     override fun onPause() {

@@ -16,8 +16,8 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView3"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
             android:layout_marginTop="30dp"
+            android:layout_height="180dp"
             android:elevation="10dp"
             app:cardCornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -30,14 +30,22 @@
                 android:layout_height="match_parent"
                 android:background="@color/card_bg_color_grey">
 
+                <TextView
+                    android:id="@+id/txt_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/device_title"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/txt_device_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="5dp"
                     android:text="@string/connected"
@@ -62,20 +70,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/btn_disconnect"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/btn_background_blue"
-                    android:text="@string/disconnect"
-                    android:textColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
-                <Button
+                    android:id="@+id/btn_remove"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -87,6 +82,33 @@
                     app:layout_constraintStart_toStartOf="parent">
 
                 </Button>
+
+                <Button
+                    android:id="@+id/btn_connect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/btn_background_blue"
+                    android:text="@string/btn_connect"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <Button
+                    android:id="@+id/btn_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/btn_background_blue"
+                    android:text="@string/btn_edit"
+                    android:textColor="@color/white"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -122,13 +144,14 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView18"
+                    android:id="@+id/txt_lift_model"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="25dp"
                     android:layout_marginEnd="30dp"
-                    android:text="@string/dollor"
+                    android:text="@string/model_name"
+                    android:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -261,7 +284,7 @@
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView72">
+                    app:layout_constraintTop_toBottomOf="@+id/textView73">
 
                     <TextView
                         android:id="@+id/button11"
@@ -779,7 +802,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/card_bg_color_grey"
+            app:cardCornerRadius="12dp"
             android:layout_marginTop="20dp"
             >
 
@@ -787,7 +810,7 @@
                 android:id="@+id/constraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:background="@drawable/cardcorner"
+                android:background="@color/card_bg_color_grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -846,14 +869,14 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/card_bg_color_grey"
+            app:cardCornerRadius="12dp"
             android:layout_marginTop="20dp"
             >
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:background="@drawable/cardcorner"
+                android:background="@color/card_bg_color_grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -905,14 +928,14 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/card_bg_color_grey"
+            app:cardCornerRadius="12dp"
             android:layout_marginTop="20dp"
             >
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:background="@drawable/cardcorner"
+                android:background="@color/card_bg_color_grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -962,13 +985,14 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/card_bg_color_grey"
+            app:cardCornerRadius="12dp"
             android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             >
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:background="@drawable/cardcorner"
+                android:background="@color/card_bg_color_grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"

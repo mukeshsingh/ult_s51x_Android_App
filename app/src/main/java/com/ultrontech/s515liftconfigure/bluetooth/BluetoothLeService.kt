@@ -6,7 +6,7 @@ import android.bluetooth.*
 import android.bluetooth.le.BluetoothLeScanner
 import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageManager
 import android.os.Binder
 import android.os.Handler
@@ -31,6 +31,7 @@ class BluetoothLeService : Service() {
     private var mScanning = false
     private val mHandler = Handler(Looper.getMainLooper())
     lateinit var mAccessAuthKey: String
+    lateinit var device: Device
     private var mSessionId: String? = null
     private var mBusy = false
     var lifts = listOf<ScanDisplayItem>()
@@ -60,6 +61,30 @@ class BluetoothLeService : Service() {
         return true
     }
 
+    private val mReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val action = intent.action
+            if (action == BluetoothAdapter.ACTION_STATE_CHANGED) {
+                val state = intent.getIntExtra(
+                    BluetoothAdapter.EXTRA_STATE,
+                    BluetoothAdapter.ERROR
+                )
+                when (state) {
+                    BluetoothAdapter.STATE_OFF -> {
+                        Log.d(TAG, "Bluetooth has been OFF")
+                        broadcastUpdate(ACTION_BLUETOOTH_OFF, null)
+                    }
+                    BluetoothAdapter.STATE_TURNING_OFF -> {}
+                    BluetoothAdapter.STATE_ON -> {
+                        Log.d(TAG, "Bluetooth has been ON")
+                        broadcastUpdate(ACTION_BLUETOOTH_ON, null)
+                    }
+                    BluetoothAdapter.STATE_TURNING_ON -> {}
+                }
+            }
+        }
+    }
+
     fun refreshScannedList() {
         lifts = devices.map {
             ScanDisplayItem(
@@ -75,7 +100,16 @@ class BluetoothLeService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? {
         Log.e(TAG, ">>>>>>>> BluetoothLeService onBind.")
+
+        val filter = IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED)
+        registerReceiver(mReceiver, filter)
+
         return mBinder
+    }
+
+    override fun unbindService(conn: ServiceConnection) {
+        unregisterReceiver(mReceiver)
+        super.unbindService(conn)
     }
 
     inner class LocalBinder : Binder() {
@@ -83,6 +117,24 @@ class BluetoothLeService : Service() {
             Log.e(TAG, ">>>>>>>> BluetoothLeService LocalBinder getService.")
             return this@BluetoothLeService
         }
+    }
+
+    fun link(d: Device) {
+        device = d
+
+        val lift = device.lift?.liftId?.let { find(it) }
+
+        if (lift?.connected == true && lift?.authorised == true) {
+            device.connectionState = LiftConnectionState.connected_auth
+        } else if (lift?.connected == true) {
+            device.connectionState = LiftConnectionState.connected_noauth
+        } else if (lift?.connected == false) {
+            device.connectionState = LiftConnectionState.not_connected
+        } else {
+            device.connectionState = LiftConnectionState.connect_error
+        }
+
+        broadcastUpdate(ACTION_CONNECTION_UPDATE, null)
     }
 
     fun authenticate() {
@@ -100,11 +152,14 @@ class BluetoothLeService : Service() {
         }
     }
 
-    fun authorise(lift : ScannedDevice, userLift : UserLift) {
-        Log.d(TAG, "Connect to Device : ${lift.name}")
+    fun authorise(userLift : UserLift) {
+        val lift = mAddress?.let { find(it) }
+        if (lift != null) {
+            Log.d(TAG, "Connect to Device : ${lift.name}")
 
-        if (!lift.connected || lift.authControl == null) {
-            return
+            if (!lift.connected || lift.authControl == null) {
+                return
+            }
         }
 
         with(S515LiftConfigureApp) {
@@ -117,8 +172,11 @@ class BluetoothLeService : Service() {
 
                 var command :ByteArray = byteArrayOf(S515BTCommand.btCmdAuthenticate.toByte(), 0x04, b1, b2, b3, b4)
                 var data =  command
-                lift.authControl!!.value = data
-                writeCharacteristic(lift.authControl)
+
+                lift?.authControl!!.value = data
+
+                val success = writeCharacteristic(lift?.authControl)
+                Log.d(Companion.TAG, "Characteristic written: $success")
             }
         }
     }
@@ -647,7 +705,6 @@ class BluetoothLeService : Service() {
         return clientConfig.value == BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
     }
 
-
     private fun checkGatt(): Boolean {
         if (mBluetoothAdapter == null) {
             return false
@@ -673,6 +730,10 @@ class BluetoothLeService : Service() {
     }
 
     companion object {
+        const val ACTION_BLUETOOTH_ON =
+            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_BLUETOOTH_ON"
+        const val ACTION_BLUETOOTH_OFF =
+            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_BLUETOOTH_OFF"
         const val ACTION_BLUETOOTH_DEVICE_FOUND =
             "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_BLUETOOTH_DEVICE_FOUND"
         const val ACTION_GATT_CONNECTING =
@@ -691,6 +752,8 @@ class BluetoothLeService : Service() {
             "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_GATT_READ_DATA"
         const val ACTION_UPDATE_AUTHENTICATION =
             "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_UPDATE_AUTHENTICATION"
+        const val ACTION_CONNECTION_UPDATE =
+            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_CONNECTION_UPDATE"
         const val ACTION_UPDATE_LEVEL =
             "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_UPDATE_LEVEL"
         const val ACTION_UPDATE_INFO =

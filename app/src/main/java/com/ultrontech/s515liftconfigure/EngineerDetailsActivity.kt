@@ -7,39 +7,19 @@ import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
-import com.ultrontech.s515liftconfigure.bluetooth.BluetoothState
-import com.ultrontech.s515liftconfigure.bluetooth.LiftBT
 import com.ultrontech.s515liftconfigure.models.*
 
 class EngineerDetailsActivity : AppCompatActivity() {
-    var connectionState : LiftConnectionState = LiftConnectionState.not_connected
-
-    var volumeLevel      : Int?         = null
-    var microphoneLevel  : Int?         = null
-    var number1          : PhoneContact = PhoneContact(false, numberType = PhoneNumberType.user_defined)
-    var number2          : PhoneContact = PhoneContact(false, numberType = PhoneNumberType.user_defined)
-    var number3          : PhoneContact = PhoneContact(false, numberType = PhoneNumberType.user_defined)
-    var number4          : PhoneContact = PhoneContact(false, numberType = PhoneNumberType.installer)
-    var number5          : PhoneContact = PhoneContact(false, numberType = PhoneNumberType.emergency_services)
-    var callDialTimeout  : UInt?        = null
-    var callPressDelay   : UInt?        = null
-    var simType          : SimType?     = null
-    var job              : String?      = null
-    var client           : String?      = null
-    var ssid             : String?      = null
-    var pkey             : String?      = null
-    var commsBoard       : BoardInfo?   = null
-    var wifiAvailable    : Boolean      = false
-    var wifiConnected    : Boolean      = false
-    var connectedSSID    : String?      = null
-    var simPin           : PhoneSimPin? = null
-
-    var lift    : UserLift? = null
-
-    lateinit var liftName: TextView
-    lateinit var deviceStatus: TextView
+    private lateinit var liftName: TextView
+    private lateinit var deviceStatus: TextView
+    private lateinit var btnEdit: Button
+    private lateinit var btnConnect: Button
+    private lateinit var btnRemove: Button
+    private val bluetoothLeService: BluetoothLeService = BluetoothLeService.service!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,10 +27,25 @@ class EngineerDetailsActivity : AppCompatActivity() {
 
         liftName = findViewById(R.id.txt_lift_name)
         deviceStatus = findViewById(R.id.txt_device_status)
+        btnConnect = findViewById(R.id.btn_connect)
+        btnEdit = findViewById(R.id.btn_edit)
+        btnRemove = findViewById(R.id.btn_remove)
 
+        btnRemove.setOnClickListener {
+            bluetoothLeService.device.lift?.let { it1 ->
+                S515LiftConfigureApp.profileStore.remove(it1)
+                finish()
+            }
+        }
+    }
+
+    fun linkDevice () {
         val liftId = intent.extras?.getString(HomeActivity.INTENT_LIFT_ID)
         if (liftId != null) {
-            lift = S515LiftConfigureApp.profileStore.find(liftId)
+            val lift = S515LiftConfigureApp.profileStore.find(liftId)
+            var device = Device(lift = lift)
+            bluetoothLeService.link(device)
+
             liftName.text = lift?.liftName ?: ""
         }
     }
@@ -58,24 +53,50 @@ class EngineerDetailsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         registerReceiver(deviceUpdateReceiver, updateIntentFilter())
+
+        linkDevice()
     }
 
     override fun onPause() {
-        super.onPause()
         unregisterReceiver(deviceUpdateReceiver)
+        super.onPause()
+    }
+
+    private fun updateConnectState() {
+        with(bluetoothLeService) {
+            when(device.connectionState) {
+                LiftConnectionState.connected_noauth -> {
+                    deviceStatus.text = resources.getString(R.string.device_connected_no_auth)
+                    btnConnect.visibility = View.GONE
+                    btnEdit.visibility = View.GONE
+                    device.lift?.let { bluetoothLeService.authorise(it) }
+                }
+                LiftConnectionState.connected_auth -> {
+                    deviceStatus.text = resources.getString(R.string.device_connected)
+                    btnConnect.visibility = View.GONE
+                    btnEdit.visibility = View.VISIBLE
+                }
+                LiftConnectionState.not_connected -> {
+                    deviceStatus.text = resources.getString(R.string.device_not_connected)
+                    btnConnect.visibility = View.VISIBLE
+                    btnEdit.visibility = View.GONE
+                }
+                LiftConnectionState.connect_error -> {
+                    deviceStatus.text = resources.getString(R.string.device_connect_error)
+                    btnConnect.visibility = View.VISIBLE
+                    btnEdit.visibility = View.GONE
+                }
+            }
+        }
     }
 
     private val deviceUpdateReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
-                BluetoothLeService.ACTION_GATT_CONNECTING -> {
+                BluetoothLeService.ACTION_CONNECTION_UPDATE -> {
                     Log.d(HomeActivity.TAG, "Device connecting.")
-                }
-                BluetoothLeService.ACTION_GATT_CONNECTED -> {
-                    Log.d(HomeActivity.TAG, "Device connected.")
-                }
-                BluetoothLeService.ACTION_GATT_DISCONNECTED -> {
-                    Log.d(HomeActivity.TAG, "Device disconnected.")
+
+                    updateConnectState()
                 }
                 BluetoothLeService.ACTION_UPDATE_INFO -> {
                     Log.d(HomeActivity.TAG, "ACTION_UPDATE_INFO.")
@@ -104,14 +125,20 @@ class EngineerDetailsActivity : AppCompatActivity() {
                 BluetoothLeService.ACTION_UPDATE_SSID_LIST -> {
                     Log.d(HomeActivity.TAG, "ACTION_UPDATE_SSID_LIST.")
                 }
+                BluetoothLeService.ACTION_BLUETOOTH_ON -> {
+                    Log.d(HomeActivity.TAG, "ACTION_BLUETOOTH_ON.")
+                }
+                BluetoothLeService.ACTION_BLUETOOTH_OFF -> {
+                    finish()
+                }
             }
         }
     }
     private fun updateIntentFilter(): IntentFilter? {
         return IntentFilter().apply {
-            addAction(BluetoothLeService.ACTION_GATT_CONNECTING)
-            addAction(BluetoothLeService.ACTION_GATT_CONNECTED)
-            addAction(BluetoothLeService.ACTION_GATT_DISCONNECTED)
+            addAction(BluetoothLeService.ACTION_BLUETOOTH_ON)
+            addAction(BluetoothLeService.ACTION_BLUETOOTH_OFF)
+            addAction(BluetoothLeService.ACTION_CONNECTION_UPDATE)
             addAction(BluetoothLeService.ACTION_UPDATE_SSID_LIST)
             addAction(BluetoothLeService.ACTION_UPDATE_JOB)
             addAction(BluetoothLeService.ACTION_UPDATE_PHONE_CONFIG)
@@ -122,20 +149,5 @@ class EngineerDetailsActivity : AppCompatActivity() {
             addAction(BluetoothLeService.ACTION_UPDATE_LEVEL)
             addAction(BluetoothLeService.ACTION_CLEAR_PHONE_SLOT)
         }
-    }
-    companion object{
-        const val ACTION_CONNECTED = "com.ultrontech.s515liftconfigure.ACTION_CONNECTED"
-        const val ACTION_DISCONNECTED = "com.ultrontech.s515liftconfigure.ACTION_DISCONNECTED"
-        const val ACTION_UPDATE_DIAL_TIME_OUT = "com.ultrontech.s515liftconfigure.ACTION_UPDATE_DIAL_TIME_OUT"
-        const val ACTION_UPDATE_PRESS_DELAY = "com.ultrontech.s515liftconfigure.ACTION_UPDATE_PRESS_DELAY"
-        const val ACTION_UPDATE_BOARD_INFO = "com.ultrontech.s515liftconfigure.ACTION_UPDATE_BOARD_INFO"
-        const val ACTION_UPDATE_JOB = "com.ultrontech.s515liftconfigure.ACTION_UPDATE_JOB"
-        const val ACTION_UPDATE_WIFI_AVAILABLE = "com.ultrontech.s515liftconfigure.ACTION_UPDATE_WIFI_AVAILABLE"
-        const val ACTION_UPDATE_SIM_TYPE = "com.ultrontech.s515liftconfigure.ACTION_UPDATE_SIM_TYPE"
-        const val ACTION_UPDATE_SIM_PIN = "com.ultrontech.s515liftconfigure.ACTION_UPDATE_SIM_PIN"
-        const val ACTION_UPDATE_PHONE_SLOT = "com.ultrontech.s515liftconfigure.ACTION_UPDATE_PHONE_SLOT"
-        const val ACTION_UPDATE_VOLUME = "com.ultrontech.s515liftconfigure.ACTION_UPDATE_VOLUME"
-        const val ACTION_CLEAR_PHONE_SLOT = "com.ultrontech.s515liftconfigure.ACTION_CLEAR_PHONE_SLOT"
-        const val ACTION_AUTHENTICATED = "com.ultrontech.s515liftconfigure.ACTION_AUTHENTICATED"
     }
 }

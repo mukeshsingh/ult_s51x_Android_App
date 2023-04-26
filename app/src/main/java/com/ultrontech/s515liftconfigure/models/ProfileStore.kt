@@ -58,9 +58,11 @@ data class ProfileStore (
     fun remove(lift : UserLift): Boolean {
         val idx = userDevices.indexOf (lift)
 
-        if (idx > -1) userDevices.drop(idx)
+        val l = userDevices.toMutableList()
+        l.removeAt(idx)
+        if (idx > -1) userDevices = l.toTypedArray()
 
-        return false
+        return saveDevices()
     }
 
     fun add(lift: UserLift): Boolean {

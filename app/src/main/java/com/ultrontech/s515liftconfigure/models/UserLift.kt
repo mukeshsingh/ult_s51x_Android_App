@@ -86,6 +86,32 @@ data class PhoneContact (
     var numberType : PhoneNumberType
 )
 
+data class Device (
+    var connectionState : LiftConnectionState = LiftConnectionState.not_connected,
+
+    var volumeLevel      : Int?         = null,
+    var microphoneLevel  : Int?         = null,
+    var number1          : PhoneContact = PhoneContact(false, numberType = PhoneNumberType.user_defined),
+    var number2          : PhoneContact = PhoneContact(false, numberType = PhoneNumberType.user_defined),
+    var number3          : PhoneContact = PhoneContact(false, numberType = PhoneNumberType.user_defined),
+    var number4          : PhoneContact = PhoneContact(false, numberType = PhoneNumberType.installer),
+    var number5          : PhoneContact = PhoneContact(false, numberType = PhoneNumberType.emergency_services),
+    var callDialTimeout  : UInt?        = null,
+    var callPressDelay   : UInt?        = null,
+    var simType          : SimType?     = null,
+    var job              : String?      = null,
+    var client           : String?      = null,
+    var ssid             : String?      = null,
+    var pkey             : String?      = null,
+    var commsBoard       : BoardInfo?   = null,
+    var wifiAvailable    : Boolean      = false,
+    var wifiConnected    : Boolean      = false,
+    var connectedSSID    : String?      = null,
+    var simPin           : PhoneSimPin? = null,
+
+    var lift    : UserLift? = null
+)
+
 data class PhoneSimPin (
     var active : Boolean,
     var pin : PINNumber?
