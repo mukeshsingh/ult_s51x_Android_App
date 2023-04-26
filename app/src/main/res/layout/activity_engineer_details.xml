@@ -23,7 +23,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:visibility="gone">
+            >
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -108,7 +108,6 @@
                     android:background="@drawable/btn_background_blue"
                     android:text="@string/btn_edit"
                     android:textColor="@color/white"
-                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
 
@@ -126,7 +125,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView3"
-            android:visibility="gone">
+            >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -356,13 +355,12 @@
 
                 <Button
                     android:id="@+id/textView74"
-                    android:layout_width="wrap_content"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="20dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/btn_background_blue"
-                    android:padding="15dp"
                     android:text="@string/edit"
                     android:textColor="@color/white"
                     android:textSize="16sp"
@@ -471,14 +469,13 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
-                <TextView
+                <Button
                     android:id="@+id/textView25"
-                    android:layout_width="wrap_content"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/btn_background_blue"
-                    android:padding="12dp"
                     android:text="@string/edit"
                     android:textColor="@color/white"
                     android:textSize="16sp"
@@ -529,14 +526,13 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView27" />
 
-                <TextView
+                <Button
                     android:id="@+id/textView31"
-                    android:layout_width="wrap_content"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/btn_background_blue"
-                    android:padding="12dp"
                     android:text="@string/edit"
                     android:textColor="@color/white"
                     android:textSize="16sp"
@@ -600,14 +596,13 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView33" />
 
-                <TextView
+                <Button
                     android:id="@+id/textView35"
-                    android:layout_width="wrap_content"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/btn_background_blue"
-                    android:padding="12dp"
                     android:text="@string/edit"
                     android:textColor="@color/white"
                     android:textSize="16sp"
@@ -689,14 +684,13 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView41" />
 
-                <TextView
+                <Button
                     android:id="@+id/textView44"
-                    android:layout_width="wrap_content"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/btn_background_blue"
-                    android:padding="12dp"
                     android:text="@string/edit"
                     android:textColor="@color/white"
                     android:textSize="16sp"
@@ -779,14 +773,13 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView50" />
 
-                <TextView
+                <Button
                     android:id="@+id/textView52"
-                    android:layout_width="wrap_content"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/btn_background_blue"
-                    android:padding="12dp"
                     android:text="@string/edit"
                     android:textColor="@color/white"
                     android:textSize="16sp"
@@ -826,7 +819,7 @@
                 <ImageView
                     android:id="@+id/imageView12"
                     android:layout_width="40dp"
-                    android:layout_height="40"
+                    android:layout_height="40dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="60dp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -906,14 +899,13 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
+                <Button
                     android:id="@+id/textView60"
-                    android:layout_width="wrap_content"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/btn_background_blue"
-                    android:padding="12dp"
                     android:text="@string/edit"
                     android:textColor="@color/white"
                     android:textSize="16sp"
@@ -962,14 +954,13 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
+                <Button
                     android:id="@+id/textView64"
-                    android:layout_width="wrap_content"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/btn_background_blue"
-                    android:padding="12dp"
                     android:text="@string/edit"
                     android:textColor="@color/white"
                     android:textSize="16sp"
@@ -1031,14 +1022,13 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
+                <Button
                     android:id="@+id/textView67"
-                    android:layout_width="wrap_content"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/btn_background_blue"
-                    android:padding="12dp"
                     android:text="@string/edit"
                     android:textColor="@color/white"
                     android:textSize="16sp"
@@ -1097,14 +1087,13 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
+                <Button
                     android:id="@+id/textView70"
-                    android:layout_width="wrap_content"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/btn_background_blue"
-                    android:padding="12dp"
                     android:text="@string/edit"
                     android:textColor="@color/white"
                     android:textSize="16sp"
