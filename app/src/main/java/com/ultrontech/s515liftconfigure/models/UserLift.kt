@@ -85,12 +85,12 @@ object Util {
         }
     }
 
-    fun getSimType(simType: UInt): SimType {
+    fun getSimType(simType: Int): SimType {
         return when(simType) {
-            0x01u -> SimType.ModemSimTypeInstallerProvided
-            0x02u -> SimType.ModemSimTypeUserPAYG
-            0x03u -> SimType.ModemSimTypeUserContract
-            0x04u -> SimType.ModemSimTypeUnknown
+            0x01 -> SimType.ModemSimTypeInstallerProvided
+            0x02 -> SimType.ModemSimTypeUserPAYG
+            0x03 -> SimType.ModemSimTypeUserContract
+            0x04 -> SimType.ModemSimTypeUnknown
             else -> SimType.ModemSimTypeUnknown
         }
     }
@@ -131,8 +131,8 @@ data class Device (
     var number3          : PhoneContact = PhoneContact(false, numberType = PhoneNumberType.user_defined),
     var number4          : PhoneContact = PhoneContact(false, numberType = PhoneNumberType.installer),
     var number5          : PhoneContact = PhoneContact(false, numberType = PhoneNumberType.emergency_services),
-    var callDialTimeout  : UInt?        = null,
-    var callPressDelay   : UInt?        = null,
+    var callDialTimeout  : Int?        = null,
+    var callPressDelay   : Int?         = null,
     var simType          : SimType?     = null,
     var job              : String?      = null,
     var client           : String?      = null,

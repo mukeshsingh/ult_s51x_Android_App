@@ -818,11 +818,11 @@ fun BluetoothLeService.processInfo(data : ByteArray, device: ScannedDevice) {
 fun BluetoothLeService.processPhoneConfig(data : ByteArray) {
     Log.d(BluetoothLeService.TAG, "Got data Phone Config: $data")
     if (data.isNotEmpty()) {
-        val callDialTimeout = data[1].toUInt()
-        val callStartDelay = data[2].toUInt()
-        val simType = data[3].toUInt()
+        val callDialTimeout = data[1].toInt()
+        val callStartDelay = data[2].toInt()
+        val simType = data[3].toInt()
         val simPinActive = data[4].toInt()
-        val simPinLength = data[5].toUInt()
+        val simPinLength = data[5].toInt()
         val p1 = data[6].toInt()
         val p2 = data[7].toInt()
         val p3 = data[8].toInt()

@@ -89,6 +89,7 @@
     <string name="nonumber">No Number specified</string>
     <string name="rozers">The Rozzers</string>
     <string name="timeout">Dial Timeout</string>
+    <string name="dial_timeout_title">Call Dial Timeout</string>
     <string name="second">(seconds)</string>
     <string name="thirty">30</string>
     <string name="three">3</string>

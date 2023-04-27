@@ -18,7 +18,8 @@ import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 
 
 class EditLiftFragment : BottomSheetDialogFragment() {
-
+    private val editBoardDetailsFragment: EditBoardDetailsFragment = EditBoardDetailsFragment()
+    private val editChangeNameFragment: ChangeNameFragment = ChangeNameFragment()
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return BottomSheetDialog(activity as EngineerDetailsActivity, com.ultrontech.s515liftconfigure.R.style.TransparentBottomSheetDialogTheme)
     }
@@ -33,6 +34,14 @@ class EditLiftFragment : BottomSheetDialogFragment() {
         val changeNameBtn = view.findViewById<Button>(R.id.btn_change_name)
         val changePinBtn = view.findViewById<Button>(R.id.btn_change_pin)
 
+        changeNameBtn.setOnClickListener {
+            (activity as EngineerDetailsActivity).supportFragmentManager.beginTransaction().remove(this@EditLiftFragment).commit()
+            editChangeNameFragment.show((activity as EngineerDetailsActivity).supportFragmentManager, "editChangeNameFragment")
+        }
+        changePinBtn.setOnClickListener {
+            (activity as EngineerDetailsActivity).supportFragmentManager.beginTransaction().remove(this@EditLiftFragment).commit()
+            editBoardDetailsFragment.show((activity as EngineerDetailsActivity).supportFragmentManager, "editBoardDetailsFragment")
+        }
         disconnectBtn.setOnClickListener {
             activity?.finish()
         }

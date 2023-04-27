@@ -16,7 +16,7 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_title" />
 
     <TextView
         android:id="@+id/textView13"
@@ -27,7 +27,7 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_title" />
 
     <LinearLayout
         android:id="@+id/ll_bars"
@@ -86,46 +86,6 @@
             android:layout_weight="1"
             android:background="@color/green" />
 
-        <View
-            android:id="@+id/vBar6"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:background="@color/green" />
-
-        <View
-            android:id="@+id/vBar7"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:background="@color/green" />
-
-        <View
-            android:id="@+id/vBar8"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:background="@color/grey" />
-
-        <View
-            android:id="@+id/vBar9"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:background="@color/grey" />
-
-        <View
-            android:id="@+id/vBar10"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:background="@color/grey" />
-
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -135,11 +95,11 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/txt_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:text="@string/call_press_delay"
+        android:text="@string/volume"
         android:textColor="@color/white"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -155,6 +115,7 @@
         android:textColor="@color/white"
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_bars" />
 

@@ -12,7 +12,7 @@ import com.ultrontech.s515liftconfigure.R
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 
 
-class EditVolumeFragment : BottomSheetDialogFragment() {
+class EditMicrophoneFragment : BottomSheetDialogFragment() {
     private val barValue = 1
     private var value = 0
     private lateinit var bars: Array<View>
@@ -38,6 +38,8 @@ class EditVolumeFragment : BottomSheetDialogFragment() {
         val view = inflater.inflate(R.layout.fragment_edit_volume, container, false)
         val btnClose = view.findViewById<Button>(R.id.btnClose)
         txtValue = view.findViewById(R.id.txt_value)
+        val title = view.findViewById<TextView>(R.id.txt_title)
+        title.text = resources.getString(R.string.micro)
 
         val vBar1 = view.findViewById<View>(R.id.vBar1)
         val vBar2 = view.findViewById<View>(R.id.vBar2)
@@ -53,7 +55,7 @@ class EditVolumeFragment : BottomSheetDialogFragment() {
         }
 
         btnClose.setOnClickListener {
-            (activity as EngineerDetailsActivity).supportFragmentManager.beginTransaction().remove(this@EditVolumeFragment).commit()
+            (activity as EngineerDetailsActivity).supportFragmentManager.beginTransaction().remove(this@EditMicrophoneFragment).commit()
         }
 
         BluetoothLeService.service?.device?.volumeLevel?.let {
