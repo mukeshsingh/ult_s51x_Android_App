@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
+import com.ultrontech.s515liftconfigure.fragments.EditLiftFragment
 import com.ultrontech.s515liftconfigure.models.*
 
 class EngineerDetailsActivity : AppCompatActivity() {
@@ -37,6 +38,7 @@ class EngineerDetailsActivity : AppCompatActivity() {
     private lateinit var capWifiAP: TextView
 
     private val bluetoothLeService: BluetoothLeService = BluetoothLeService.service!!
+    val bottomsheetEditLiftFrag = EditLiftFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +71,12 @@ class EngineerDetailsActivity : AppCompatActivity() {
                 finish()
             }
         }
+        btnEdit.setOnClickListener {
+            bottomsheetEditLiftFrag.show(supportFragmentManager, "bottomsheetEditLiftFrag")
+        }
     }
+
+
 
     private fun linkDevice () {
         val liftId = intent.extras?.getString(HomeActivity.INTENT_LIFT_ID)
@@ -95,6 +102,7 @@ class EngineerDetailsActivity : AppCompatActivity() {
     }
 
     private fun updateConnectState() {
+        return
         with(bluetoothLeService) {
             when(device.connectionState) {
                 LiftConnectionState.connected_noauth -> {

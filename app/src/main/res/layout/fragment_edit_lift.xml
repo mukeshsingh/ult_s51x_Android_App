@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
+android:layout_width="wrap_content"
 android:layout_height="wrap_content"
 android:background="@color/transparent"
 tools:context=".fragments.EditLiftFragment"
@@ -12,6 +12,8 @@ tools:context=".fragments.EditLiftFragment"
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="15dp"
         android:orientation="vertical">
 
         <TextView
@@ -19,7 +21,8 @@ tools:context=".fragments.EditLiftFragment"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_bkg_dark_grey_top_rad"
             android:paddingVertical="10dp"
-            android:text="Hello, world!"
+            android:text="@string/edit_lift_heading"
+            android:textColor="@color/lightGrey"
             android:textAlignment="center" />
 
         <View
@@ -29,10 +32,12 @@ tools:context=".fragments.EditLiftFragment"
             android:background="@color/grey" />
 
         <Button
+            android:id="@+id/btn_disconnect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_bkg_dark_grey_no_radius"
-            android:text="Click me" />
+            android:text="@string/disconnect_edit_lift"
+            android:textColor="@color/red"/>
 
         <View
             android:id="@+id/view8"
@@ -41,10 +46,12 @@ tools:context=".fragments.EditLiftFragment"
             android:background="@color/grey" />
 
         <Button
+            android:id="@+id/btn_change_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_bkg_dark_grey_no_radius"
-            android:text="Click me" />
+            android:text="@string/change_the_name"
+            android:textColor="@color/darkBlue"/>
 
         <View
             android:id="@+id/view7"
@@ -55,20 +62,21 @@ tools:context=".fragments.EditLiftFragment"
         </View>
 
         <Button
-            android:id="@id/button10"
+            android:id="@id/btn_change_pin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_bkg_dark_grey_bottom_rad"
-            android:text="Click me" />
+            android:text="@string/change_my_pin_number"
+            android:textColor="@color/darkBlue"/>
 
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_bkg_dark_grey"
+            android:text="@string/cancel2"
+            android:textColor="@android:color/holo_red_light" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnCancel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/btn_bkg_dark_grey"
-        android:text="@string/cancel2"
-        android:textColor="@android:color/holo_red_light" />
 </LinearLayout>
