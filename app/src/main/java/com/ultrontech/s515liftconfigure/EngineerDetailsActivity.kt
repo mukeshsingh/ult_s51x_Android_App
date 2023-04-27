@@ -55,6 +55,7 @@ class EngineerDetailsActivity : AppCompatActivity() {
     private val editBoardDetailsFragment = EditBoardDetailsFragment()
     private val editSimFragment = EditSimFragment()
     private val editVolumeFragment = EditVolumeFragment()
+    private val editCallDelayFragment = EditCallDelayFragment()
     private val editContactFragment = EditContactFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -115,6 +116,14 @@ class EngineerDetailsActivity : AppCompatActivity() {
 
         btnEditContact1.setOnClickListener {
             editContactFragment.show(supportFragmentManager, "editContactFragment")
+        }
+
+        btnCallPress.setOnClickListener {
+            editCallDelayFragment.show(supportFragmentManager, "editCallDelayFragment")
+        }
+
+        btnVolume.setOnClickListener {
+            editVolumeFragment.show(supportFragmentManager, "editVolumeFragment")
         }
     }
 

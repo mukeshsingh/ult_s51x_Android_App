@@ -46,11 +46,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/choose_sim_pin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loopView" />
     <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/toggleButton"
+        android:id="@+id/btnPinType"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginTop="20dp"
+        app:selectionRequired="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,259 +70,270 @@
 
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/btnNoPin"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/grey"
+            android:textColor="@color/white"
             android:layout_weight="1"
-            android:text="Button 1" />
-
+            android:text="@string/no_pin" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnPinRequired"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button 2" />
-    </com.google.android.material.button.MaterialButtonToggleGroup>
-
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/toggleButton1"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView18"
-        app:singleSelection="true">
-
-        <Button
-            android:id="@+id/count1"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="1" />
-
-        <Button
-            android:id="@+id/count2"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="2" />
-
-        <Button
-            android:id="@+id/count3"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="3" />
-
-        <Button
-            android:id="@+id/count4"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="4" />
-
-        <Button
-            android:id="@+id/count5"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="5" />
-
-        <Button
-            android:id="@+id/count6"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="6" />
-
-        <Button
-            android:id="@+id/count7"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="7" />
-
-        <Button
-            android:id="@+id/count8"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="8" />
+            android:backgroundTint="@color/grey"
+            android:textColor="@color/white"
+            android:text="@string/pin_required" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <LinearLayout
-        android:id="@+id/root_otp_layout"
+        android:id="@+id/ll_pin_required"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:weightSum="8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButton1">
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/btnPinType">
 
-        <EditText
-            android:id="@+id/otp_edit_box1"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:text="@string/choose_pin_length"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toggleButton" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/btnPinLength"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/et_style"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textSize="30sp" />
+            android:layout_marginTop="10dp"
+            app:singleSelection="true"
+            app:selectionRequired="true">
 
-        <EditText
-            android:id="@+id/otp_edit_box2"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/et_style"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textSize="30sp" />
+            <Button
+                android:id="@+id/btn1"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/grey"
+                android:text="1"
+                android:textColor="@color/white" />
 
-        <EditText
-            android:id="@+id/otp_edit_box3"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/et_style"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textSize="30sp" />
+            <Button
+                android:id="@+id/btn2"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/grey"
+                android:text="2"
+                android:textColor="@color/white" />
 
-        <EditText
-            android:id="@+id/otp_edit_box4"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/et_style"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textSize="30sp" />
+            <Button
+                android:id="@+id/btn3"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/grey"
+                android:text="3"
+                android:textColor="@color/white" />
 
-        <EditText
-            android:id="@+id/otp_edit_box5"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/et_style"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textSize="30sp" />
+            <Button
+                android:id="@+id/btn4"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/grey"
+                android:text="4"
+                android:textColor="@color/white" />
 
-        <EditText
-            android:id="@+id/otp_edit_box6"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/et_style"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textSize="30sp" />
+            <Button
+                android:id="@+id/btn5"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/grey"
+                android:text="5"
+                android:textColor="@color/white" />
 
-        <EditText
-            android:id="@+id/otp_edit_box7"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/et_style"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textSize="30sp" />
+            <Button
+                android:id="@+id/btn6"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/grey"
+                android:text="6"
+                android:textColor="@color/white" />
 
-        <EditText
-            android:id="@+id/otp_edit_box8"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:background="@drawable/et_style"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textSize="30sp" />
+            <Button
+                android:id="@+id/btn7"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/grey"
+                android:text="7"
+                android:textColor="@color/white" />
 
+            <Button
+                android:id="@+id/btn8"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/grey"
+                android:text="8"
+                android:textColor="@color/white" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <LinearLayout
+            android:id="@+id/llOtpPin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:weightSum="8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toggleButton1">
+
+            <EditText
+                android:id="@+id/otp_edit_box1"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/et_style"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/otp_edit_box2"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/et_style"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/otp_edit_box3"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/et_style"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/otp_edit_box4"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/et_style"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/otp_edit_box5"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/et_style"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/otp_edit_box6"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/et_style"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/otp_edit_box7"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/et_style"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/otp_edit_box8"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@drawable/et_style"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textSize="30sp" />
+
+        </LinearLayout>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Choose SIM type"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loopView" />
-
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Choose SIM type"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButton" />
-
     <Button
-        android:id="@+id/button16"
+        android:id="@+id/btnCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/btn_background_red"
+        android:backgroundTint="@color/red"
         android:paddingTop="10dp"
-        app:backgroundTint="#2D345899"
         android:paddingBottom="10dp"
         android:text="@string/cancel"
         android:textSize="24sp"
+        app:backgroundTint="@color/red"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/root_otp_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/ll_pin_required" />
 
     <Button
-        android:id="@+id/button17"
+        android:id="@+id/btnUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:background="@drawable/btn_background_red"
-        app:backgroundTint="#2D3"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:text="@string/update"
         android:textSize="24sp"
+        app:backgroundTint="@color/green"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/root_otp_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/ll_pin_required" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

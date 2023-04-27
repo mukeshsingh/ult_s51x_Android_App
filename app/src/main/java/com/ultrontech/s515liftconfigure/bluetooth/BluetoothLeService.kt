@@ -368,10 +368,7 @@ class BluetoothLeService : Service() {
                     LiftBT.infoCharUUID -> devices[mAddress]?.let { processInfo(data, it) }
                     LiftBT.phoneCharUUID -> devices[mAddress]?.let { processPhone(data, it) }
                     LiftBT.phoneConfigCharUUID -> devices[mAddress]?.let {
-                        processPhoneConfig(
-                            data,
-                            it
-                        )
+                        processPhoneConfig(data)
                     }
                     LiftBT.jobCharUUID -> devices[mAddress]?.let { processJob(data, it) }
                     LiftBT.wifiCharUUID -> devices[mAddress]?.let { processWifiDetail(data) }
@@ -818,7 +815,7 @@ fun BluetoothLeService.processInfo(data : ByteArray, device: ScannedDevice) {
     }
 }
 
-fun BluetoothLeService.processPhoneConfig(data : ByteArray, device: ScannedDevice) {
+fun BluetoothLeService.processPhoneConfig(data : ByteArray) {
     Log.d(BluetoothLeService.TAG, "Got data Phone Config: $data")
     if (data.isNotEmpty()) {
         val callDialTimeout = data[1].toUInt()
@@ -835,8 +832,8 @@ fun BluetoothLeService.processPhoneConfig(data : ByteArray, device: ScannedDevic
         val p7 = data[12].toInt()
         val p8 = data[13].toInt()
 
-        var pin: PINNumber? = null
-        if (simPinActive == 0x01) pin = PINNumber(simPinLength.toInt(), intArrayOf(p1, p2, p3, p4, p5, p6, p7, p8))
+        var pin: PhoneSimPin? = null
+        if (simPinActive == 0x01) pin = PhoneSimPin(true, PINNumber(simPinLength.toInt(), intArrayOf(p1, p2, p3, p4, p5, p6, p7, p8)))
 
         Log.d(BluetoothLeService.TAG, "[PHONE] phone detail READ: (Start Delay=$callStartDelay, Timeout=$callDialTimeout, simType: $simType, pin: $pin")
 
@@ -845,6 +842,11 @@ fun BluetoothLeService.processPhoneConfig(data : ByteArray, device: ScannedDevic
         obj.put("dialTimeout", callDialTimeout)
         obj.put("simType", simType)
         obj.put("simPin", pin)
+
+        device.simPin = pin
+        device.simType = Util.getSimType(simType)
+        device.callDialTimeout = callDialTimeout
+        device.callPressDelay = callStartDelay
 
         broadcastUpdate(BluetoothLeService.ACTION_UPDATE_PHONE_CONFIG, obj.toString() )
     } else {

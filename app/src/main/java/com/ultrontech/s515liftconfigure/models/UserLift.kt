@@ -69,10 +69,31 @@ enum class BoardType {
 }
 
 enum class SimType {
-    modemSimTypeUnknown,
-    modemSimTypeInstallerProvided,
-    modemSimTypeUserContract,
-    modemSimTypeUserPAYG,
+    ModemSimTypeUnknown,
+    ModemSimTypeInstallerProvided,
+    ModemSimTypeUserContract,
+    ModemSimTypeUserPAYG,
+}
+
+object Util {
+    fun getSimTypeName(simType: SimType): String {
+        return when(simType) {
+            SimType.ModemSimTypeInstallerProvided -> "Installer"
+            SimType.ModemSimTypeUserContract -> "User Contact"
+            SimType.ModemSimTypeUserPAYG -> "PAYG"
+            SimType.ModemSimTypeUnknown -> "Unknown"
+        }
+    }
+
+    fun getSimType(simType: UInt): SimType {
+        return when(simType) {
+            0x01u -> SimType.ModemSimTypeInstallerProvided
+            0x02u -> SimType.ModemSimTypeUserPAYG
+            0x03u -> SimType.ModemSimTypeUserContract
+            0x04u -> SimType.ModemSimTypeUnknown
+            else -> SimType.ModemSimTypeUnknown
+        }
+    }
 }
 
 data class DeviceCapability (

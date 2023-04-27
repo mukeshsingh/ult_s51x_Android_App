@@ -118,4 +118,9 @@
     <string name="sim_information">Sim information</string>
     <string name="current_lift_pin_number">Current lift PIN number</string>
     <string name="enter_the_new_pin_number">Enter the new PIN Number</string>
+    <string name="pin_required">PIN Required</string>
+    <string name="no_pin">No PIN</string>
+    <string name="choose_pin_length">Choose Pin Length</string>
+    <string name="choose_sim_pin">Choose SIM Pin</string>
+    <string name="call_press_delay">Call Press Delay</string>
 </resources>
