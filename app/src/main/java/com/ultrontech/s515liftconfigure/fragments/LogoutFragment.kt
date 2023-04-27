@@ -1,10 +1,14 @@
 package com.ultrontech.s515liftconfigure.fragments
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ultrontech.s515liftconfigure.HomeActivity
 import com.ultrontech.s515liftconfigure.R
@@ -12,8 +16,9 @@ import com.ultrontech.s515liftconfigure.S515LiftConfigureApp
 
 
 class LogoutFragment : BottomSheetDialogFragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return BottomSheetDialog(activity as HomeActivity, com.ultrontech.s515liftconfigure.R.style.TransparentBottomSheetDialogTheme)
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
