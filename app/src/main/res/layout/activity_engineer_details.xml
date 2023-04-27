@@ -22,7 +22,8 @@
             app:cardCornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -122,7 +123,8 @@
             app:cardCornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView3">
+            app:layout_constraintTop_toBottomOf="@+id/cardView3"
+            >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -280,7 +282,7 @@
                     android:background="@color/grey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView72">
+                    app:layout_constraintTop_toBottomOf="@+id/txt_client">
 
                 </View>
 
@@ -382,13 +384,108 @@
         </androidx.cardview.widget.CardView>
 
 
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            app:cardCornerRadius="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/card_bg_color_grey">
+
+                <TextView
+                    android:id="@+id/textView18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/sim_information"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/tvInstallerProvider"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="80dp"
+                    android:text="@string/installer_provider"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvNoCallMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="130dp"
+                    android:lineHeight="25dp"
+                    android:paddingHorizontal="10dp"
+                    android:text="@string/you_have_made_no_calls"
+                    android:textAlignment="center"
+                    android:textColor="@color/custom_pink"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvNoPinConfig"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="@string/no_pin_number_configured"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@+id/btn_sim_edit"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvNoCallMessage" />
+
+                <Button
+                    android:id="@+id/btn_sim_edit"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/btn_background_blue"
+                    android:text="@string/edit"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+
         <androidx.cardview.widget.CardView
             android:id="@+id/constraintLayout5"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="10dp"
             app:cardCornerRadius="12dp"
-            app:layout_constraintTop_toBottomOf="@+id/cardView"
+            app:layout_constraintTop_toBottomOf="@+id/cardView2"
             android:layout_marginTop="30dp"
             >
 
@@ -478,7 +575,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
                 <Button
-                    android:id="@+id/textView25"
+                    android:id="@+id/btn_edit_contact1"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
@@ -535,7 +632,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView27" />
 
                 <Button
-                    android:id="@+id/textView31"
+                    android:id="@+id/btn_edit_contact2"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
@@ -605,7 +702,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView33" />
 
                 <Button
-                    android:id="@+id/textView35"
+                    android:id="@+id/btn_edit_contact3"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
@@ -693,7 +790,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView41" />
 
                 <Button
-                    android:id="@+id/textView44"
+                    android:id="@+id/btn_edit_contact4"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
@@ -782,7 +879,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView50" />
 
                 <Button
-                    android:id="@+id/textView52"
+                    android:id="@+id/btn_edit_contact5"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
@@ -908,7 +1005,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/textView60"
+                    android:id="@+id/btn_dial"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
@@ -963,7 +1060,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/textView64"
+                    android:id="@+id/btn_call_press"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
@@ -1031,7 +1128,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/textView67"
+                    android:id="@+id/btn_volume"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
@@ -1096,7 +1193,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/textView70"
+                    android:id="@+id/btn_microphone"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"

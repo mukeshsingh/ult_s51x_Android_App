@@ -36,9 +36,20 @@ class EngineerDetailsActivity : AppCompatActivity() {
     private lateinit var capDiagnostics: TextView
     private lateinit var capWifi: TextView
     private lateinit var capWifiAP: TextView
+    private lateinit var btnBoardEdit: Button
+    private lateinit var btnEditContact1: Button
+    private lateinit var btnEditContact2: Button
+    private lateinit var btnEditContact3: Button
+    private lateinit var btnEditContact4: Button
+    private lateinit var btnEditContact5: Button
+    private lateinit var btnDial: Button
+    private lateinit var btnCallPress: Button
+    private lateinit var btnVolume: Button
+    private lateinit var btnMicrophone: Button
+
 
     private val bluetoothLeService: BluetoothLeService = BluetoothLeService.service!!
-    val bottomsheetEditLiftFrag = EditLiftFragment()
+    private val bottomsheetEditLiftFrag = EditLiftFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +75,20 @@ class EngineerDetailsActivity : AppCompatActivity() {
         capDiagnostics = findViewById(R.id.txt_cap_diagnostics)
         capWifi = findViewById(R.id.txt_cap_wifi)
         capWifiAP = findViewById(R.id.txt_cap_wifi_ap)
+
+        btnBoardEdit = findViewById(R.id.btn_board_edit)
+        btnEditContact1 = findViewById(R.id.btn_edit_contact1)
+        btnEditContact2 = findViewById(R.id.btn_edit_contact2)
+        btnEditContact3 = findViewById(R.id.btn_edit_contact3)
+        btnEditContact4 = findViewById(R.id.btn_edit_contact4)
+        btnEditContact5 = findViewById(R.id.btn_edit_contact5)
+        btnDial= findViewById(R.id.btn_dial)
+        btnCallPress= findViewById(R.id.btn_call_press)
+        btnVolume= findViewById(R.id.btn_volume)
+        btnMicrophone= findViewById(R.id.btn_microphone)
+
+
+
 
         btnRemove.setOnClickListener {
             bluetoothLeService.device.lift?.let { it1 ->

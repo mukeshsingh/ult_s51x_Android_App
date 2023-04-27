@@ -111,4 +111,8 @@
     <string name="change_the_name">Change the name</string>
     <string name="disconnect_edit_lift">Disconnect</string>
     <string name="change_my_pin_number">Change my PIN number</string>
+    <string name="no_pin_number_configured">No Pin number configured</string>
+    <string name="you_have_made_no_calls">You have made no calls to configured numbers yet. You should make a test call to ensure correct operation of your sim card.</string>
+    <string name="installer_provider">Installer Provider</string>
+    <string name="sim_information">Sim information</string>
 </resources>
