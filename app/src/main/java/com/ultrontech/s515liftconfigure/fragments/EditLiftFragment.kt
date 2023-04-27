@@ -14,6 +14,7 @@ import com.ultrontech.s515liftconfigure.EngineerDetailsActivity
 import com.ultrontech.s515liftconfigure.HomeActivity
 import com.ultrontech.s515liftconfigure.R
 import com.ultrontech.s515liftconfigure.S515LiftConfigureApp
+import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 
 
 class EditLiftFragment : BottomSheetDialogFragment() {
@@ -33,15 +34,11 @@ class EditLiftFragment : BottomSheetDialogFragment() {
         val changePinBtn = view.findViewById<Button>(R.id.btn_change_pin)
 
         disconnectBtn.setOnClickListener {
-//            with(S515LiftConfigureApp) {
-//                profileStore.logout()
-//                (activity as HomeActivity).supportFragmentManager.beginTransaction().remove(this@LogoutFragment).commit()
-//                (activity as HomeActivity).loginChanged()
-//            }
+            activity?.finish()
         }
 
         cancelBtn.setOnClickListener {
-//            (activity as HomeActivity).supportFragmentManager.beginTransaction().remove(this@LogoutFragment).commit()
+            (activity as EngineerDetailsActivity).supportFragmentManager.beginTransaction().remove(this@EditLiftFragment).commit()
         }
 
         return view

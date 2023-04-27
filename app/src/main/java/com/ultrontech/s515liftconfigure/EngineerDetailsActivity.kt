@@ -10,8 +10,9 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
-import com.ultrontech.s515liftconfigure.fragments.EditLiftFragment
+import com.ultrontech.s515liftconfigure.fragments.*
 import com.ultrontech.s515liftconfigure.models.*
 
 class EngineerDetailsActivity : AppCompatActivity() {
@@ -46,10 +47,15 @@ class EngineerDetailsActivity : AppCompatActivity() {
     private lateinit var btnCallPress: Button
     private lateinit var btnVolume: Button
     private lateinit var btnMicrophone: Button
-
+    private lateinit var btnEditSim: Button
 
     private val bluetoothLeService: BluetoothLeService = BluetoothLeService.service!!
-    private val bottomsheetEditLiftFrag = EditLiftFragment()
+
+    private val bottomSheetEditLiftFrag = EditLiftFragment()
+    private val editBoardDetailsFragment = EditBoardDetailsFragment()
+    private val editSimFragment = EditSimFragment()
+    private val editVolumeFragment = EditVolumeFragment()
+    private val editContactFragment = EditContactFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +66,7 @@ class EngineerDetailsActivity : AppCompatActivity() {
         btnConnect = findViewById(R.id.btn_connect)
         btnEdit = findViewById(R.id.btn_edit)
         btnRemove = findViewById(R.id.btn_remove)
+
         liftModel = findViewById(R.id.txt_lift_model)
         ssidConfiguredLabel = findViewById(R.id.txt_ssid_configured_label)
         wifiSsid = findViewById(R.id.txt_ssid)
@@ -82,13 +89,11 @@ class EngineerDetailsActivity : AppCompatActivity() {
         btnEditContact3 = findViewById(R.id.btn_edit_contact3)
         btnEditContact4 = findViewById(R.id.btn_edit_contact4)
         btnEditContact5 = findViewById(R.id.btn_edit_contact5)
-        btnDial= findViewById(R.id.btn_dial)
-        btnCallPress= findViewById(R.id.btn_call_press)
-        btnVolume= findViewById(R.id.btn_volume)
-        btnMicrophone= findViewById(R.id.btn_microphone)
-
-
-
+        btnDial = findViewById(R.id.btn_dial)
+        btnCallPress = findViewById(R.id.btn_call_press)
+        btnVolume = findViewById(R.id.btn_volume)
+        btnMicrophone = findViewById(R.id.btn_microphone)
+        btnEditSim = findViewById(R.id.btn_sim_edit)
 
         btnRemove.setOnClickListener {
             bluetoothLeService.device.lift?.let { it1 ->
@@ -97,11 +102,21 @@ class EngineerDetailsActivity : AppCompatActivity() {
             }
         }
         btnEdit.setOnClickListener {
-            bottomsheetEditLiftFrag.show(supportFragmentManager, "bottomsheetEditLiftFrag")
+            bottomSheetEditLiftFrag.show(supportFragmentManager, "bottomSheetEditLiftFrag")
+        }
+
+        btnEditSim.setOnClickListener {
+            editSimFragment.show(supportFragmentManager, "editSimFragment")
+        }
+
+        btnBoardEdit.setOnClickListener {
+            editBoardDetailsFragment.show(supportFragmentManager, "editBoardDetailsFragment")
+        }
+
+        btnEditContact1.setOnClickListener {
+            editContactFragment.show(supportFragmentManager, "editContactFragment")
         }
     }
-
-
 
     private fun linkDevice () {
         val liftId = intent.extras?.getString(HomeActivity.INTENT_LIFT_ID)
@@ -157,7 +172,56 @@ class EngineerDetailsActivity : AppCompatActivity() {
 
     fun updateWifiDetail() {
         with(bluetoothLeService) {
+            if (device.connectedSSID != null) {
+                ssidConfiguredLabel.text = resources.getString(R.string.ssid_configured)
+                wifiSsid.visibility = View.VISIBLE
+                wifiSsid.text = device.connectedSSID
+            } else {
+                ssidConfiguredLabel.text = resources.getString(R.string.ssid_not_configured)
+                wifiSsid.visibility = View.GONE
+            }
 
+            if (device.wifiAvailable) {
+                wifiAvailableStatus.text = resources.getString(R.string.wifi_available_status)
+            } else {
+                wifiAvailableStatus.text = resources.getString(R.string.wifi_not_available_status)
+            }
+
+            if (device.wifiConnected) {
+                wifiConnectedStatus.text = resources.getString(R.string.wifi_connected)
+                wifiConnectedStatus.setTextColor(resources.getColor(R.color.white, theme))
+            } else {
+                wifiConnectedStatus.text = resources.getString(R.string.wifi_not_connected)
+                wifiConnectedStatus.setTextColor(resources.getColor(R.color.red, theme))
+            }
+        }
+    }
+
+    fun updateInfo() {
+        with(bluetoothLeService) {
+            if (device.commsBoard != null) {
+                if (device.commsBoard!!.capabilities.getAll()[0].rawValue == 1u) {
+                    capGSM.background = ResourcesCompat.getDrawable(resources, R.drawable.green_rounded_bg, theme)
+                } else {
+                    capGSM.background = ResourcesCompat.getDrawable(resources, R.drawable.grey_rounded_bg, theme)
+                }
+                if (device.commsBoard!!.capabilities.getAll()[0].rawValue == 2u) {
+                    capDiagnostics.background = ResourcesCompat.getDrawable(resources, R.drawable.green_rounded_bg, theme)
+                } else {
+                    capDiagnostics.background = ResourcesCompat.getDrawable(resources, R.drawable.grey_rounded_bg, theme)
+                }
+                if (device.commsBoard!!.capabilities.getAll()[0].rawValue == 4u) {
+                    capWifi.background = ResourcesCompat.getDrawable(resources, R.drawable.green_rounded_bg, theme)
+                } else {
+                    capWifi.background = ResourcesCompat.getDrawable(resources, R.drawable.grey_rounded_bg, theme)
+                }
+
+                if (device.commsBoard!!.capabilities.getAll()[0].rawValue == 8u) {
+                    capWifiAP.background = ResourcesCompat.getDrawable(resources, R.drawable.green_rounded_bg, theme)
+                } else {
+                    capWifiAP.background = ResourcesCompat.getDrawable(resources, R.drawable.grey_rounded_bg, theme)
+                }
+            }
         }
     }
 
@@ -193,6 +257,8 @@ class EngineerDetailsActivity : AppCompatActivity() {
                 }
                 BluetoothLeService.ACTION_UPDATE_INFO -> {
                     Log.d(HomeActivity.TAG, "ACTION_UPDATE_INFO.")
+
+                    updateInfo()
                 }
                 BluetoothLeService.ACTION_UPDATE_LEVEL -> {
                     Log.d(HomeActivity.TAG, "ACTION_UPDATE_LEVEL.")

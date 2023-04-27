@@ -49,7 +49,7 @@ class LiftListAdapter(private val context: Context,
         if (userLift != null) {
             liftRegStatus.visibility = View.VISIBLE
             btnAddLift.visibility = View.GONE
-            cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.listItemRegisteredBkg))
+            cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.green))
         } else {
             liftRegStatus.visibility = View.GONE
             btnAddLift.visibility = View.VISIBLE
