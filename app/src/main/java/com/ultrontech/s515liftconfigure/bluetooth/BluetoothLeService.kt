@@ -161,7 +161,7 @@ class BluetoothLeService : Service() {
                 lift?.authControl!!.value = command
 
                 val success = writeCharacteristic(lift?.authControl!!, value = command)
-                Log.d(Companion.TAG, "Characteristic written: $success")
+                Log.d(Companion.TAG, "Characteristic written for auth: $success")
             }
         }
     }
@@ -725,6 +725,175 @@ class BluetoothLeService : Service() {
         return timeout > 0
     }
 
+    fun updatePin(pin: PINNumber) {
+        val lift = device.lift?.let { find(it.liftId) }
+        if (lift == null || !lift.connected || lift.authControl == null) {
+            return
+        }
+
+        if (waitIdle(LiftBT.GATT_TIMEOUT)) {
+            val token1 = if (S515LiftConfigureApp.profileStore.hasEngineerCapability) ProfileStore.EngineerTokenKey else device.lift?.accessKey?.code()
+            if (token1 != null) {
+                val b1 = ((token1 shr 24) and 0xff).toByte()
+                val b2 = ((token1 shr 16) and 0xff).toByte()
+                val b3 = ((token1 shr 8) and 0xff).toByte()
+                val b4 = ((token1 and 0xff)).toByte()
+
+                val token2 = pin.code()
+                val x1 = ((token2 shr 24) and 0xff).toByte()
+                val x2 = ((token2 shr 16) and 0xff).toByte()
+                val x3 = ((token2 shr 8) and 0xff).toByte()
+                val x4 = ((token2 and 0xff)).toByte()
+
+                val command: ByteArray = byteArrayOf(
+                    S515BTCommand.btCmdAuthModify.toByte(),
+                    0x08,b1,b2,b3,b4,x1,x2,x3,x4
+                )
+                lift?.authControl!!.value = command
+                val success = writeCharacteristic(lift?.authControl!!, value = command)
+                Log.d(TAG, "Characteristic written for auth modify: $success")
+            }
+        }
+    }
+
+    fun disconnect() {
+        val lift = device.lift?.let { find(it.liftId) }
+        if (!lift?.connected!!) {
+            return
+        }
+
+        if (waitIdle(LiftBT.GATT_TIMEOUT)) {
+            val command : ByteArray = byteArrayOf(S515BTCommand.btCmdDisconnect.toByte(), 0x0)
+            lift?.authControl?.value = command
+            val success = writeCharacteristic(lift?.authControl!!, value = command)
+            Log.d(TAG, "Characteristic written for auth disconnect: $success")
+        }
+    }
+
+    fun BluetoothLeService.setVolume(volume: Int) {
+        val lift = device.lift?.let { find(it.liftId) }
+        if (lift?.audioControl != null) {
+            val m = (device.microphoneLevel?: 3) + 3
+            Log.d(TAG,"[BT::WRITE] audio level (volume=($volume), sensitivity=(${device.microphoneLevel}))")
+            val command : ByteArray = byteArrayOf(S515BTCommand.btCmdSetVolumeAndSensitivity.toByte(), 0x02, volume.toByte() , m.toByte())
+            lift?.audioControl?.value = command
+            val success = writeCharacteristic(lift?.audioControl!!, value = command)
+            Log.d(TAG, "Characteristic written for audio control volume: $success")
+        }
+    }
+
+    fun BluetoothLeService.setMicrophone(microphone: Int) {
+        val lift = device.lift?.let { find(it.liftId) }
+        if (lift?.audioControl == null) return
+
+        val vol = device.volumeLevel?: 3
+        Log.d(TAG,"[BT::WRITE] audio level (volume=(${vol}), sensitivity=(${microphone}))")
+        val command : ByteArray = byteArrayOf(S515BTCommand.btCmdSetVolumeAndSensitivity.toByte(), 0x02, vol.toByte() , (microphone + 3).toByte())
+        lift?.audioControl?.value = command
+        val success = writeCharacteristic(lift?.audioControl!!, value = command)
+        Log.d(TAG, "Characteristic written for audio control microphone: $success")
+    }
+
+    fun BluetoothLeService.setPhoneNumber(phoneNumber : Int, enabled : Boolean, toNumber : String) {
+        val lift = device.lift?.let { find(it.liftId) }
+        if (lift?.phoneControl == null) return
+
+        print("[BT::WRITE] phone slot(($phoneNumber) with number ($toNumber)")
+        val numberData = toNumber.toByteArray()
+        val command: ByteArray = byteArrayOf(S515BTCommand.btCmdWritePhoneNumber.toByte(), (numberData.size + 2).toByte(), phoneNumber.toByte(), (if (enabled) 0x01 else 0x00).toByte()) + numberData
+        lift?.phoneControl?.value = command
+        val success = writeCharacteristic(lift?.phoneControl!!, value = command)
+        Log.d(TAG, "Characteristic written for phone number: $success")
+    }
+
+    fun BluetoothLeService.setPressDelay(pressDelay: Int) {
+        val lift = device.lift?.let { find(it.liftId) }
+        if (lift?.phoneConfigControl == null) return
+
+        Log.d(TAG, "[BT::WRITE] call press delay ($pressDelay)")
+        val command: ByteArray = byteArrayOf(S515BTCommand.btCmdSetCallPressDelay.toByte(), 0x01, pressDelay.toByte())
+        lift?.phoneConfigControl?.value = command
+        val success = writeCharacteristic(lift?.phoneConfigControl!!, value = command)
+        Log.d(TAG, "Characteristic written for press delay: $success")
+    }
+
+    fun BluetoothLeService.setDialTimeout(dialTimeout : Int) {
+        val lift = device.lift?.let { find(it.liftId) }
+        if (lift?.phoneConfigControl == null) return
+
+        Log.d(TAG, "[BT::WRITE] call press delay ($dialTimeout)")
+        val command: ByteArray = byteArrayOf(S515BTCommand.btCmdSetDialTimeoutDelay.toByte(), 0x01, dialTimeout.toByte())
+        lift?.phoneConfigControl?.value = command
+        val success = writeCharacteristic(lift?.phoneConfigControl!!, value = command)
+        Log.d(TAG, "Characteristic written for dial timeout: $success")
+    }
+
+    fun BluetoothLeService.setSimType(simType : SimType) {
+        val lift = device.lift?.let { find(it.liftId) }
+        if (lift?.phoneConfigControl == null) return
+
+        Log.d(TAG, "[BT::WRITE] call press delay ($simType)")
+        val command: ByteArray = byteArrayOf(S515BTCommand.btCmdSetModemSimType.toByte(), 0x01, simType.ordinal.toByte())
+        lift?.phoneConfigControl?.value = command
+        val success = writeCharacteristic(lift?.phoneConfigControl!!, value = command)
+        Log.d(TAG, "Characteristic written for sim type: $success")
+    }
+
+    fun BluetoothLeService.setPin(pin : PINNumber) {
+        val lift = device.lift?.let { find(it.liftId) }
+        if (lift?.phoneConfigControl == null) return
+
+        print("[BT::WRITE] SIM PIN ($pin) :: code=(${pin.code()})")
+        val p1 = (if (pin.length >= 1) pin.digits[0] else 0).toByte()
+        val p2 = (if (pin.length >= 2) pin.digits[1] else 0).toByte()
+        val p3 = (if (pin.length >= 3) pin.digits[2] else 0).toByte()
+        val p4 = (if (pin.length >= 4) pin.digits[3] else 0).toByte()
+        val p5 = (if (pin.length >= 5) pin.digits[4] else 0).toByte()
+        val p6 = (if (pin.length >= 6) pin.digits[5] else 0).toByte()
+        val p7 = (if (pin.length >= 7) pin.digits[6] else 0).toByte()
+        val p8 = (if (pin.length >= 8) pin.digits[8] else 0).toByte()
+
+        val command: ByteArray = byteArrayOf(S515BTCommand.btCmdSetSIMPin.toByte(), (10).toByte(), 0x01, pin.length.toByte(), p1, p2, p3, p4, p5, p6, p7, p8)
+        val success = writeCharacteristic(lift?.phoneConfigControl!!, value = command)
+        Log.d(TAG, "Characteristic written for PinNumber: $success")
+    }
+
+    fun BluetoothLeService.clearPin() {
+        val lift = device.lift?.let { find(it.liftId) }
+        if (lift?.phoneConfigControl == null) return
+
+        val command: ByteArray = byteArrayOf(S515BTCommand.btCmdSetSIMPin.toByte(), (10).toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00)
+        lift?.phoneConfigControl?.value = command
+        val success = writeCharacteristic(lift?.phoneConfigControl!!, value = command)
+        Log.d(TAG, "Characteristic written for PinNumber: $success")
+    }
+
+    fun BluetoothLeService.setSSID(ssid: String, passPhase: String) {
+        val lift = device.lift?.let { find(it.liftId) }
+        if (lift?.wifiControl == null) return
+
+        val ssidData = ssid.toByteArray()
+        val passPhaseData = passPhase.toByteArray()
+        print("[BT::WRITE] Wifi Detail (ssid=($ssid), pkey=($passPhase)")
+        val command: ByteArray = byteArrayOf(S515BTCommand.btCmdSetSSIDAndKey.toByte(), 0x00, ssidData.size.toByte(), passPhaseData.size.toByte()) + ssidData + passPhaseData
+        lift?.wifiControl?.value = command
+        val success = writeCharacteristic(lift?.wifiControl!!, value = command)
+        Log.d(TAG, "Characteristic written for PinNumber: $success")
+    }
+
+    fun setJob(job : String, client : String) {
+        val lift = device.lift?.let { find(it.liftId) }
+        if (lift?.jobControl == null) return
+
+        val jobData = job.toByteArray()
+        val clientData = client.toByteArray()
+        print("[BT::WRITE] Wifi Detail (ssid=($job), pkey=($client)")
+        val command: ByteArray = byteArrayOf(S515BTCommand.btCmdSetJobAndClient.toByte(), 0x00, jobData.size.toByte(), clientData.size.toByte()) + jobData + clientData
+        lift?.jobControl?.value = command
+        val success = writeCharacteristic(lift?.jobControl!!, value = command)
+        Log.d(TAG, "Characteristic written for PinNumber: $success")
+    }
+
     companion object {
         const val ACTION_BLUETOOTH_ON =
             "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_BLUETOOTH_ON"
@@ -983,6 +1152,32 @@ fun BluetoothLeService.processSSIDList(data: ByteArray, device: ScannedDevice) {
         broadcastUpdate(BluetoothLeService.ACTION_UPDATE_SSID_LIST, null )
     } else {
          Log.d(BluetoothLeService.TAG, "[SSID List] - no data received")
+    }
+}
+
+
+fun BluetoothLeService.setName(name: String) {
+    val lift = device.lift
+
+    if (lift != null) {
+        S515LiftConfigureApp.profileStore.update(name, lift)
+    }
+}
+
+fun BluetoothLeService.setAccess(access: PINNumber) {
+    val lift = device.lift
+
+    if (lift != null) {
+        updatePin(access)
+        S515LiftConfigureApp.profileStore.update(access, lift)
+    }
+}
+
+fun BluetoothLeService.setContact(contact: Int, toName : String) {
+    val lift = device.lift
+
+    if (lift != null) {
+        S515LiftConfigureApp.profileStore.set(contact, toName, lift)
     }
 }
 

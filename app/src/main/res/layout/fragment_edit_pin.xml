@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.LoginPinFragment">
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".fragments.LoginPinFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,9 +17,9 @@
 
         <TextView
             android:id="@+id/txt_lift_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
+            android:layout_width="316dp"
+            android:layout_height="45dp"
+            android:layout_marginHorizontal="30dp"
             android:layout_marginTop="32dp"
             android:gravity="center"
             android:text="@string/add_lift_txt_lift_name"
@@ -30,32 +30,57 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/txt_enter_pin_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
+            android:id="@+id/txt_current_pin"
+            android:layout_width="316dp"
+            android:layout_height="45dp"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="32dp"
             android:gravity="center"
-            android:text="@string/add_lift_txt_title"
+            android:text="@string/current_lift_pin_number"
             android:textColor="@color/white"
-            android:textSize="25dp"
+            android:textSize="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_lift_name" />
 
         <TextView
+            android:id="@+id/txt_current_pinNumber"
+            android:layout_width="316dp"
+            android:layout_height="45dp"
+            android:layout_marginHorizontal="30dp"
+            android:gravity="center"
+            android:text="123456"
+            android:textColor="@color/lightGrey"
+            android:textSize="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_current_pin" />
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="316dp"
+            android:layout_height="45dp"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/enter_the_new_pin_number"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_current_pinNumber" />
+
+        <TextView
             android:id="@+id/txt_desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="316dp"
+            android:layout_height="45dp"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="20dp"
             android:text="@string/add_lift_txt_desc"
             android:textColor="@color/white"
-            android:textSize="20sp"
-            android:justificationMode="inter_word"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_enter_pin_number" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_title" />
 
         <LinearLayout
             android:id="@+id/llPinLayout"
@@ -77,8 +102,8 @@
                 android:background="@drawable/password_border"
                 android:ems="10"
                 android:inputType="number"
-                android:textAlignment="center"
                 android:textColor="@color/white"
+                android:textAlignment="center"
                 android:textSize="30sp" />
 
             <EditText
@@ -92,8 +117,8 @@
                 android:background="@drawable/password_border"
                 android:ems="10"
                 android:inputType="number"
-                android:textAlignment="center"
                 android:textColor="@color/white"
+                android:textAlignment="center"
                 android:textSize="30sp" />
 
             <EditText
@@ -107,8 +132,8 @@
                 android:background="@drawable/password_border"
                 android:ems="10"
                 android:inputType="number"
-                android:textAlignment="center"
                 android:textColor="@color/white"
+                android:textAlignment="center"
                 android:textSize="30sp" />
 
             <EditText
@@ -122,8 +147,8 @@
                 android:background="@drawable/password_border"
                 android:ems="10"
                 android:inputType="number"
-                android:textAlignment="center"
                 android:textColor="@color/white"
+                android:textAlignment="center"
                 android:textSize="30sp" />
 
             <EditText
@@ -137,8 +162,8 @@
                 android:background="@drawable/password_border"
                 android:ems="10"
                 android:inputType="number"
-                android:textAlignment="center"
                 android:textColor="@color/white"
+                android:textAlignment="center"
                 android:textSize="30sp" />
 
             <EditText
@@ -152,8 +177,8 @@
                 android:background="@drawable/password_border"
                 android:ems="10"
                 android:inputType="number"
-                android:textAlignment="center"
                 android:textColor="@color/white"
+                android:textAlignment="center"
                 android:textSize="30sp" />
 
         </LinearLayout>
@@ -164,11 +189,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:layout_marginTop="50dp"
+            app:backgroundTint="@color/grey"
             android:padding="15dp"
             android:text="@string/cancel"
             android:textColor="@color/white"
             android:textSize="25dp"
-            app:backgroundTint="@color/grey"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/llPinLayout" />
 
@@ -178,11 +203,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="25dp"
+            app:backgroundTint="@color/green"
             android:padding="15dp"
-            android:text="@string/Connect"
+            android:text="Update"
             android:textColor="@color/lightGrey"
             android:textSize="25dp"
-            app:backgroundTint="@color/green"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/llPinLayout" />
 

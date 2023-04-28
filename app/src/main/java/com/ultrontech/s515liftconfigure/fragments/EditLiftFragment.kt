@@ -1,8 +1,6 @@
 package com.ultrontech.s515liftconfigure.fragments
 
 import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,14 +9,12 @@ import android.widget.Button
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ultrontech.s515liftconfigure.EngineerDetailsActivity
-import com.ultrontech.s515liftconfigure.HomeActivity
 import com.ultrontech.s515liftconfigure.R
-import com.ultrontech.s515liftconfigure.S515LiftConfigureApp
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 
 
 class EditLiftFragment : BottomSheetDialogFragment() {
-    private val editBoardDetailsFragment: EditBoardDetailsFragment = EditBoardDetailsFragment()
+    private val changePinFragment: ChangePinFragment = ChangePinFragment()
     private val editChangeNameFragment: ChangeNameFragment = ChangeNameFragment()
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return BottomSheetDialog(activity as EngineerDetailsActivity, com.ultrontech.s515liftconfigure.R.style.TransparentBottomSheetDialogTheme)
@@ -40,9 +36,10 @@ class EditLiftFragment : BottomSheetDialogFragment() {
         }
         changePinBtn.setOnClickListener {
             (activity as EngineerDetailsActivity).supportFragmentManager.beginTransaction().remove(this@EditLiftFragment).commit()
-            editBoardDetailsFragment.show((activity as EngineerDetailsActivity).supportFragmentManager, "editBoardDetailsFragment")
+            changePinFragment.show((activity as EngineerDetailsActivity).supportFragmentManager, "changePinFragment")
         }
         disconnectBtn.setOnClickListener {
+            BluetoothLeService.service?.disconnect()
             activity?.finish()
         }
 

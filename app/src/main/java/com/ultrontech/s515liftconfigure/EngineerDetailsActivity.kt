@@ -52,7 +52,7 @@ class EngineerDetailsActivity : AppCompatActivity() {
     private val bluetoothLeService: BluetoothLeService = BluetoothLeService.service!!
 
     private val bottomSheetEditLiftFrag = EditLiftFragment()
-    private val editBoardDetailsFragment = EditBoardDetailsFragment()
+    private val editBoardDetailsFragment = EditBoardDetailFragment()
     private val editSimFragment = EditSimFragment()
     private val editVolumeFragment = EditVolumeFragment()
     private val editCallDelayFragment = EditCallDelayFragment()
@@ -161,7 +161,6 @@ class EngineerDetailsActivity : AppCompatActivity() {
     }
 
     private fun updateConnectState() {
-        return
         with(bluetoothLeService) {
             when(device.connectionState) {
                 LiftConnectionState.connected_noauth -> {
