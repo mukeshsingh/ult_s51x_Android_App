@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_grey"
+    android:background="@color/black"
     tools:context=".fragments.EditVolumeFragment">
 
     <TextView
@@ -50,7 +50,7 @@
             android:layout_height="70dp"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:background="@color/green"
+            android:background="@color/intensity_color"
             app:layout_constraintStart_toEndOf="@+id/colored_bar"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,7 +60,7 @@
             android:layout_height="70dp"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:background="@color/green" />
+            android:background="@color/intensity_color"/>
 
         <View
             android:id="@+id/vBar3"
@@ -68,7 +68,7 @@
             android:layout_height="70dp"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:background="@color/green" />
+            android:background="@color/intensity_color" />
 
         <View
             android:id="@+id/vBar4"
@@ -76,7 +76,7 @@
             android:layout_height="70dp"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:background="@color/green" />
+            android:background="@color/intensity_color" />
 
         <View
             android:id="@+id/vBar5"
@@ -84,7 +84,7 @@
             android:layout_height="70dp"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:background="@color/green" />
+            android:background="@color/intensity_color" />
 
         <View
             android:id="@+id/vBar6"
@@ -92,7 +92,7 @@
             android:layout_height="70dp"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:background="@color/green" />
+            android:background="@color/intensity_color" />
 
         <View
             android:id="@+id/vBar7"
@@ -100,7 +100,7 @@
             android:layout_height="70dp"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:background="@color/green" />
+            android:background="@color/intensity_color" />
 
         <View
             android:id="@+id/vBar8"
@@ -164,7 +164,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
         android:text="@string/close"
-        android:textColor="#0972EB"
+        app:backgroundTint="@null"
+        android:background="@drawable/btn_bkg_dark_grey"
+        android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

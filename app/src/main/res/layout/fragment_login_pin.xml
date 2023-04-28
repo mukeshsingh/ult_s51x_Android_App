@@ -4,12 +4,13 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
+    android:background="@color/black"
 tools:context=".fragments.LoginPinFragment">
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="300dp"
-    android:background="#C9FEDA"
+    android:background="@color/black"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.0"
@@ -22,6 +23,7 @@ tools:context=".fragments.LoginPinFragment">
         android:layout_marginStart="30dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="30dp"
+        android:textColor="@color/white"
         android:text="@string/enter_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -154,7 +156,8 @@ tools:context=".fragments.LoginPinFragment">
         android:layout_marginStart="25dp"
         android:layout_marginTop="50dp"
         android:text="@string/cancel"
-        android:textColor="#2196F3"
+        android:textSize="20dp"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/llPinLayout" />
 
@@ -165,7 +168,8 @@ tools:context=".fragments.LoginPinFragment">
         android:layout_marginTop="50dp"
         android:layout_marginEnd="25dp"
         android:text="@string/login"
-        android:textColor="#4CAF50"
+        android:textColor="@color/white"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/llPinLayout" />
 

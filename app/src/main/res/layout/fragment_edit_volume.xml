@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_grey"
+    android:background="@color/black"
     tools:context=".fragments.EditVolumeFragment">
 
     <TextView
@@ -50,7 +50,7 @@
             android:layout_height="70dp"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:background="@color/green"
+            android:background="@color/intensity_color"
             app:layout_constraintStart_toEndOf="@+id/colored_bar"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,7 +60,7 @@
             android:layout_height="70dp"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:background="@color/green" />
+            android:background="@color/intensity_color" />
 
         <View
             android:id="@+id/vBar3"
@@ -68,7 +68,7 @@
             android:layout_height="70dp"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:background="@color/green" />
+            android:background="@color/intensity_color" />
 
         <View
             android:id="@+id/vBar4"
@@ -76,7 +76,7 @@
             android:layout_height="70dp"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:background="@color/green" />
+            android:background="@color/intensity_color" />
 
         <View
             android:id="@+id/vBar5"
@@ -84,7 +84,7 @@
             android:layout_height="70dp"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:background="@color/green" />
+            android:background="@color/intensity_color"/>
 
         <ImageView
             android:layout_width="20dp"
