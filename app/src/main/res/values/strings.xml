@@ -34,6 +34,7 @@
     <string name="app_heading">ULTRON</string>
     <string name="app_subHeading">Technologies</string>
     <string name="profile_name_hint">Enter your name</string>
+    <string name="lift_name_hint">Enter lift name</string>
     <string name="card_status">Status</string>
     <string name="bluetooth_status">Bluetooth is available</string>
     <string name="stair_status">Stairlift</string>
