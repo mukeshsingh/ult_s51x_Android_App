@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
+    android:paddingBottom="20dp"
     tools:context=".fragments.EditSimFragment">
 
     <TextView
@@ -97,7 +98,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/btnPinType">
+        app:layout_constraintTop_toBottomOf="@+id/btnPinType"
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/textView18"
@@ -207,106 +209,114 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:orientation="horizontal"
-            android:padding="10dp"
-            android:weightSum="8"
+            android:paddingLeft="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toggleButton1">
 
             <EditText
-                android:id="@+id/otp_edit_box1"
+                android:id="@+id/p1"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/et_style"
+                android:textColor="@color/white"
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="1"
                 android:textSize="30sp" />
 
             <EditText
-                android:id="@+id/otp_edit_box2"
+                android:id="@+id/p2"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/et_style"
+                android:textColor="@color/white"
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="1"
                 android:textSize="30sp" />
 
             <EditText
-                android:id="@+id/otp_edit_box3"
+                android:id="@+id/p3"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/et_style"
+                android:textColor="@color/white"
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="1"
                 android:textSize="30sp" />
 
             <EditText
-                android:id="@+id/otp_edit_box4"
+                android:id="@+id/p4"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/et_style"
+                android:textColor="@color/white"
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="1"
                 android:textSize="30sp" />
 
             <EditText
-                android:id="@+id/otp_edit_box5"
+                android:id="@+id/p5"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/et_style"
+                android:textColor="@color/white"
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="1"
                 android:textSize="30sp" />
 
             <EditText
-                android:id="@+id/otp_edit_box6"
+                android:id="@+id/p6"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/et_style"
+                android:textColor="@color/white"
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="1"
                 android:textSize="30sp" />
 
             <EditText
-                android:id="@+id/otp_edit_box7"
+                android:id="@+id/p7"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/et_style"
+                android:textColor="@color/white"
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="1"
                 android:textSize="30sp" />
 
             <EditText
-                android:id="@+id/otp_edit_box8"
+                android:id="@+id/p8"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
                 android:background="@drawable/et_style"
+                android:textColor="@color/white"
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="1"
+                android:visibility="gone"
                 android:textSize="30sp" />
 
         </LinearLayout>
@@ -317,6 +327,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/red"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
@@ -331,6 +342,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:text="@string/update"

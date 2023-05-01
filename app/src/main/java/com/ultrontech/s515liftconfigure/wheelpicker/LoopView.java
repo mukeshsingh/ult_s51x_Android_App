@@ -13,6 +13,8 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.ultrontech.s515liftconfigure.R;
+
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -38,6 +40,7 @@ public class LoopView extends View {
     int maxTextHeight;
     int colorGray;
     int colorBlack;
+    int colorWhite;
     int colorGrayLight;
     float lineSpacingMultiplier;
     boolean isLoop;
@@ -74,6 +77,7 @@ public class LoopView extends View {
         textSize = 0;
         colorGray = 0xffafafaf;
         colorBlack = 0xff313131;
+        colorWhite = 0xffffffff;
         colorGrayLight = 0xffc5c5c5;
         lineSpacingMultiplier = 2.0F;
         isLoop = false;
@@ -118,6 +122,7 @@ public class LoopView extends View {
         paintC.setAntiAlias(true);
         paintC.setTypeface(Typeface.MONOSPACE);
         paintC.setTextSize(textSize);
+        paintC.setColor(colorWhite);
         measureTextWidthHeight();
         halfCircumference = (int) (maxTextHeight * lineSpacingMultiplier * (itemCount - 1));
         measuredHeight = (int) ((halfCircumference * 2) / Math.PI);
@@ -289,6 +294,7 @@ public class LoopView extends View {
         int cWidth = r.width();
         paint.setTextAlign(Paint.Align.LEFT);
         paint.getTextBounds(text, 0, text.length(), r);
+        paint.setColor(colorGrayLight);
         float x = cWidth / 2f - r.width() / 2f - r.left;
         canvas.drawText(text, x, y, paint);
     }

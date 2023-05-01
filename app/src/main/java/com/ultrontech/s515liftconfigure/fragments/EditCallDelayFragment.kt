@@ -13,8 +13,8 @@ import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 
 
 class EditCallDelayFragment : BottomSheetDialogFragment() {
-    private val barValue = 5
-    private var value = 0
+    private val barValue = 1
+    private var value = 1
     private lateinit var bars: Array<View>
     private lateinit var txtValue: TextView
 
@@ -35,7 +35,7 @@ class EditCallDelayFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_edit_call_delay, container, false)
+        val view = inflater.inflate(R.layout.fragment_edit_volume, container, false)
         val btnClose = view.findViewById<Button>(R.id.btnClose)
         txtValue = view.findViewById(R.id.txt_value)
 
@@ -44,13 +44,8 @@ class EditCallDelayFragment : BottomSheetDialogFragment() {
         val vBar3 = view.findViewById<View>(R.id.vBar3)
         val vBar4 = view.findViewById<View>(R.id.vBar4)
         val vBar5 = view.findViewById<View>(R.id.vBar5)
-        val vBar6 = view.findViewById<View>(R.id.vBar6)
-        val vBar7 = view.findViewById<View>(R.id.vBar7)
-        val vBar8 = view.findViewById<View>(R.id.vBar8)
-        val vBar9 = view.findViewById<View>(R.id.vBar9)
-        val vBar10 = view.findViewById<View>(R.id.vBar10)
 
-        bars = arrayOf(vBar1, vBar2, vBar3, vBar4, vBar5, vBar6, vBar7, vBar8, vBar9, vBar10)
+        bars = arrayOf(vBar1, vBar2, vBar3, vBar4, vBar5)
         bars.forEachIndexed { index, bar ->
             bar.setOnClickListener {
                 setValue(barValue * (index + 1))
@@ -61,9 +56,9 @@ class EditCallDelayFragment : BottomSheetDialogFragment() {
             (activity as EngineerDetailsActivity).supportFragmentManager.beginTransaction().remove(this@EditCallDelayFragment).commit()
         }
 
-        BluetoothLeService.service?.device?.callPressDelay?.let {
-            setValue(it)
-            txtValue.text = it.toString()
+        with(BluetoothLeService.service?.device) {
+            setValue(this?.callPressDelay ?: 1)
+            txtValue.text = (this?.callPressDelay ?: 1).toString()
         }
 
         return view

@@ -14,7 +14,7 @@ import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 
 class EditVolumeFragment : BottomSheetDialogFragment() {
     private val barValue = 1
-    private var value = 0
+    private var value = 1
     private lateinit var bars: Array<View>
     private lateinit var txtValue: TextView
 
@@ -56,9 +56,9 @@ class EditVolumeFragment : BottomSheetDialogFragment() {
             (activity as EngineerDetailsActivity).supportFragmentManager.beginTransaction().remove(this@EditVolumeFragment).commit()
         }
 
-        BluetoothLeService.service?.device?.volumeLevel?.let {
-            setValue(it)
-            txtValue.text = it.toString()
+        with(BluetoothLeService.service?.device) {
+            setValue(this?.volumeLevel ?: 1)
+            txtValue.text = (this?.volumeLevel ?: 1).toString()
         }
 
         return view

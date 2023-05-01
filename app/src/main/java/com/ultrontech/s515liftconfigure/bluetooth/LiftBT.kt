@@ -27,7 +27,7 @@ object LiftBT {
 
     val CLIENT_CHARACTERISTIC_CONFIG: UUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb")
 
-    const val GATT_TIMEOUT = 100 // milliseconds
+    const val GATT_TIMEOUT = 500 // milliseconds
 
     fun isChunkedResponse(uuid: UUID?): Boolean {
         return when (uuid) {

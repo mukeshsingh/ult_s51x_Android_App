@@ -6,9 +6,9 @@ import android.text.TextWatcher
 import android.widget.EditText
 import com.ultrontech.s515liftconfigure.hideKeyboard
 
-class PinTextWatcher internal constructor(private var currentIndex: Int, private var editTexts: Array<EditText>, private var context: Context): TextWatcher {
+class PinTextWatcher internal constructor(private var currentIndex: Int, var editTexts: Array<EditText>, private var context: Context): TextWatcher {
     private var isFirst = false
-    private  var isLast: Boolean = false
+    var isLast: Boolean = false
     private var newTypedString = ""
 
     init {

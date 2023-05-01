@@ -5,7 +5,7 @@ import android.view.View
 import android.view.View.OnKeyListener
 import android.widget.EditText
 
-class PinOnKeyListener internal constructor(private var currentIndex: Int, private var editTexts: Array<EditText>): OnKeyListener{
+class PinOnKeyListener internal constructor(private var currentIndex: Int, var editTexts: Array<EditText>): OnKeyListener{
     override fun onKey(v: View?, keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_DEL && event.action === KeyEvent.ACTION_DOWN) {
             if (editTexts[currentIndex].text.toString().isEmpty() && currentIndex != 0) {

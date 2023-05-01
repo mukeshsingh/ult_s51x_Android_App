@@ -14,7 +14,7 @@ import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 
 class EditDialTimeoutFragment : BottomSheetDialogFragment() {
     private val barValue = 5
-    private var value = 0
+    private var value = 1
     private lateinit var bars: Array<View>
     private lateinit var txtValue: TextView
 
@@ -63,9 +63,9 @@ class EditDialTimeoutFragment : BottomSheetDialogFragment() {
             (activity as EngineerDetailsActivity).supportFragmentManager.beginTransaction().remove(this@EditDialTimeoutFragment).commit()
         }
 
-        BluetoothLeService.service?.device?.callDialTimeout?.let {
-            setValue(it)
-            txtValue.text = it.toString()
+        with(BluetoothLeService.service?.device) {
+            setValue(this?.callDialTimeout ?: 1)
+            txtValue.text = (this?.callDialTimeout ?: 1).toString()
         }
 
         return view

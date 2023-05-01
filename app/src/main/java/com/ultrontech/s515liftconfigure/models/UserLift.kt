@@ -1,5 +1,6 @@
 package com.ultrontech.s515liftconfigure.models
 
+import android.util.Log
 import java.util.Date
 import java.util.UUID
 import kotlinx.serialization.*;
@@ -87,10 +88,10 @@ object Util {
 
     fun getSimType(simType: Int): SimType {
         return when(simType) {
+            0x00 -> SimType.ModemSimTypeUnknown
             0x01 -> SimType.ModemSimTypeInstallerProvided
-            0x02 -> SimType.ModemSimTypeUserPAYG
-            0x03 -> SimType.ModemSimTypeUserContract
-            0x04 -> SimType.ModemSimTypeUnknown
+            0x02 -> SimType.ModemSimTypeUserContract
+            0x03 -> SimType.ModemSimTypeUserPAYG
             else -> SimType.ModemSimTypeUnknown
         }
     }
@@ -145,7 +146,16 @@ data class Device (
     var simPin           : PhoneSimPin? = null,
 
     var lift    : UserLift? = null
-)
+) {
+    fun noPreviousCalls(): Boolean {
+        return true
+    }
+
+    fun callReminderNeeded(): Boolean {
+        return true
+    }
+
+}
 
 data class PhoneSimPin (
     var active : Boolean,
@@ -199,16 +209,16 @@ data class PINNumber (
 
     fun code(): Int {
         var c: Int = 0
-        digits.forEach {
-            c += (c shl 8) + (it and 255)
+        for(i in 0 until length) {
+            c += (c shl 8) + (digits[i] and 255)
         }
         return c
     }
 
     fun display(): String {
         var c: String = ""
-        digits.forEach {
-            c += it
+        for(i in 0 until length) {
+            c += digits[i]
         }
 
         return c

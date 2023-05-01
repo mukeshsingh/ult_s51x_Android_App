@@ -23,7 +23,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
@@ -69,15 +68,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
+        <EditText
+            android:id="@+id/edtPKey"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:backgroundTint="@color/transparent"
+            android:hint="@string/wifi_pkey"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/lightGrey"
+            android:textSize="30sp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/btnPinType"
+            tools:layout_editor_absoluteX="8dp" />
 
         <com.google.android.material.button.MaterialButtonToggleGroup
             android:id="@+id/btnPinType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="9dp"
+            app:layout_constraintTop_toBottomOf="@+id/edtSSID"
             app:selectionRequired="true"
             app:singleSelection="true"
-            tools:context=".fragments.EditBoardDetailFragment">
+            tools:context=".fragments.EditBoardDetailFragment"
+            tools:layout_editor_absoluteX="10dp">
 
             <Button
                 android:id="@+id/btnNoPassPhase"
@@ -85,10 +99,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:backgroundTint="@color/grey"
                 android:text="@string/no_security"
                 android:textColor="@android:color/white"
                 android:textSize="10dp"
+                app:backgroundTint="@color/grey"
                 app:layout_constraintVertical_bias="0.0" />
 
             <Button
@@ -97,12 +111,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:backgroundTint="@color/grey"
                 android:text="@string/wep_wpa"
                 android:textColor="@android:color/white"
-                android:textSize="10dp" />
+                android:textSize="10dp"
+                app:backgroundTint="@color/grey" />
         </com.google.android.material.button.MaterialButtonToggleGroup>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -128,7 +141,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/job_name"
-            android:textColor="@color/grey"
+            android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -142,7 +155,7 @@
             android:backgroundTint="@color/transparent"
             android:hint="Job Name"
             android:textColor="@color/white"
-            android:textColorHint="@color/lightGrey"
+            android:textColorHint="@color/grey"
             android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@+id/textView10"
             app:layout_constraintEnd_toEndOf="parent"
@@ -154,7 +167,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/client_name"
-            android:textColor="@color/grey"
+            android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edtJob" />
@@ -165,9 +178,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="4dp"
-            android:hint="@string/ultron_technology"
+            android:hint="@string/client_name"
             android:textColor="@color/white"
-            android:textColorHint="@color/lightGrey"
+            android:textColorHint="@color/grey"
             android:backgroundTint="@color/transparent"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
