@@ -10,6 +10,7 @@ import android.os.IBinder
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -74,7 +75,13 @@ class HomeActivity : AppCompatActivity() {
         val enterLoginPin = findViewById<CardView>(R.id.cvLogin)
 
         userName = findViewById(R.id.txt_user_name)
-        userName.text = S515LiftConfigureApp.profileStore.userName
+        if (S515LiftConfigureApp.profileStore.userName.isNotEmpty()) {
+            userName.visibility = View.VISIBLE
+            userName.text = S515LiftConfigureApp.profileStore.userName
+        }else{
+            userName.visibility = View.GONE
+        }
+
 
         inflater = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
@@ -266,7 +273,12 @@ class HomeActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
-        userName.text = S515LiftConfigureApp.profileStore.userName
+        if (S515LiftConfigureApp.profileStore.userName.isNotEmpty()) {
+            userName.visibility = View.VISIBLE
+            userName.text = S515LiftConfigureApp.profileStore.userName
+        }else{
+            userName.visibility = View.GONE
+        }
         showUserDevices()
     }
 

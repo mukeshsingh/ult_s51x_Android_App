@@ -116,7 +116,7 @@
 
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
+            android:id="@+id/engineerDetailContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -386,14 +386,14 @@
 
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView2"
+            android:id="@+id/simInfoContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             app:cardCornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView"
+            app:layout_constraintTop_toBottomOf="@+id/engineerDetailContainer"
             android:visibility="visible"
             >
 
@@ -488,12 +488,12 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/crdContact"
+            android:id="@+id/userContactContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="10dp"
             app:cardCornerRadius="12dp"
-            app:layout_constraintTop_toBottomOf="@+id/cardView2"
+            app:layout_constraintTop_toBottomOf="@+id/simInfoContainer"
             android:layout_marginTop="30dp"
             android:visibility="visible"
             >
@@ -1039,8 +1039,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/crdContact">
+            app:layout_constraintTop_toBottomOf="@+id/userContactContainer">
         <androidx.cardview.widget.CardView
+            android:id="@+id/dialTimeContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:cardCornerRadius="12dp"
@@ -1107,6 +1108,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
+            android:id="@+id/callPressContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:cardCornerRadius="12dp"
@@ -1175,6 +1177,7 @@
 
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/volumeContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:cardCornerRadius="12dp"
@@ -1241,6 +1244,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
+            android:id="@+id/microphoneContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:cardCornerRadius="12dp"

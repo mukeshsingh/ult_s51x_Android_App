@@ -5,12 +5,15 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.media.Image
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.fragments.*
@@ -114,6 +117,15 @@ class EngineerDetailsActivity : AppCompatActivity() {
     private lateinit var txtPinLabel: TextView
     private var liftId: String? = null
 
+    private lateinit var engineerDetailContainer:CardView
+    private lateinit var simInfoContainer:CardView
+    private lateinit var userContactContainer:CardView
+    private lateinit var dialTimeContainer:CardView
+    private lateinit var callPressContainer:CardView
+    private lateinit var volumeContainer:CardView
+    private lateinit var microphoneContainer:CardView
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_engineer_details)
@@ -194,6 +206,14 @@ class EngineerDetailsActivity : AppCompatActivity() {
         volume = findViewById(R.id.txtVolume)
         microphone = findViewById(R.id.txtMicrophone)
 
+        engineerDetailContainer = findViewById(R.id.engineerDetailContainer)
+        simInfoContainer = findViewById(R.id.simInfoContainer)
+        userContactContainer = findViewById(R.id.userContactContainer)
+        dialTimeContainer = findViewById(R.id.dialTimeContainer)
+        callPressContainer = findViewById(R.id.callPressContainer)
+        volumeContainer = findViewById(R.id.volumeContainer)
+        microphoneContainer = findViewById(R.id.microphoneContainer)
+
         btnRemove.setOnClickListener {
             bluetoothLeService.device?.lift?.let { it1 ->
                 S515LiftConfigureApp.profileStore.remove(it1)
@@ -223,7 +243,7 @@ class EngineerDetailsActivity : AppCompatActivity() {
             editContactFragment.show(supportFragmentManager, "editContactFragment")
         }
 
-        btnEditContact1.setOnClickListener {
+        btnEditContact2.setOnClickListener {
             editContactFragment.numberSlot = 2
             editContactFragment.phone = BluetoothLeService.service?.device?.number2
             editContactFragment.name = liftId?.let { it1 ->
@@ -234,7 +254,7 @@ class EngineerDetailsActivity : AppCompatActivity() {
             editContactFragment.show(supportFragmentManager, "editContactFragment")
         }
 
-        btnEditContact1.setOnClickListener {
+        btnEditContact3.setOnClickListener {
             editContactFragment.numberSlot = 3
             editContactFragment.phone = BluetoothLeService.service?.device?.number3
             editContactFragment.name = liftId?.let { it1 ->
@@ -245,7 +265,7 @@ class EngineerDetailsActivity : AppCompatActivity() {
             editContactFragment.show(supportFragmentManager, "editContactFragment")
         }
 
-        btnEditContact1.setOnClickListener {
+        btnEditContact4.setOnClickListener {
             editContactFragment.numberSlot = 4
             editContactFragment.phone = BluetoothLeService.service?.device?.number4
             editContactFragment.name = liftId?.let { it1 ->
@@ -256,7 +276,7 @@ class EngineerDetailsActivity : AppCompatActivity() {
             editContactFragment.show(supportFragmentManager, "editContactFragment")
         }
 
-        btnEditContact1.setOnClickListener {
+        btnEditContact5.setOnClickListener {
             editContactFragment.numberSlot = 5
             editContactFragment.phone = BluetoothLeService.service?.device?.number5
             editContactFragment.name = liftId?.let { it1 ->
@@ -312,6 +332,15 @@ class EngineerDetailsActivity : AppCompatActivity() {
         super.onPause()
     }
 
+    private fun showHideCards(visibility: Int){
+        engineerDetailContainer.visibility = visibility
+        simInfoContainer.visibility = visibility
+        userContactContainer.visibility = visibility
+        dialTimeContainer.visibility = visibility
+        callPressContainer.visibility = visibility
+        volumeContainer.visibility = visibility
+        microphoneContainer.visibility = visibility
+    }
     private fun updateConnectState() {
         with(bluetoothLeService) {
             when(device?.connectionState) {
@@ -319,22 +348,26 @@ class EngineerDetailsActivity : AppCompatActivity() {
                     deviceStatus.text = resources.getString(R.string.device_connected_no_auth)
                     btnConnect.visibility = View.VISIBLE
                     btnEdit.visibility = View.GONE
+                    showHideCards(View.GONE)
                     device?.lift?.let { bluetoothLeService.authorise(it) }
                 }
                 LiftConnectionState.connected_auth -> {
                     deviceStatus.text = resources.getString(R.string.device_connected)
                     btnConnect.visibility = View.GONE
                     btnEdit.visibility = View.VISIBLE
+                    showHideCards(View.VISIBLE)
                 }
                 LiftConnectionState.not_connected -> {
                     deviceStatus.text = resources.getString(R.string.device_not_connected)
                     btnConnect.visibility = View.VISIBLE
                     btnEdit.visibility = View.GONE
+                    showHideCards(View.GONE)
                 }
                 LiftConnectionState.connect_error -> {
                     deviceStatus.text = resources.getString(R.string.device_connect_error)
                     btnConnect.visibility = View.VISIBLE
                     btnEdit.visibility = View.GONE
+                    showHideCards(View.GONE)
                 }
                 else -> {}
             }

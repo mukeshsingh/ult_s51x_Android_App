@@ -51,7 +51,7 @@ class AddLiftFragment : BottomSheetDialogFragment() {
             with(S515LiftConfigureApp) {
                 val pinStr = "${p1.text}${p2.text}${p3.text}${p4.text}${p5.text}${p6.text}".trim()
 
-                if (pinStr.length == 6) {
+                if (pinStr.length == 6 && profileStore.hasEngineerCapability) {
                     val accessKey = pinStr.map { it.digitToInt() }.toIntArray()
                     val userLift = lift?.let { lft -> UserLift(liftId = lft.id, liftName = lft.name, accessKey = PINNumber(6, accessKey)) }
                     if (userLift != null) {
