@@ -18,10 +18,11 @@ class EditVolumeFragment : BottomSheetDialogFragment() {
     private lateinit var bars: Array<View>
     private lateinit var txtValue: TextView
 
-    fun setValue(value: Int) {
-        val idx = (value / barValue) - 1
+    fun setValue(v: Int) {
+        val idx = (v / barValue) - 1
 
-        txtValue.text = value.toString()
+        txtValue.text = v.toString()
+        value = v
         bars.forEachIndexed { index, bar ->
             if (index <= idx) {
                 bar.setBackgroundColor(resources.getColor(R.color.green, (activity as EngineerDetailsActivity).theme))
@@ -53,6 +54,7 @@ class EditVolumeFragment : BottomSheetDialogFragment() {
         }
 
         btnClose.setOnClickListener {
+            BluetoothLeService.service?.setVolume(value)
             (activity as EngineerDetailsActivity).supportFragmentManager.beginTransaction().remove(this@EditVolumeFragment).commit()
         }
 

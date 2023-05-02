@@ -129,4 +129,5 @@
     <string name="choose_pin_length">Choose Pin Length</string>
     <string name="choose_sim_pin">Choose SIM Pin</string>
     <string name="call_press_delay">Call Press Delay</string>
+    <string name="phone_number">Phone Number</string>
 </resources>

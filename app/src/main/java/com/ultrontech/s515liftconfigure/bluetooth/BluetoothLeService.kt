@@ -370,15 +370,13 @@ class BluetoothLeService : Service() {
 
                 when (this?.uuid) {
                     LiftBT.authCharUUID -> devices[mAddress]?.let { processAuth(data, it) }
-                    LiftBT.levelsCharUUID -> devices[mAddress]?.let { processLevel(data) }
-                    LiftBT.infoCharUUID -> devices[mAddress]?.let { processInfo(data) }
-                    LiftBT.phoneCharUUID -> devices[mAddress]?.let { processPhone(data) }
-                    LiftBT.phoneConfigCharUUID -> devices[mAddress]?.let {
-                        processPhoneConfig(data)
-                    }
-                    LiftBT.jobCharUUID -> devices[mAddress]?.let { processJob(data) }
-                    LiftBT.wifiCharUUID -> devices[mAddress]?.let { processWifiDetail(data) }
-                    LiftBT.ssidsCharUUID -> devices[mAddress]?.let { processSSIDList(data) }
+                    LiftBT.levelsCharUUID -> processLevel(data)
+                    LiftBT.infoCharUUID -> processInfo(data)
+                    LiftBT.phoneCharUUID -> processPhone(data)
+                    LiftBT.phoneConfigCharUUID -> processPhoneConfig(data)
+                    LiftBT.jobCharUUID -> processJob(data)
+                    LiftBT.wifiCharUUID -> processWifiDetail(data)
+                    LiftBT.ssidsCharUUID -> processSSIDList(data)
 
                     LiftBT.modelNumberCharUUID -> {
                         val cx = data.decodeToString()
@@ -779,8 +777,8 @@ class BluetoothLeService : Service() {
     fun setVolume(volume: Int) {
         val lift = device?.lift?.let { find(it.liftId) }
         if (lift?.audioControl != null) {
-            val m = (device?.microphoneLevel ?: 3) + 3
-            Log.d(TAG,"[BT::WRITE] audio level (volume=($volume), sensitivity=(${device?.microphoneLevel}))")
+            val m = (device?.microphoneLevel ?: 0) + 3
+            Log.d(TAG,"[BT::WRITE] audio level (volume=($volume), sensitivity=($m))")
             val command : ByteArray = byteArrayOf(S515BTCommand.btCmdSetVolumeAndSensitivity.toByte(), 0x02, volume.toByte() , m.toByte())
             lift?.audioControl?.value = command
             val success = writeCharacteristic(lift?.audioControl!!, value = command)
@@ -792,8 +790,8 @@ class BluetoothLeService : Service() {
         val lift = device?.lift?.let { find(it.liftId) }
         if (lift?.audioControl == null) return
 
-        val vol = device?.volumeLevel ?: 3
-        Log.d(TAG,"[BT::WRITE] audio level (volume=(${vol}), sensitivity=(${microphone}))")
+        val vol = device?.volumeLevel ?: 1
+        Log.d(TAG,"[BT::WRITE] audio level (volume=(${vol}), sensitivity=(${ + 3}))")
         val command : ByteArray = byteArrayOf(S515BTCommand.btCmdSetVolumeAndSensitivity.toByte(), 0x02, vol.toByte() , (microphone + 3).toByte())
         lift?.audioControl?.value = command
         val success = writeCharacteristic(lift?.audioControl!!, value = command)
@@ -1039,7 +1037,7 @@ fun BluetoothLeService.processPhone(data : ByteArray) {
 
         for (idx in 0 until 5) {
             val mult = (idx * 42)
-            val flag = data[1 + mult].toInt() shl 8 + data[mult].toInt()
+            val flag = (data[1 + mult].toInt() shl 8) + data[mult].toInt()
 
             if ((flag and 0x01) == 0x00) {
                 broadcastUpdate(BluetoothLeService.ACTION_CLEAR_PHONE_SLOT, (idx + 1).toString() )
@@ -1069,7 +1067,7 @@ fun BluetoothLeService.processPhone(data : ByteArray) {
                 val enabled = (flag and 0x04) == 0x04
 
                 val slot = idx + 1
-                if (phoneNum == null) {
+                if (phoneNum.isEmpty()) {
                     when(slot) {
                         1 -> device?.number1 = PhoneContact(numberType = PhoneNumberType.user_defined)
                         2 -> device?.number2 = PhoneContact(numberType = PhoneNumberType.user_defined)

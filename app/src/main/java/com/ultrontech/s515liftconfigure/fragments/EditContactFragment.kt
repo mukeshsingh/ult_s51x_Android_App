@@ -1,6 +1,7 @@
 package com.ultrontech.s515liftconfigure.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +38,7 @@ class EditContactFragment : BottomSheetDialogFragment() {
 
         contactName.setText(name)
         phoneNumber.setText(phone?.number)
-        swtEnabled.isEnabled = phone?.enabled == true
+        swtEnabled.isChecked = phone?.enabled == true
 
         val btnCancel = view.findViewById<Button>(R.id.btnCancel)
         val btnUpdate = view.findViewById<Button>(R.id.btnUpdate)
@@ -63,5 +64,7 @@ class EditContactFragment : BottomSheetDialogFragment() {
         return view
     }
 
-
+    companion object {
+        const val TAG = "EditContactFragment"
+    }
 }
