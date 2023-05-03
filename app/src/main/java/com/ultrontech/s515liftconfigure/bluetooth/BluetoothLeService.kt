@@ -1037,7 +1037,7 @@ fun BluetoothLeService.processPhone(data : ByteArray) {
 
         for (idx in 0 until 5) {
             val mult = (idx * 42)
-            val flag = (data[1 + mult].toInt() shl 8) + data[mult].toInt()
+            val flag = if ((1 + mult) < data.size) ((data[1 + mult].toInt() shl 8) + data[mult].toInt()) else 0
 
             if ((flag and 0x01) == 0x00) {
                 broadcastUpdate(BluetoothLeService.ACTION_CLEAR_PHONE_SLOT, (idx + 1).toString() )
