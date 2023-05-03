@@ -36,10 +36,6 @@ class EditContactFragment : BottomSheetDialogFragment() {
         phoneNumber = view.findViewById(R.id.edtPhoneNumber)
         swtEnabled = view.findViewById(R.id.swtEnabled)
 
-        contactName.setText(name)
-        phoneNumber.setText(phone?.number)
-        swtEnabled.isChecked = phone?.enabled == true
-
         val btnCancel = view.findViewById<Button>(R.id.btnCancel)
         val btnUpdate = view.findViewById<Button>(R.id.btnUpdate)
 
@@ -52,7 +48,7 @@ class EditContactFragment : BottomSheetDialogFragment() {
                 this?.setContact(numberSlot, contactName.text.toString())
                 this?.setPhoneNumber(
                     numberSlot,
-                    swtEnabled.isEnabled,
+                    swtEnabled.isChecked,
                     phoneNumber.text.toString()
                 )
             }
@@ -62,6 +58,14 @@ class EditContactFragment : BottomSheetDialogFragment() {
         }
 
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        contactName.setText(name)
+        phoneNumber.setText(phone?.number)
+        swtEnabled.isChecked = phone?.enabled == true
     }
 
     companion object {
