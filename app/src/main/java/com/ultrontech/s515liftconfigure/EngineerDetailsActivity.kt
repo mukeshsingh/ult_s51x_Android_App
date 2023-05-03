@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -53,11 +54,11 @@ class EngineerDetailsActivity : AppCompatActivity() {
     private lateinit var btnMicrophone: Button
     private lateinit var btnEditSim: Button
 
-    private lateinit var img1: Image
-    private lateinit var img2: Image
-    private lateinit var img3: Image
-    private lateinit var img4: Image
-    private lateinit var img5: Image
+    private lateinit var img1: ImageView
+    private lateinit var img2: ImageView
+    private lateinit var img3: ImageView
+    private lateinit var img4: ImageView
+    private lateinit var img5: ImageView
 
     private lateinit var contactName1: TextView
     private lateinit var contactName2: TextView
@@ -207,6 +208,8 @@ class EngineerDetailsActivity : AppCompatActivity() {
         disabled4 = findViewById(R.id.txtDisabled4)
         disabled5 = findViewById(R.id.txtDisabled5)
 
+
+
         dialedTimeout = findViewById(R.id.txtDialTimeout)
         callPressDelay = findViewById(R.id.txtCallPressDelay)
         volume = findViewById(R.id.txtVolume)
@@ -219,6 +222,14 @@ class EngineerDetailsActivity : AppCompatActivity() {
         callPressContainer = findViewById(R.id.callPressContainer)
         volumeContainer = findViewById(R.id.volumeContainer)
         microphoneContainer = findViewById(R.id.microphoneContainer)
+
+
+
+        img1 = findViewById(R.id.img1)
+        img2 = findViewById(R.id.img2)
+        img3 = findViewById(R.id.img3)
+        img4 = findViewById(R.id.img4)
+        img5 = findViewById(R.id.img5)
 
         btnRemove.setOnClickListener {
             bluetoothLeService.device?.lift?.let { it1 ->
@@ -510,6 +521,12 @@ class EngineerDetailsActivity : AppCompatActivity() {
             lastDialed1.visibility = View.VISIBLE
             lastVoice1.visibility = View.VISIBLE
 
+            if (phone?.enabled == true){
+                img1.setImageResource(R.drawable.person_fill_checkmark)
+            } else{
+                img1.setImageResource(R.drawable.person_checkmark_grey)
+            }
+
             contactName1.text = contactName
             phoneNumber1.text = phone?.number
 
@@ -531,6 +548,7 @@ class EngineerDetailsActivity : AppCompatActivity() {
                 lastVoice1.text = resources.getString(R.string.callmade)
             }
         } else {
+            img1.setImageResource(R.drawable.person_fill_xmark)
             contactName1.text = resources.getString(R.string.missing_number)
             phoneNumber1.visibility = View.GONE
             callCount1.visibility = View.GONE
@@ -551,6 +569,13 @@ class EngineerDetailsActivity : AppCompatActivity() {
             callCount2.visibility = View.VISIBLE
             lastDialed2.visibility = View.VISIBLE
             lastVoice2.visibility = View.VISIBLE
+
+            if (phone?.enabled == true){
+                img2.setImageResource(R.drawable.person_fill_checkmark)
+            }
+            else{
+                img2.setImageResource(R.drawable.person_checkmark_grey)
+            }
 
             contactName2.text = contactName
             phoneNumber2.text = phone?.number
@@ -573,6 +598,7 @@ class EngineerDetailsActivity : AppCompatActivity() {
                 lastVoice2.text = resources.getString(R.string.callmade)
             }
         } else {
+            img2.setImageResource(R.drawable.person_fill_xmark)
             contactName2.text = resources.getString(R.string.missing_number)
             phoneNumber2.visibility = View.GONE
             callCount2.visibility = View.GONE
@@ -593,6 +619,13 @@ class EngineerDetailsActivity : AppCompatActivity() {
             callCount3.visibility = View.VISIBLE
             lastDialed3.visibility = View.VISIBLE
             lastVoice3.visibility = View.VISIBLE
+
+            if (phone?.enabled == true){
+                img3.setImageResource(R.drawable.person_fill_checkmark)
+            }
+            else{
+                img3.setImageResource(R.drawable.person_checkmark_grey)
+            }
 
             contactName3.text = contactName
             phoneNumber3.text = phone?.number
@@ -615,6 +648,7 @@ class EngineerDetailsActivity : AppCompatActivity() {
                 lastVoice3.text = resources.getString(R.string.callmade)
             }
         } else {
+            img3.setImageResource(R.drawable.person_fill_xmark)
             contactName3.text = resources.getString(R.string.missing_number)
             phoneNumber3.visibility = View.GONE
             callCount3.visibility = View.GONE

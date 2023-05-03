@@ -27,14 +27,13 @@
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/btn_bkg_dark_grey"
         android:layout_marginHorizontal="10dp"
+        android:background="@drawable/btn_bkg_dark_grey"
         android:orientation="vertical"
         android:padding="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
         tools:context=".fragments.EditBoardDetailFragment">
 
 
@@ -70,8 +69,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/grey"
-           >
+            android:background="@color/grey">
 
         </View>
 
@@ -105,29 +103,29 @@
             android:text="Phone Number are sent to your lift for use as emergency call numbers"
             android:textColor="@color/lightGrey"
             android:textSize="14sp" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/grey"
-            />
+            android:background="@color/grey" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/swtEnabled"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/enabled"
-            android:textColor="@color/white"
-            android:enabled="true"
-            app:thumbTint="@color/green"
             android:layout_marginStart="10dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Button"/>
+            android:enabled="true"
+            android:text="@string/enabled"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+            android:textColor="@color/white"
+            app:thumbTint="@color/green" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/grey"
             android:layout_marginTop="8dp"
-            />
+            android:background="@color/grey" />
+
         <TextView
             android:id="@+id/tvEnabled"
             android:layout_width="wrap_content"
@@ -144,14 +142,16 @@
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal"
         android:paddingHorizontal="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+        app:layout_constraintVertical_bias="0.0"
         tools:context=".fragments.EditBoardDetailFragment">
 
         <Button
