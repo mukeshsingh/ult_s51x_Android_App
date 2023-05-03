@@ -1054,7 +1054,7 @@ fun BluetoothLeService.processPhone(data : ByteArray) {
                 val n1vtmhour   = data[10 + mult].toInt()
                 val n1vtmmday   = data[11 + mult].toInt()
                 val n1vtmmon    = data[12 + mult].toInt()
-                val n1vtmyear   = data[13 + mult].toInt()
+                val n1vtmyear   = if (data.size > (13 + mult)) data[13 + mult].toInt() else 0
 
                 /*
                  * Note the magic number 123 here.
