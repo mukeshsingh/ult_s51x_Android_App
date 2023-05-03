@@ -201,6 +201,12 @@ class EngineerDetailsActivity : AppCompatActivity() {
         lastVoice4 = findViewById(R.id.txtLastVoice4)
         lastVoice5 = findViewById(R.id.txtLastVoice5)
 
+        disabled1 = findViewById(R.id.txtDisabled1)
+        disabled2 = findViewById(R.id.txtDisabled2)
+        disabled3 = findViewById(R.id.txtDisabled3)
+        disabled4 = findViewById(R.id.txtDisabled4)
+        disabled5 = findViewById(R.id.txtDisabled5)
+
         dialedTimeout = findViewById(R.id.txtDialTimeout)
         callPressDelay = findViewById(R.id.txtCallPressDelay)
         volume = findViewById(R.id.txtVolume)
@@ -488,10 +494,10 @@ class EngineerDetailsActivity : AppCompatActivity() {
             with(BluetoothLeService.service) {
                 when (i) {
                     1 -> updatePhoneSlot1(this?.device?.number1, this?.device?.lift?.userContact1Name)
-                    2 -> updatePhoneSlot2(this?.device?.number1, this?.device?.lift?.userContact1Name)
-                    3 -> updatePhoneSlot3(this?.device?.number1, this?.device?.lift?.userContact1Name)
-                    4 -> updatePhoneSlot4(this?.device?.number1, this?.device?.lift?.userContact1Name)
-                    5 -> updatePhoneSlot4(this?.device?.number1, this?.device?.lift?.userContact1Name)
+                    2 -> updatePhoneSlot2(this?.device?.number2, this?.device?.lift?.userContact2Name)
+                    3 -> updatePhoneSlot3(this?.device?.number3, this?.device?.lift?.userContact3Name)
+                    4 -> updatePhoneSlot4(this?.device?.number4, this?.device?.lift?.installerName)
+                    5 -> updatePhoneSlot5(this?.device?.number5, this?.device?.lift?.emergencyName)
                 }
             }
         }
@@ -709,7 +715,7 @@ class EngineerDetailsActivity : AppCompatActivity() {
 
     private fun updateVolume() {
         with(BluetoothLeService.service) {
-            volume.text = (this?.device?.microphoneLevel ?: "??").toString()
+            volume.text = (this?.device?.volumeLevel ?: "??").toString()
             microphone.text = (this?.device?.microphoneLevel ?: "??").toString()
         }
     }

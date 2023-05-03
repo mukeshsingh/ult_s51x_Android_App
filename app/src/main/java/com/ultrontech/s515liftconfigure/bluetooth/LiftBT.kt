@@ -31,7 +31,6 @@ object LiftBT {
 
     fun isChunkedResponse(uuid: UUID?): Boolean {
         return when (uuid) {
-            phoneCharUUID -> true
             else -> false
         }
     }

@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:layout_marginBottom="5dp"
-            android:text="Phone Number"
+            android:text="@string/phone_number"
             android:textColor="@color/white"
             android:textSize="14sp" />
 
@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:backgroundTint="@android:color/transparent"
-            android:text="9560049495"
+            android:hint="@string/phone_number"
             android:textColor="@color/white"
             android:textColorHint="@color/grey"
             android:textSize="30sp" />
@@ -111,31 +111,17 @@
             android:background="@color/grey"
             />
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/btn_bkg_dark_grey"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp"
-        tools:context=".fragments.EditBoardDetailFragment"
-        >
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/swtEnabled"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/enabled"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:enabled="true"
+            app:thumbTint="@color/green"
+            android:layout_marginStart="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"/>
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/swtEnabled"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/switchbg"
-            android:layout_marginStart="10dp"/>
-    </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
