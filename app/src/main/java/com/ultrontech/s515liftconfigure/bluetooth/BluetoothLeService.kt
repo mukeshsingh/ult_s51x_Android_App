@@ -656,8 +656,8 @@ class BluetoothLeService : Service() {
     private fun setMtu() {
         if (checkPermission()) {
             mBusy = true
-            val mtuRequest = mBluetoothGatt?.requestMtu(100)
-            Log.i(TAG, "MTU Request: $mtuRequest: 100")
+            val mtuRequest = mBluetoothGatt?.requestMtu(300)
+            Log.i(TAG, "MTU Request: $mtuRequest: 300")
         }
     }
 
