@@ -286,12 +286,12 @@ class BluetoothLeService : Service() {
             super.onCharacteristicWrite(gatt, characteristic, status)
 
             Log.d(TAG, "onCharacteristicWrite: " + characteristic?.value?.get(0) +
-                characteristic?.value?.get(1) + characteristic?.value?.get(2)
+                    characteristic?.value?.get(1) + characteristic?.value?.get(2)
             )
-//            if (characteristic?.uuid == LiftBT.authCharUUID) {
-//                mSessionId = characteristic?.value?.let { String(it, Charsets.UTF_8) }
-//                broadcastUpdate(ACTION_GATT_SERVICES_AUTHENTICATED, null)
-//            }
+//          if (characteristic?.uuid == LiftBT.authCharUUID) {
+//              mSessionId = characteristic?.value?.let { String(it, Charsets.UTF_8) }
+//              broadcastUpdate(ACTION_GATT_SERVICES_AUTHENTICATED, null)
+//          }
         }
 
         override fun onCharacteristicChanged(
@@ -438,7 +438,7 @@ class BluetoothLeService : Service() {
                                 BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT
                             )
                     } else {
-                        return if (mBluetoothGatt?.writeCharacteristic(it) == true) 1 else 0
+                        return if (mBluetoothGatt?.writeCharacteristic(it) == true) 0 else 1
                     }
                 }
             }
@@ -656,8 +656,8 @@ class BluetoothLeService : Service() {
     private fun setMtu() {
         if (checkPermission()) {
             mBusy = true
-            val mtuRequest = mBluetoothGatt?.requestMtu(300)
-            Log.i(TAG, "MTU Request: $mtuRequest: 300")
+            val mtuRequest = mBluetoothGatt?.requestMtu(500)
+            Log.i(TAG, "MTU Request: $mtuRequest: 500")
         }
     }
 
