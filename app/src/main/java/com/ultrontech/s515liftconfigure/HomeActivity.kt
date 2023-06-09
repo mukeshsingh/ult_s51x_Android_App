@@ -14,6 +14,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -123,9 +124,18 @@ class HomeActivity : AppCompatActivity() {
             liftMsg.text = resources.getString(R.string.lift_status)
 
             cardView.setOnClickListener {
-                val intent = Intent(this, EngineerDetailsActivity::class.java)
-                intent.putExtra(INTENT_LIFT_ID, userLift.liftId)
-                startActivity(intent)
+                val lift = BluetoothLeService.service?.find(userLift.liftId)
+                if (lift?.modelNumber != null && lift.modelNumber!!.isNotEmpty()) {
+                    val intent = Intent(this, EngineerDetailsActivity::class.java)
+                    intent.putExtra(INTENT_LIFT_ID, userLift.liftId)
+                    startActivity(intent)
+                } else {
+                    this@HomeActivity?.let { it1 ->
+                        S515LiftConfigureApp.instance.basicAlert(
+                            it1, "The mobile application is waiting for the connected BT device to finish processing."
+                        ){}
+                    }
+                }
             }
 
             llUserLifts.addView(cardView)

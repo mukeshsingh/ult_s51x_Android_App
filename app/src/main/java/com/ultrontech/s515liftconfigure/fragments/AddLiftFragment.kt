@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ultrontech.s515liftconfigure.FindLiftActivity
 import com.ultrontech.s515liftconfigure.R
@@ -13,6 +14,7 @@ import com.ultrontech.s515liftconfigure.S515LiftConfigureApp
 import com.ultrontech.s515liftconfigure.bluetooth.ScanDisplayItem
 import com.ultrontech.s515liftconfigure.listener.PinOnKeyListener
 import com.ultrontech.s515liftconfigure.models.PINNumber
+import com.ultrontech.s515liftconfigure.models.ProfileStore
 import com.ultrontech.s515liftconfigure.models.UserLift
 import com.ultrontech.s515liftconfigure.watcher.PinTextWatcher
 
@@ -51,7 +53,7 @@ class AddLiftFragment : BottomSheetDialogFragment() {
             with(S515LiftConfigureApp) {
                 val pinStr = "${p1.text}${p2.text}${p3.text}${p4.text}${p5.text}${p6.text}".trim()
 
-                if (pinStr.length == 6 && profileStore.hasEngineerCapability) {
+                if (pinStr.length == 6 && ProfileStore.AddLiftPin == pinStr) {
                     val accessKey = pinStr.map { it.digitToInt() }.toIntArray()
                     val userLift = lift?.let { lft -> UserLift(liftId = lft.id, liftName = lft.name, accessKey = PINNumber(6, accessKey)) }
                     if (userLift != null) {
@@ -60,6 +62,12 @@ class AddLiftFragment : BottomSheetDialogFragment() {
 
                     (activity as FindLiftActivity).liftConnected()
                     (activity as FindLiftActivity).supportFragmentManager.beginTransaction().remove(this@AddLiftFragment).commit()
+                } else {
+                    this@AddLiftFragment.context?.let { it1 ->
+                        instance.basicAlert(
+                            it1, "Pin is not valid. Please try again!"
+                        ){}
+                    }
                 }
             }
         }

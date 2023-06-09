@@ -194,6 +194,7 @@ data class ProfileStore (
     }
 
     companion object{
-        val EngineerTokenKey : Int = 0x5B300B1
+        const val EngineerTokenKey : Int = 0x5B300B1
+        const val AddLiftPin = "112233"
     }
 }

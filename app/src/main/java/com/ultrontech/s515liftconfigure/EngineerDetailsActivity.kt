@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
@@ -208,8 +209,6 @@ class EngineerDetailsActivity : AppCompatActivity() {
         disabled4 = findViewById(R.id.txtDisabled4)
         disabled5 = findViewById(R.id.txtDisabled5)
 
-
-
         dialedTimeout = findViewById(R.id.txtDialTimeout)
         callPressDelay = findViewById(R.id.txtCallPressDelay)
         volume = findViewById(R.id.txtVolume)
@@ -223,8 +222,6 @@ class EngineerDetailsActivity : AppCompatActivity() {
         volumeContainer = findViewById(R.id.volumeContainer)
         microphoneContainer = findViewById(R.id.microphoneContainer)
 
-
-
         img1 = findViewById(R.id.img1)
         img2 = findViewById(R.id.img2)
         img3 = findViewById(R.id.img3)
@@ -237,6 +234,7 @@ class EngineerDetailsActivity : AppCompatActivity() {
                 finish()
             }
         }
+
         btnEdit.setOnClickListener {
             bottomSheetEditLiftFrag.show(supportFragmentManager, "bottomSheetEditLiftFrag")
         }
@@ -322,6 +320,22 @@ class EngineerDetailsActivity : AppCompatActivity() {
 
         btnConnect.setOnClickListener {
             linkDevice()
+        }
+
+        if (S515LiftConfigureApp.profileStore.hasEngineerCapability) {
+            btnBoardEdit.visibility = View.VISIBLE
+            btnEditContact4.visibility = View.VISIBLE
+            btnEditContact5.visibility = View.VISIBLE
+            btnMicrophone.visibility = View.VISIBLE
+            btnCallPress.visibility = View.VISIBLE
+            btnDial.visibility = View.VISIBLE
+        } else {
+            btnBoardEdit.visibility = View.GONE
+            btnEditContact4.visibility = View.GONE
+            btnEditContact5.visibility = View.GONE
+            btnMicrophone.visibility = View.GONE
+            btnCallPress.visibility = View.GONE
+            btnDial.visibility = View.GONE
         }
     }
 
@@ -807,6 +821,16 @@ class EngineerDetailsActivity : AppCompatActivity() {
                 BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED -> {
                     bluetoothLeService?.updateServices()
                 }
+                BluetoothLeService.ACTION_SERVICES_UPDATED -> {
+                    linkDevice()
+                }
+                BluetoothLeService.ACTION_GATT_DISCONNECTED -> {
+                    this@EngineerDetailsActivity?.let { it1 ->
+                        S515LiftConfigureApp.instance.basicAlert(
+                            it1, "Lift disconnected."
+                        ) { finish() }
+                    }
+                }
             }
         }
     }
@@ -825,6 +849,8 @@ class EngineerDetailsActivity : AppCompatActivity() {
             addAction(BluetoothLeService.ACTION_UPDATE_LEVEL)
             addAction(BluetoothLeService.ACTION_CLEAR_PHONE_SLOT)
             addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED)
+            addAction(BluetoothLeService.ACTION_SERVICES_UPDATED)
+            addAction(BluetoothLeService.ACTION_GATT_DISCONNECTED)
         }
     }
 }

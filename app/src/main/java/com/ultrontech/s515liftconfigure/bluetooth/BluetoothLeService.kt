@@ -14,9 +14,12 @@ import androidx.core.app.ActivityCompat
 import com.ultrontech.s515liftconfigure.HomeActivity
 import com.ultrontech.s515liftconfigure.S515LiftConfigureApp
 import com.ultrontech.s515liftconfigure.models.*
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.util.*
+
 
 class BluetoothLeService : Service() {
     private val mBinder = LocalBinder()
@@ -220,9 +223,11 @@ class BluetoothLeService : Service() {
             }
         } else if (bluetoothDevice != null && mBluetoothGatt != null){
             Log.w(TAG, "Attempt to connect in state: $connectionState")
-            if (waitIdle(LiftBT.GATT_TIMEOUT)) {
-                mBluetoothGatt?.discoverServices()
-            }
+//            if (waitIdle(LiftBT.GATT_TIMEOUT)) {
+                Handler(Looper.getMainLooper()).post {
+                    mBluetoothGatt?.discoverServices()
+                }
+//            }
 
             return false
         } else {
@@ -243,17 +248,28 @@ class BluetoothLeService : Service() {
                 broadcastUpdate(ACTION_GATT_CONNECTED, null)
 
                 if (waitIdle(LiftBT.GATT_TIMEOUT) && checkPermission()) {
-                    mBluetoothGatt?.discoverServices()
+                    Handler(Looper.getMainLooper()).post {
+                        mBluetoothGatt?.discoverServices()
+                    }
                 }
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                 // disconnected from the GATT Server
-                device?.connected = false
                 close()
-                broadcastUpdate(ACTION_GATT_DISCONNECTED, null)
+
+                device?.connected = false
+                device?.authorised = false
+
+                lifts = listOf()
+                devices = HashMap<String, ScannedDevice> ()
+                this@BluetoothLeService.device = null
+
+                updateConnectionState(false)
+                broadcastUpdate(ACTION_CONNECTION_UPDATE)
+                broadcastUpdate(ACTION_UPDATE_AUTHENTICATION)
+                broadcastUpdate(ACTION_GATT_DISCONNECTED)
+
                 scanLeDevice()
             }
-
-//            update(device!!)
 
             Log.w(TAG, "onConnectionStateChange Status: $status, New state: $newState")
         }
@@ -366,49 +382,55 @@ class BluetoothLeService : Service() {
         } else {
             with(characteristic) {
                 val data = this?.value
-                val dataString = String(data!!, Charsets.UTF_8)
+                String(data!!, Charsets.UTF_8)
 
-                when (this?.uuid) {
-                    LiftBT.authCharUUID -> devices[mAddress]?.let { processAuth(data, it) }
-                    LiftBT.levelsCharUUID -> processLevel(data)
-                    LiftBT.infoCharUUID -> processInfo(data)
-                    LiftBT.phoneCharUUID -> processPhone(data)
-                    LiftBT.phoneConfigCharUUID -> processPhoneConfig(data)
-                    LiftBT.jobCharUUID -> processJob(data)
-                    LiftBT.wifiCharUUID -> processWifiDetail(data)
-                    LiftBT.ssidsCharUUID -> processSSIDList(data)
+                Handler(Looper.getMainLooper()).post {
+                    when (this?.uuid) {
+                        LiftBT.authCharUUID -> devices[mAddress]?.let { processAuth(data, it) }
+                        LiftBT.levelsCharUUID -> processLevel(data)
+                        LiftBT.infoCharUUID -> processInfo(data)
+                        LiftBT.phoneCharUUID -> processPhone(data)
+                        LiftBT.phoneConfigCharUUID -> processPhoneConfig(data)
+                        LiftBT.jobCharUUID -> processJob(data)
+                        LiftBT.wifiCharUUID -> processWifiDetail(data)
+                        LiftBT.ssidsCharUUID -> processSSIDList(data)
 
-                    LiftBT.modelNumberCharUUID -> {
-                        val cx = data.decodeToString()
-                        print("[BT($mAddress)::Char($uuid))] : value updated -> [$cx)]")
-                        devices[mAddress]?.modelNumber = cx
-                        mBusy = false
-                        refreshScannedList()
-                        val service = mBluetoothGatt?.getService(LiftBT.deviceControlServiceUUID)
-                        val char = service?.getCharacteristic(LiftBT.manufacturerNameCharUUID)
-                        readCharacteristic(char)
+                        LiftBT.modelNumberCharUUID -> {
+                            val cx = data.decodeToString()
+                            print("[BT($mAddress)::Char($uuid))] : value updated -> [$cx)]")
+                            devices[mAddress]?.modelNumber = cx
+                            mBusy = false
+                            refreshScannedList()
+                            val service =
+                                mBluetoothGatt?.getService(LiftBT.deviceControlServiceUUID)
+                            val char = service?.getCharacteristic(LiftBT.manufacturerNameCharUUID)
+                            readCharacteristic(char)
+                        }
+
+                        LiftBT.manufacturerNameCharUUID -> {
+                            val cx = data.decodeToString()
+                            print("[BT($mAddress)::Char($uuid))] : value updated -> [$cx)]")
+                            devices[mAddress]?.manufacturerName = cx
+                            mBusy = false
+                            refreshScannedList()
+                            val service =
+                                mBluetoothGatt?.getService(LiftBT.deviceControlServiceUUID)
+                            val char = service?.getCharacteristic(LiftBT.firmwareRevisionCharUUID)
+                            readCharacteristic(char)
+                        }
+
+                        LiftBT.firmwareRevisionCharUUID -> {
+                            val cx = data.decodeToString()
+                            print("[BT($mAddress)::Char($uuid))] : value updated -> [$cx)]")
+                            devices[mAddress]?.firmwareRevision = cx
+                            mBusy = false
+                            refreshScannedList()
+                        }
+
+                        else -> {
+                            Log.d(BluetoothLeService.TAG, "unknown characteristic")
+                        }
                     }
-
-                    LiftBT.manufacturerNameCharUUID -> {
-                        val cx = data.decodeToString()
-                        print("[BT($mAddress)::Char($uuid))] : value updated -> [$cx)]")
-                        devices[mAddress]?.manufacturerName = cx
-                        mBusy = false
-                        refreshScannedList()
-                        val service = mBluetoothGatt?.getService(LiftBT.deviceControlServiceUUID)
-                        val char = service?.getCharacteristic(LiftBT.firmwareRevisionCharUUID)
-                        readCharacteristic(char)
-                    }
-
-                    LiftBT.firmwareRevisionCharUUID -> {
-                        val cx = data.decodeToString()
-                        print("[BT($mAddress)::Char($uuid))] : value updated -> [$cx)]")
-                        devices[mAddress]?.firmwareRevision = cx
-                        mBusy = false
-                        refreshScannedList()
-                    }
-
-                    else -> Log.d(BluetoothLeService.TAG, "unknown characteristic")
                 }
             }
         }
@@ -443,7 +465,7 @@ class BluetoothLeService : Service() {
                 }
             }
         }
-        return 0
+        return -1
     }
 
     fun checkPermission(): Boolean {
@@ -596,18 +618,30 @@ class BluetoothLeService : Service() {
                     val props = characteristic.properties
                     if (props and BluetoothGattCharacteristic.PROPERTY_NOTIFY > 0) {
                         if (waitIdle(LiftBT.GATT_TIMEOUT) != null) {
+                            if (characteristic.uuid == LiftBT.authCharUUID) {
+                                Log.d(
+                                    HomeActivity.TAG,
+                                    ">>>>>>>>> Enable notification for auth: " + characteristic.uuid
+                                )
+                            }
                             setCharacteristicNotification(characteristic, true)
                         }
-                        Log.d(HomeActivity.TAG, ">>>>>>>>> Enable notification for: " + characteristic.uuid)
+                        Log.d(
+                            HomeActivity.TAG,
+                            ">>>>>>>>> Enable notification for: " + characteristic.uuid
+                        )
                     }
                 }
 
                 if (linked > 0) {
                     device?.controlOk = true
                 }
-            } else if (service.uuid == LiftBT.deviceControlServiceUUID){
+            } else if (service.uuid == LiftBT.deviceControlServiceUUID) {
                 service.characteristics?.forEach { characteristic ->
-                    Log.d(TAG, "[BT::Characteristic] - Found device control " + characteristic.uuid.toString())
+                    Log.d(
+                        TAG,
+                        "[BT::Characteristic] - Found device control " + characteristic.uuid.toString()
+                    )
                     /*
                      * 2A24 => Model Number
                      * 2A29 => Manufacturer Name
@@ -615,7 +649,8 @@ class BluetoothLeService : Service() {
                      */
                     when (characteristic.uuid) {
                         LiftBT.modelNumberCharUUID -> device?.modelNumControl = characteristic
-                        LiftBT.manufacturerNameCharUUID -> device?.manNameControl = characteristic
+                        LiftBT.manufacturerNameCharUUID -> device?.manNameControl =
+                            characteristic
                         LiftBT.firmwareRevisionCharUUID -> device?.fwRevControl = characteristic
                     }
                 }
@@ -667,32 +702,39 @@ class BluetoothLeService : Service() {
         if (!checkGatt()) return false
         var ok = false
         if (!isNotificationEnabled(characteristic)) {
-            if (checkPermission() && waitIdle(LiftBT.GATT_TIMEOUT) && mBluetoothGatt?.setCharacteristicNotification(characteristic, enable) == true) {
-                if (waitIdle(LiftBT.GATT_TIMEOUT)) {
-                    val clientConfig =
-                        characteristic.getDescriptor(LiftBT.CLIENT_CHARACTERISTIC_CONFIG)
-                    if (clientConfig != null) {
-                        ok = if (enable) {
-                            Log.i(TAG, "Enable notification: " + characteristic.uuid.toString())
-                            clientConfig.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)
+            if (checkPermission() && waitIdle(LiftBT.GATT_TIMEOUT_FOR_NOTIFICATIONS) && mBluetoothGatt?.setCharacteristicNotification(characteristic, enable) == true) {
+                var clientConfig = characteristic.getDescriptor(LiftBT.CLIENT_CHARACTERISTIC_CONFIG)
+                if (waitIdle(LiftBT.GATT_TIMEOUT_FOR_NOTIFICATIONS) && clientConfig != null) {
+                    ok = if (enable) {
+                        Log.i(TAG, "Enable notification: " + characteristic.uuid.toString())
+                        clientConfig.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)
+                    } else {
+                        Log.i(
+                            TAG, "Disable notification: " + characteristic.uuid.toString()
+                        );
+                        clientConfig.setValue(BluetoothGattDescriptor.DISABLE_NOTIFICATION_VALUE)
+                    }
+
+                    if (ok) {
+                        mBusy = true
+
+                        ok = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            mBluetoothGatt?.writeDescriptor(
+                                clientConfig,
+                                BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
+                            ) == BluetoothStatusCodes.SUCCESS
                         } else {
-                            Log.i(
-                                TAG, "Disable notification: " + characteristic.uuid.toString()
-                            );
-                            clientConfig.setValue(BluetoothGattDescriptor.DISABLE_NOTIFICATION_VALUE)
+                            mBluetoothGatt?.writeDescriptor(clientConfig)!!
                         }
+
                         if (ok) {
-                            mBusy = true
-                            ok = mBluetoothGatt?.writeDescriptor(clientConfig) == true
-                            Log.i(
-                                TAG,
-                                "writeDescriptor: " + characteristic.uuid.toString()
-                            )
+                            Log.i(TAG, "writeDescriptor: " + characteristic.uuid.toString())
                         }
                     }
                 }
             }
         }
+
         return ok
     }
 
@@ -776,14 +818,14 @@ class BluetoothLeService : Service() {
 
     fun setVolume(volume: Int) {
         val lift = device?.lift?.let { find(it.liftId) }
-        if (lift?.audioControl != null) {
-            val m = (device?.microphoneLevel ?: 0) + 3
-            Log.d(TAG,"[BT::WRITE] audio level (volume=($volume), sensitivity=($m))")
-            val command : ByteArray = byteArrayOf(S515BTCommand.btCmdSetVolumeAndSensitivity.toByte(), 0x02, volume.toByte() , m.toByte())
-            lift?.audioControl?.value = command
-            val success = writeCharacteristic(lift?.audioControl!!, value = command)
-            Log.d(TAG, "Characteristic written for audio control volume: $success")
-        }
+        if (lift?.audioControl == null) return
+
+        val m = (device?.microphoneLevel ?: 0) + 3
+        Log.d(TAG,"[BT::WRITE] audio level (volume=($volume), sensitivity=($m))")
+        val command : ByteArray = byteArrayOf(S515BTCommand.btCmdSetVolumeAndSensitivity.toByte(), 0x02, volume.toByte() , m.toByte())
+        lift?.audioControl?.value = command
+        val success = writeCharacteristic(lift?.audioControl!!, value = command)
+        Log.d(TAG, "Characteristic written for audio control volume: $success")
     }
 
     fun setMicrophone(microphone: Int) {
@@ -933,13 +975,11 @@ class BluetoothLeService : Service() {
             "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_UPDATE_PHONE_SLOT"
         const val ACTION_CLEAR_PHONE_SLOT =
             "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_CLEAR_PHONE_SLOT"
-        const val ACTION_UPDATE_JOB =
-            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_UPDATE_JOB"
-        const val ACTION_UPDATE_WIFI_DETAIL =
-            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_UPDATE_WIFI_DETAIL"
-        const val ACTION_UPDATE_SSID_LIST =
-            "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_UPDATE_SSID_LIST"
+        const val ACTION_UPDATE_JOB = "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_UPDATE_JOB"
+        const val ACTION_UPDATE_WIFI_DETAIL = "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_UPDATE_WIFI_DETAIL"
+        const val ACTION_UPDATE_SSID_LIST = "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_UPDATE_SSID_LIST"
         const val ACTION_LIFT_LIST_UPDATED = "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_LIFT_LIST_UPDATED"
+        const val ACTION_SERVICES_UPDATED = "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_SERVICES_UPDATED"
 
         const val TAG = "BluetoothLeService: "
         var service: BluetoothLeService? = null
@@ -965,6 +1005,19 @@ fun BluetoothLeService.processLevel(data : ByteArray) {
     if (data.isNotEmpty() && data[0].toUInt() == BluetoothLeService.DataOK && data.size == 3) {
         device?.volumeLevel = data[1].toInt()
         device?.microphoneLevel = data[2].toInt()
+
+        /////// workarrount for auth - start //////
+//        if (!S515LiftConfigureApp.profileStore.hasEngineerCapability) {
+            var d = device?.lift?.liftId?.let { find(it) }
+            d?.authorised = true
+
+            updateConnectionState(false)
+
+            broadcastUpdate(BluetoothLeService.ACTION_CONNECTION_UPDATE, null)
+            broadcastUpdate(BluetoothLeService.ACTION_UPDATE_AUTHENTICATION, null)
+//        }
+        /////// workarrount for auth - end //////
+
         broadcastUpdate(BluetoothLeService.ACTION_UPDATE_LEVEL )
     }
 }
@@ -1063,7 +1116,7 @@ fun BluetoothLeService.processPhone(data : ByteArray) {
                  */
                 val lastDialled = if (n1dtmyear >= 123) PhoneDate(n1dtmyear, n1dtmmon, n1dtmmday, n1dtmhour, n1dtmmin, null) else null
                 val lastVoice = if (n1vtmyear >= 123) PhoneDate(n1vtmyear, n1vtmmon, n1vtmmday, n1vtmhour, n1vtmmin, null) else null
-                val phoneNum = data.copyOfRange(14 + mult, 42 + mult)
+                val phoneNum = data.copyOfRange(14 + mult, 42 + mult).dropLastWhile { it == 0.toByte() }.toByteArray()
                 val enabled = (flag and 0x04) == 0x04
 
                 val slot = idx + 1

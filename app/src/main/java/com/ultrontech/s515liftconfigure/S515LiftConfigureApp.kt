@@ -3,9 +3,11 @@ package com.ultrontech.s515liftconfigure
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.ultrontech.s515liftconfigure.models.ProfileStore
 import kotlinx.coroutines.GlobalScope
@@ -24,6 +26,19 @@ class S515LiftConfigureApp: Application() {
         sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
 
         profileStore = ProfileStore()
+    }
+
+    fun basicAlert(context: Context, message: String, callback: (() -> Unit)?){
+        val builder = AlertDialog.Builder(context)
+        with(builder) {
+            setTitle("Lifts")
+            setMessage(message)
+            setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                dialog.dismiss()
+                callback?.invoke()
+            })
+            show()
+        }
     }
 
     inline fun startCoroutineTimer(delayMillis: Long = 0, repeat: Boolean = false, numberOfRepeat: Long = 0, repeatMillis: Long = 0, crossinline action: () -> Unit) = GlobalScope.launch {

@@ -287,12 +287,12 @@
 
                 </View>
 
-
                 <LinearLayout
                     android:id="@+id/llPinLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="20dp"
+                    android:layout_marginTop="20dp"
+                    android:paddingBottom="20dp"
                     android:gravity="center"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -368,9 +368,8 @@
                     android:id="@+id/btn_board_edit"
                     android:layout_width="75dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="20dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="20dp"
                     android:backgroundTint="@color/darkBlue"
                     android:text="@string/edit"
                     android:textColor="@color/white"
