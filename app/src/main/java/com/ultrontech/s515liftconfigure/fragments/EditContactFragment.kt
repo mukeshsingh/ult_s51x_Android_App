@@ -52,7 +52,7 @@ class EditContactFragment : BottomSheetDialogFragment() {
             with(BluetoothLeService.service) {
                 this?.setContact(numberSlot, contactName.text.toString())
                 val phone = phoneNumber.text.toString().trim()
-                if (phone.length >= 10) {
+                if (phone.length >= 3) {
                     this?.setPhoneNumber(
                         numberSlot,
                         swtEnabled.isChecked,
@@ -64,7 +64,7 @@ class EditContactFragment : BottomSheetDialogFragment() {
                 } else {
                     this@EditContactFragment.context?.let { it1 ->
                         S515LiftConfigureApp.instance.basicAlert(
-                            it1, "Please enter at least 10 digit phone number."
+                            it1, "Please enter at least 3 digit phone number."
                         ){}
                     }
                 }
