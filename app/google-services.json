@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "814449065159",
+    "project_id": "lift-configurator",
+    "storage_bucket": "lift-configurator.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814449065159:android:0a5a31e3e403aed2a052e2",
+        "android_client_info": {
+          "package_name": "com.ultrontech.s515liftconfigure"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcTre1L32e5Z_tc2na2pLUzWtHzA9wDaQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
