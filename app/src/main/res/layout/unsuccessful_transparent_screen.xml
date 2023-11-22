@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#80000000"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/link_broken"/>
+
+    <TextView
+        android:id="@+id/textFail1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="WE APOLOGIZE"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp"/>
+    <TextView
+        android:id="@+id/textFail2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="We have been unable to add"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"/>
+    <TextView
+        android:id="@+id/textFail3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Handicare VLinkA15E to your account."
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"/>
+    <TextView
+        android:id="@+id/textFail4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Please try again."
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"/>
+
+
+</LinearLayout>
