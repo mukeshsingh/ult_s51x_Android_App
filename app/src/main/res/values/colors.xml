@@ -31,4 +31,5 @@
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
     <color name="text_color_title">#636466</color>
+    <color name="grey_btn_bg">#E5E5E5</color>
 </resources>
