@@ -7,6 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="bg">#E5E5E5</color>
     <color name="btmSheetBg1">#F2F1F6</color>
     <color name="grey">#808080</color>
     <color name="lightGrey">#B6B6B4</color>
@@ -14,6 +15,7 @@
     <color name="cancelBtnBkg">#2D3458</color>
     <color name="listItemBkg">#B8DEDD</color>
     <color name="green">#5BB450</color>
+    <color name="lightGreen">#99CC33</color>
     <color name="home_card_bg_grey">#727677</color>
     <color name="magnify_color">#838788</color>
     <color name="person_text_color">#838788</color>
@@ -23,4 +25,10 @@
     <color name="card_bg_color_grey">#727677</color>
     <color name="custom_pink">#FBB4C1</color>
     <color name="intensity_color">#DBFFE5</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+    <color name="light_blue_A200">#FF40C4FF</color>
+    <color name="light_blue_A400">#FF00B0FF</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="text_color_title">#636466</color>
 </resources>

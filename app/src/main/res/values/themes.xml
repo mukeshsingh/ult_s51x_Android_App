@@ -25,9 +25,9 @@
     </style>
 
 
-        <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
-            <item name="android:background">@drawable/roundbottomsheet</item>
-        </style>
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/roundbottomsheet</item>
+    </style>
 
     <style name="statusCardDesign">
         <item name="android:paddingStart">17dp</item>
@@ -40,6 +40,28 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="android:colorBackground">@android:color/transparent</item>
     </style>
+
+    <style name="Theme.s515LiftConfigure.Fullscreen" parent="Theme.s515LiftConfigure">
+        <item name="android:actionBarStyle">
+            @style/Widget.Theme.s515LiftConfigure.ActionBar.Fullscreen
+        </item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
+
+    <style name="ThemeOverlay.Coms515liftconfigure.FullscreenContainer" parent="">
+        <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
+        <item name="fullscreenTextColor">@color/light_blue_A200</item>
+    </style>
+
+    <style name="Theme.s515LiftConfigure.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.s515LiftConfigure.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.s515LiftConfigure.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>
