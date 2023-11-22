@@ -1,94 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginTop="20dp"
+    >
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvLiftFound"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
-        app:cardBackgroundColor="@color/grey"
-        app:cardCornerRadius="12dp"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/grey_btn_bg"
+        app:cardCornerRadius="20dp"
         app:cardElevation="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/textView77"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Model:"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.826"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.132" />
-
-            <TextView
-                android:id="@+id/txt_lift_model"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="S515"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.952"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.132" />
+            android:layout_height="54"
+            android:paddingHorizontal="10dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/txt_lift_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Savaria VLink_197E"
-                android:textColor="@color/white"
-                android:textSize="32sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.271"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.366" />
-
-            <TextView
-                android:id="@+id/lift_register_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Lift Registered"
+                android:textColor="@color/text_color_title"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.795" />
+                />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btnAddLift"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/btnbackgroung2"
-                android:paddingHorizontal="10dp"
-                android:text="@string/btn_add_this_lift"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/add"
+                android:layout_marginLeft="10dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"/>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

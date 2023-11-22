@@ -40,18 +40,14 @@ class LiftListAdapter(private val context: Context,
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val liftView = inflater.inflate(R.layout.lift_list_item, parent, false)
         val cardView = liftView.findViewById<CardView>(R.id.cvLiftFound)
-        val liftRegStatus = liftView.findViewById<TextView>(R.id.lift_register_status)
         val txtLiftName = liftView.findViewById<TextView>(R.id.txt_lift_name)
-        val txtLiftModel = liftView.findViewById<TextView>(R.id.txt_lift_model)
         val btnAddLift = liftView.findViewById<Button>(R.id.btnAddLift)
 
         val userLift = S515LiftConfigureApp.profileStore.find(lifts[position].id)
         if (userLift != null) {
-            liftRegStatus.visibility = View.VISIBLE
             btnAddLift.visibility = View.GONE
             cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.green))
         } else {
-            liftRegStatus.visibility = View.GONE
             btnAddLift.visibility = View.VISIBLE
             cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.listItemBkg))
         }
@@ -60,7 +56,6 @@ class LiftListAdapter(private val context: Context,
             findLiftActivity.showAddLiftDialog(lifts[position])
         }
         txtLiftName.text = lifts[position].name
-        txtLiftModel.text = lifts[position].modelNumber
 
         return liftView
     }
