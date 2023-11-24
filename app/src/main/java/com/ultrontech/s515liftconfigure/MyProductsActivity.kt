@@ -11,6 +11,7 @@ import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
@@ -39,6 +40,7 @@ class MyProductsActivity : AppCompatActivity() {
         binding = ActivityMyProductsBinding.inflate(layoutInflater)
         btnFindLift = binding.btnFindLift
         noProduct = binding.noProduct
+        llUserLifts = binding.llUserLifts
 
         btnFindLift.setOnClickListener {
             val intent = Intent(this, FindLiftActivity::class.java)
@@ -48,6 +50,8 @@ class MyProductsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
+
+        inflater = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         scanLifts()
     }
@@ -161,15 +165,22 @@ class MyProductsActivity : AppCompatActivity() {
 
     private fun showUserDevices() {
         llUserLifts.removeAllViews()
+        val userDevices = S515LiftConfigureApp.profileStore.userDevices
+        if (userDevices.isNotEmpty()) {
+            llUserLifts.visibility = View.VISIBLE
+            noProduct.visibility = View.GONE
+        } else {
+            llUserLifts.visibility = View.GONE
+            noProduct.visibility = View.VISIBLE
+        }
 
-        S515LiftConfigureApp.profileStore.userDevices.forEach {userLift ->
-            val cardView = inflater.inflate(R.layout.home_lift_list_item, null, false)
+        userDevices.forEach {userLift ->
+            val cardView = inflater.inflate(R.layout.card_component, null, false)
             val liftName = cardView.findViewById<TextView>(R.id.txt_lift_name)
-            val liftMsg = cardView.findViewById<TextView>(R.id.txt_lift_msg)
+            val btnEditLiftDetail = cardView.findViewById<Button>(R.id.btnEditLiftDetail)
             liftName.text = userLift.liftName
-            liftMsg.text = resources.getString(R.string.lift_status)
 
-            cardView.setOnClickListener {
+            btnEditLiftDetail.setOnClickListener {
                 val lift = BluetoothLeService.service?.find(userLift.liftId)
                 if (lift?.modelNumber != null && lift.modelNumber!!.isNotEmpty()) {
                     val intent = Intent(this, EngineerDetailsActivity::class.java)
@@ -247,7 +258,7 @@ class MyProductsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
-//        showUserDevices()
+        showUserDevices()
     }
 
     override fun onPause() {

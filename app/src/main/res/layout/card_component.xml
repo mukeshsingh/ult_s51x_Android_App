@@ -39,7 +39,7 @@
                 android:src="@drawable/linked"/>
 
             <TextView
-                android:id="@+id/lift_name"
+                android:id="@+id/txt_lift_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -51,7 +51,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/edit_lift_id"
+        android:id="@+id/btnEditLiftDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"

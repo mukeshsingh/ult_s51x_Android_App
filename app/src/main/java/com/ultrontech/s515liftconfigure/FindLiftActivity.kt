@@ -6,40 +6,44 @@ import android.content.Intent
 import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.widget.ImageButton
 import android.widget.ListView
+import android.widget.TextView
 import com.ultrontech.s515liftconfigure.adapters.LiftListAdapter
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
-import com.ultrontech.s515liftconfigure.bluetooth.BluetoothState
-import com.ultrontech.s515liftconfigure.bluetooth.LiftBT
 import com.ultrontech.s515liftconfigure.bluetooth.ScanDisplayItem
-import com.ultrontech.s515liftconfigure.fragments.AddLiftFragment
-import com.ultrontech.s515liftconfigure.models.PINNumber
-import com.ultrontech.s515liftconfigure.models.UserLift
 
 class FindLiftActivity : AppCompatActivity() {
     private var bluetoothService : BluetoothLeService? = null
-    lateinit var addLiftFragment: AddLiftFragment
     private lateinit var liftList: ListView
+    private lateinit var homeBtn: ImageButton
+    private lateinit var backBtn: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_find_lift)
 
         bluetoothService = BluetoothLeService.service
 
-        liftList = findViewById<ListView>(R.id.lst_lifts)
-
-        addLiftFragment = AddLiftFragment()
+        liftList = findViewById(R.id.lst_lifts)
+        homeBtn = findViewById(R.id.btn_home)
+        backBtn = findViewById(R.id.btn_back)
 
         liftList.adapter = bluetoothService?.lifts?.let { LiftListAdapter(this, it) }
+
+        homeBtn.setOnClickListener {
+            val intent = Intent(this, MyProductsActivity::class.java)
+            startActivity(intent)
+        }
+
+        backBtn.setOnClickListener {
+            finish()
+        }
     }
 
-    fun showAddLiftDialog(lift: ScanDisplayItem) {
-        addLiftFragment.lift = lift
-        addLiftFragment.show(supportFragmentManager, "AddLiftFragment")
-    }
-    fun liftConnected() {
-        liftList.adapter = bluetoothService?.lifts?.let { LiftListAdapter(this, it) }
+    fun goToAddLift(lift: ScanDisplayItem) {
+        AddLiftActivity.lift = lift
+        val intent = Intent(this, AddLiftActivity::class.java)
+        startActivity(intent)
     }
 
     private val gattUpdateReceiver: BroadcastReceiver = object : BroadcastReceiver() {

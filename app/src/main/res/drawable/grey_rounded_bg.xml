@@ -1,12 +1,12 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
 
-    <corners android:radius="16dp" />
+    <corners android:radius="10dp" />
 
-    <solid android:color="@color/grey" />
+    <solid android:color="@color/listItemBkg" />
 
     <stroke
-        android:width="2dp"
-        android:color="#000000" />
+        android:width="1dp"
+        android:color="@color/listItemBorder" />
 
 </shape>

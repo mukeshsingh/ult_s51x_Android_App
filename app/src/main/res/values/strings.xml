@@ -53,6 +53,7 @@
     <string name="login">Login</string>
     <string name="Connect">Connect</string>
     <string name="btn_add_this_lift">Add this Lift</string>
+    <string name="btn_back">BACK</string>
     <string name="device_title">Manage Lift</string>
     <string name="connected">Connected</string>
     <string name="disconnect">Disconnect</string>

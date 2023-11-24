@@ -2,36 +2,47 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/black"
+    android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".FindLiftActivity">
 
-    <TextView
-        android:id="@+id/textView19"
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/user_header"/>
+    <RelativeLayout
+        android:id="@+id/rlTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Visible Lifts"
-        android:textColor="@color/white"
-        android:textSize="16sp" android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
-
-    <TextView
-        android:id="@+id/textView22"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="The lifts shown below are within Blutooth range"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:layout_below="@+id/textView19"
+        android:orientation="horizontal"
+        android:layout_below="@+id/toolbar"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp">
+        <ImageView
+            android:id="@+id/imgSignal"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/signal"/>
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Lifts within Range"
+            android:fontFamily="@font/lato_medium"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/imgSignal" />
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:layout_below="@+id/textView22"
-        android:layout_marginTop="20dp">
+        android:layout_below="@+id/rlTitle"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_above="@+id/bottomBar">
         <ListView
             android:id="@+id/lst_lifts"
             android:layout_width="match_parent"
@@ -40,4 +51,10 @@
 
         </ListView>
     </ScrollView>
+    <include
+        android:id="@+id/bottomBar"
+        layout="@layout/home_back_bottom_bar"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"/>
 </RelativeLayout>

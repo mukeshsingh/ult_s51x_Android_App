@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MyProductsActivity"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <FrameLayout
@@ -49,12 +50,13 @@
                 android:gravity="center"
                 android:textColor="@color/black" />
             <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/llUserLifts"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:paddingHorizontal="20dp"
+                android:orientation="vertical"
+                android:visibility="gone">
 
-                <include layout="@layout/card_component"/>
             </LinearLayout>
         </LinearLayout>
 

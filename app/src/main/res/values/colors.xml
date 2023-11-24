@@ -13,7 +13,8 @@
     <color name="lightGrey">#B6B6B4</color>
     <color name="darkBlue">#4386E5</color>
     <color name="cancelBtnBkg">#2D3458</color>
-    <color name="listItemBkg">#B8DEDD</color>
+    <color name="listItemBkg">#F8F8F8</color>
+    <color name="listItemBorder">#636466</color>
     <color name="green">#5BB450</color>
     <color name="lightGreen">#99CC33</color>
     <color name="home_card_bg_grey">#727677</color>
@@ -31,5 +32,6 @@
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
     <color name="text_color_title">#636466</color>
+    <color name="grey_border_color">#636466</color>
     <color name="grey_btn_bg">#E5E5E5</color>
 </resources>

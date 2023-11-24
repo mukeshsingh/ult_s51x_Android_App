@@ -42,9 +42,12 @@
         android:theme="@style/Theme.s515LiftConfigure"
         tools:targetApi="31">
         <activity
+            android:name=".AddLiftActivity"
+            android:exported="false" />
+        <activity
             android:name=".MyProductsActivity"
             android:exported="false"
-            android:label="@string/title_activity_my_products"/>
+            android:label="@string/title_activity_my_products" />
         <activity
             android:name=".SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
