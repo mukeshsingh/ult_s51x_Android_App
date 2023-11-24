@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_marginHorizontal="20dp"
-    android:layout_marginTop="20dp"
-    >
+    android:layout_marginTop="20dp">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,28 +26,28 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"/>
-        <LinearLayout
-            android:id="@+id/lift_name"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+    <LinearLayout
+        android:id="@+id/lift_name"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Lift Name"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Lift Name"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            />
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/lift_name"
-                android:layout_marginLeft="10dp" />
-        </LinearLayout>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/lift_name"
+            android:layout_marginLeft="10dp" />
+    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -238,27 +242,27 @@
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"/>
     <LinearLayout
-    android:id="@+id/dial_timeout"
-    android:layout_width="match_parent"
-    android:layout_height="54dp"
-    android:orientation="horizontal"
-    android:gravity="center_vertical">
+        android:id="@+id/dial_timeout"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Dial Timeout"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Dial Timeout"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            />
 
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/dial_timeout"
-        android:layout_marginLeft="10dp" />
-</LinearLayout>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/dial_timeout"
+            android:layout_marginLeft="10dp" />
+    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -321,8 +325,7 @@
         android:layout_marginTop="40dp"
         app:cardBackgroundColor="#24A3EB"
         app:cardCornerRadius="20dp"
-        app:cardElevation="20dp"
-        >
+        app:cardElevation="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -331,12 +334,12 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/link_broken"
                 android:layout_marginLeft="10dp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -344,13 +347,10 @@
                 android:text="DISCONNECT THIS LIFT"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:textAlignment="center"
-                />
-
+                android:textAlignment="center" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
 
     <androidx.cardview.widget.CardView
         android:id="@+id/remove_lift"
@@ -359,8 +359,7 @@
         android:layout_marginTop="15dp"
         app:cardBackgroundColor="#B70101"
         app:cardCornerRadius="20dp"
-        app:cardElevation="20dp"
-        >
+        app:cardElevation="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -369,12 +368,12 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/delete_white"
                 android:layout_marginLeft="10dp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -382,11 +381,10 @@
                 android:text="REMOVE THIS LIFT"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:textAlignment="center"
-                />
-
+                android:textAlignment="center" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
 </LinearLayout>
+</ScrollView>
+
