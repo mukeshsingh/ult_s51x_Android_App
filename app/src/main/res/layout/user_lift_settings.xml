@@ -184,7 +184,7 @@ android:layout_height="match_parent">
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/engineer_board_deatail"
+            android:src="@drawable/engineer_board_detail"
             android:layout_marginLeft="10dp" />
     </LinearLayout>
     <View

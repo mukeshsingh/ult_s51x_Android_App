@@ -20,14 +20,14 @@
         <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@drawable/lift_pin_number"
+            android:src="@drawable/engineer_board_detail"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center_horizontal"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Change Lift Pin Number"
+            android:text="Engineer/Board Details"
             android:textSize="18sp"
             android:gravity="center"
             android:fontFamily="@font/lato_bold"
@@ -36,26 +36,26 @@
             android:layout_marginBottom="20dp" />
 
         <EditText
-            android:id="@+id/edit_text_enter_pin"
+            android:id="@+id/edit_text_job_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
+            android:hint="Job Name"
             android:padding="12dp"
-            android:hint="Select New Pin"
             android:layout_marginBottom="20dp"
             android:background="@drawable/edittext_outline" />
+
         <EditText
-            android:id="@+id/edit_text_confirm_pin"
+            android:id="@+id/edit_text_client_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Confirm New Pin"
             android:inputType="text"
+            android:hint="Client Name"
             android:padding="12dp"
             android:background="@drawable/edittext_outline" />
 
-
         <Button
-            android:id="@+id/btn_change_pin_number"
+            android:id="@+id/btn_confirm_board_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Confirm"
