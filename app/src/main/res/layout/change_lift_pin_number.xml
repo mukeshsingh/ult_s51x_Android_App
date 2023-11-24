@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/user_header"/>
+    <LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="100dp"
+        android:padding="16dp">
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/lift_pin_number"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center_horizontal"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change Lift Pin Number"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:fontFamily="@font/lato_bold"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp" />
+
+        <EditText
+            android:id="@+id/edit_text_enter_pin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:padding="12dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/edittext_outline" />
+        <EditText
+            android:id="@+id/edit_text_confirm_pin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:padding="12dp"
+            android:background="@drawable/edittext_outline" />
+
+
+        <Button
+            android:id="@+id/btn_change_pin_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Confirm"
+            android:textSize="18sp"
+            android:layout_marginHorizontal="60dp"
+            android:layout_marginTop="60dp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/rounded_button_green_bg"
+            app:backgroundTint="#99CC33"/>
+    </LinearLayout>
+</LinearLayout>
