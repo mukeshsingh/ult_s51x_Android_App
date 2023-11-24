@@ -234,7 +234,7 @@ android:layout_height="match_parent">
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@drawable/lift_pin_number"
+        android:src="@drawable/emergency_service_detail"
         android:layout_marginLeft="10dp" />
 </LinearLayout>
     <View
