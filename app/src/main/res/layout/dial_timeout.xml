@@ -42,8 +42,8 @@
             android:text="20"
             android:textSize="80sp"
             android:gravity="center"
-            android:fontFamily="@font/lato"
-            android:textColor="@android:color/darker_gray"
+            android:fontFamily="@font/lato_light"
+            android:textColor="#828282"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="20dp" />
 
@@ -64,7 +64,7 @@
             android:textSize="12sp"
             android:gravity="center"
             android:fontFamily="@font/lato"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="#636466"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="20dp"
             android:layout_margin="10dp"/>
