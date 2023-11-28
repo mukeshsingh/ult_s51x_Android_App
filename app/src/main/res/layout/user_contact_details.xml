@@ -291,5 +291,16 @@
             android:layout_height="1dp"
             android:background="@android:color/darker_gray"/>
     </LinearLayout>
+    <Button
+        android:id="@+id/btn_confirm_contact_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Confirm"
+        android:textSize="18sp"
+        android:layout_marginHorizontal="80dp"
+        android:layout_marginTop="50dp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/rounded_button_green_bg"
+        app:backgroundTint="#99CC33"/>
 
 </LinearLayout>
