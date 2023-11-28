@@ -42,6 +42,22 @@
         android:theme="@style/Theme.s515LiftConfigure"
         tools:targetApi="31">
         <activity
+            android:name=".ChangeSimInformationActivity"
+            android:exported="false"
+            android:label="@string/title_activity_change_sim_information"
+            android:theme="@style/Theme.s515LiftConfigure.NoActionBar" />
+        <activity
+            android:name=".ChangePinNumberActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChangeLiftNameActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserLiftSettingsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_user_lift_settings"
+            android:theme="@style/Theme.s515LiftConfigure.NoActionBar" />
+        <activity
             android:name=".AddLiftActivity"
             android:exported="false" />
         <activity

@@ -14,6 +14,8 @@
     <color name="darkBlue">#4386E5</color>
     <color name="cancelBtnBkg">#2D3458</color>
     <color name="listItemBkg">#F8F8F8</color>
+    <color name="disableBtn">#F8F8F8</color>
+    <color name="enableBtn">#636466</color>
     <color name="listItemBorder">#636466</color>
     <color name="green">#5BB450</color>
     <color name="lightGreen">#99CC33</color>

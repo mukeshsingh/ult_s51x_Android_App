@@ -183,7 +183,7 @@ class MyProductsActivity : AppCompatActivity() {
             btnEditLiftDetail.setOnClickListener {
                 val lift = BluetoothLeService.service?.find(userLift.liftId)
                 if (lift?.modelNumber != null && lift.modelNumber!!.isNotEmpty()) {
-                    val intent = Intent(this, EngineerDetailsActivity::class.java)
+                    val intent = Intent(this, UserLiftSettingsActivity::class.java)
                     intent.putExtra(HomeActivity.INTENT_LIFT_ID, userLift.liftId)
                     startActivity(intent)
                 } else {
