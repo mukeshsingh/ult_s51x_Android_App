@@ -14,6 +14,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityChangeSimInformationBinding
@@ -28,8 +29,8 @@ class ChangeSimInformationActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityChangeSimInformationBinding
     private lateinit var loopView: LoopView
-    private lateinit var btnNoPin: Button
-    private lateinit var btnPinRequired: Button
+    private lateinit var btnNoPin: MaterialButton
+    private lateinit var btnPinRequired: MaterialButton
     private lateinit var btnConfirm: Button
 
     private var isPinRequired: Boolean = false

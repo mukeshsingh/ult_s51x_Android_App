@@ -237,8 +237,8 @@ public class LoopView extends View {
             }
             k1++;
         }
-        canvas.drawLine(0.0F, firstLineY, measuredWidth, firstLineY, paintC);
-        canvas.drawLine(0.0F, secondLineY, measuredWidth, secondLineY, paintC);
+        canvas.drawLine(0.0F, firstLineY, measuredWidth, firstLineY, paintB);
+        canvas.drawLine(0.0F, secondLineY, measuredWidth, secondLineY, paintB);
         int j1 = 0;
         while (j1 < itemCount) {
             canvas.save();
@@ -294,7 +294,7 @@ public class LoopView extends View {
         int cWidth = r.width();
         paint.setTextAlign(Paint.Align.LEFT);
         paint.getTextBounds(text, 0, text.length(), r);
-        paint.setColor(colorGrayLight);
+//        paint.setColor(colorGrayLight);
         float x = cWidth / 2f - r.width() / 2f - r.left;
         canvas.drawText(text, x, y, paint);
     }
