@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -90,7 +90,8 @@
                         app:strokeColor="@color/enableBtn"
                         app:strokeWidth="1dp"
                         app:cornerRadius="8dp"
-                        app:backgroundTint="@color/disableBtn" />
+                        app:backgroundTint="@color/disableBtn"
+                        android:visibility="gone"/>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_pin_required"
@@ -103,7 +104,8 @@
                         app:strokeColor="@color/enableBtn"
                         app:strokeWidth="1dp"
                         app:cornerRadius="8dp"
-                        app:backgroundTint="@color/enableBtn"/>
+                        app:backgroundTint="@color/enableBtn"
+                        android:visibility="gone"/>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_no_pin_enable"
@@ -119,7 +121,7 @@
                         app:strokeWidth="1dp"
                         app:cornerRadius="8dp"
                         app:backgroundTint="@color/enableBtn"
-                        android:visibility="gone"/>
+                        android:visibility="visible"/>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_pin_required_disabled"
@@ -133,7 +135,7 @@
                         app:strokeWidth="1dp"
                         app:cornerRadius="8dp"
                         app:backgroundTint="@color/disableBtn"
-                        android:visibility="gone"/>
+                        android:visibility="visible"/>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -159,10 +161,14 @@
                     android:id="@+id/edit_text_enter_pin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:padding="12dp"
-                    android:hint="Select New Pin"
                     android:layout_marginBottom="20dp"
+                    android:hint="Select New Pin"
+                    android:inputType="text"
+                    android:fontFamily="@font/lato_regular"
+                    android:textSize="16sp"
+                    android:textColorHint="@color/lightGrey"
+                    android:textColor="@color/black"
+                    android:padding="12dp"
                     android:background="@drawable/edittext_outline" />
                 <EditText
                     android:id="@+id/edit_text_confirm_pin"
@@ -170,6 +176,10 @@
                     android:layout_height="wrap_content"
                     android:hint="Confirm New Pin"
                     android:inputType="text"
+                    android:fontFamily="@font/lato_regular"
+                    android:textSize="16sp"
+                    android:textColorHint="@color/lightGrey"
+                    android:textColor="@color/black"
                     android:padding="12dp"
                     android:background="@drawable/edittext_outline" />
 
@@ -177,29 +187,25 @@
 
             <LinearLayout
                 android:id="@+id/ll_pin_length"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp"
-                android:layout_marginTop="20dp">
-
-
+                android:paddingVertical="16dp"
+                android:layout_marginTop="20dp"
+                android:visibility="gone">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Choose PIN Length"
                         android:textSize="18sp"
                         android:gravity="center"
-                        android:fontFamily="@font/lato"
+                        android:fontFamily="@font/lato_regular"
                         android:textColor="@android:color/black"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="20dp" />
 
-
                     <TextView
-                        android:id="@+id/sim_length_value"
+                        android:id="@+id/txt_pin_length"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="20"
@@ -215,10 +221,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:max="100"
-                        android:progress="50"
-                        android:progressTint="@android:color/darker_gray"
-                        android:thumbTint="#636466"/>
+                        android:max="8"
+                        android:progress="5"
+                        android:progressDrawable="@drawable/progress"
+                        android:thumb="@drawable/thumb"/>
 
             </LinearLayout>
 
