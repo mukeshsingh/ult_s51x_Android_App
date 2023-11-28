@@ -19,14 +19,14 @@
         <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@drawable/dial_timeout"
+            android:src="@drawable/volume"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center_horizontal"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dial Timeout"
+            android:text="Volume"
             android:textSize="18sp"
             android:gravity="center"
             android:fontFamily="@font/lato_bold"
@@ -36,7 +36,7 @@
 
 
         <TextView
-            android:id="@+id/dial_timeout_value"
+            android:id="@+id/volume_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="20"
@@ -48,7 +48,7 @@
             android:layout_marginBottom="20dp" />
 
         <SeekBar
-            android:id="@+id/dial_timeout_slider"
+            android:id="@+id/volume_slider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -57,20 +57,9 @@
             android:progressTint="@android:color/darker_gray"
             android:thumbTint="#636466"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Expressed in seconds"
-            android:textSize="12sp"
-            android:gravity="center"
-            android:fontFamily="@font/lato"
-            android:textColor="#636466"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp"
-            android:layout_margin="10dp"/>
 
         <Button
-            android:id="@+id/dial_timeout_confirm"
+            android:id="@+id/volume_confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Confirm"
