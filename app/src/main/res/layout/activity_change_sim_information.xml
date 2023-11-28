@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -177,9 +177,48 @@
 
             <LinearLayout
                 android:id="@+id/ll_pin_length"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginTop="20dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Choose PIN Length"
+                        android:textSize="18sp"
+                        android:gravity="center"
+                        android:fontFamily="@font/lato"
+                        android:textColor="@android:color/black"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="20dp" />
+
+
+                    <TextView
+                        android:id="@+id/sim_length_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="20"
+                        android:textSize="80sp"
+                        android:gravity="center"
+                        android:fontFamily="@font/lato_light"
+                        android:textColor="#828282"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="20dp" />
+
+                    <SeekBar
+                        android:id="@+id/sim_slider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:max="100"
+                        android:progress="50"
+                        android:progressTint="@android:color/darker_gray"
+                        android:thumbTint="#636466"/>
 
             </LinearLayout>
 
