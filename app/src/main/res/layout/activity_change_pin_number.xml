@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:padding="16dp">
+    tools:context=".ChangePinNumberActivity"
+    android:background="@color/white">
     <include
         android:id="@+id/toolbar"
         layout="@layout/user_header"/>
     <LinearLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="100dp"
-        android:padding="16dp">
+        android:padding="32dp"
+        android:layout_below="@+id/toolbar">
         <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@drawable/lift_name"
+            android:src="@drawable/sim_information"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center_horizontal"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Change Lift Name"
+            android:text="SIM Information"
             android:textSize="18sp"
             android:gravity="center"
             android:fontFamily="@font/lato_bold"
@@ -36,17 +36,34 @@
             android:layout_marginBottom="20dp" />
 
         <EditText
-            android:id="@+id/edit_text_lift_name"
+            android:id="@+id/edit_text_new_pin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="New Name"
+            android:inputType="numberPassword"
+            android:hint="New Pin"
+            android:textColorHint="@color/lightGrey"
+            android:textColor="@color/black"
+            android:fontFamily="@font/lato_regular"
+            android:textSize="16sp"
+            android:padding="12dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/edittext_outline" />
+
+        <EditText
+            android:id="@+id/edit_text_confirm_pin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberPassword"
+            android:hint="Confirm New Pin"
+            android:textColorHint="@color/lightGrey"
+            android:textColor="@color/black"
+            android:fontFamily="@font/lato_regular"
+            android:textSize="16sp"
             android:padding="12dp"
             android:background="@drawable/edittext_outline" />
 
-
         <Button
-            android:id="@+id/btn_change_name"
+            android:id="@+id/btn_confirm_sim_pin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Confirm"
@@ -57,4 +74,10 @@
             android:background="@drawable/rounded_button_green_bg"
             app:backgroundTint="#99CC33"/>
     </LinearLayout>
-</LinearLayout>
+    <include
+        android:id="@+id/footer"
+        android:layout_alignParentBottom="true"
+        layout="@layout/home_back_bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" />
+</RelativeLayout>

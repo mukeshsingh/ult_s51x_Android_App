@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    tools:context=".ChangeSimInformationActivity"
+    android:background="@color/white">
     <include
         android:id="@+id/toolbar"
         layout="@layout/user_header"/>
-    <LinearLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="32dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_above="@+id/footer">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
         <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
@@ -72,16 +78,21 @@
             android:orientation="horizontal"
             >
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_pin_required"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="No PIN"
                 android:textSize="16sp"
+                android:fontFamily="@font/lato_regular"
                 android:layout_marginEnd="10dp"
-                android:textColor="#636466"
-                android:background="@drawable/button_background"/>
+                android:textColor="@color/enableBtn"
+                app:strokeColor="@color/enableBtn"
+                app:strokeWidth="1dp"
+                app:cornerRadius="8dp"
+                app:backgroundTint="@color/disableBtn"
+                />
 
             <Button
                 android:id="@+id/btn_no_pin"
@@ -90,8 +101,9 @@
                 android:layout_weight="1"
                 android:text="PIN Required"
                 android:textSize="16sp"
-                android:textColor="#636466"
-                android:background="@drawable/button_background"/>
+                android:textColor="@color/white"
+                android:background="@drawable/button_background_enable_grey"
+                app:backgroundTint="@color/enableBtn"/>
 
         </LinearLayout>
 
@@ -106,6 +118,12 @@
             android:textColor="@android:color/white"
             android:background="@drawable/rounded_button_green_bg"
             app:backgroundTint="#99CC33"/>
-
-    </LinearLayout>
-</LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <include
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        layout="@layout/home_back_bottom_bar"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

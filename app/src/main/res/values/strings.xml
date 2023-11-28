@@ -122,7 +122,7 @@
     <string name="you_have_made_no_calls">You have made no calls to configured numbers yet. You should make a test call to ensure correct operation of your sim card.</string>
     <string name="call_reminder_needed">It has been a while since your last call. You should make a test call to ensure correct operation of your SIM card</string>
     <string name="installer_provider">Installer Provider</string>
-    <string name="sim_information">Sim information</string>
+    <string name="sim_information">SIM Information</string>
     <string name="current_lift_pin_number">Current lift PIN number</string>
     <string name="enter_the_new_pin_number">Enter the new PIN Number</string>
     <string name="pin_required">PIN Required</string>
@@ -145,4 +145,6 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <string name="new_lift">"Find new lift"</string>
+    <string name="title_activity_user_lift_settings">UserLiftSettingsActivity</string>
+    <string name="title_activity_change_sim_information">ChangeSimInformationActivity</string>
 </resources>

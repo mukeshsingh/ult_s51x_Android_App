@@ -7,20 +7,20 @@
     android:background="#80000000"
     android:gravity="center">
 
-<ImageView
-android:id="@+id/imageView"
-android:layout_width="100dp"
-android:layout_height="100dp"
-android:src="@drawable/linked"/>
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/linked"/>
 
-<TextView
-android:id="@+id/textSuccess1"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:layout_marginTop="16dp"
-android:text="SUCCESSFUL"
-android:textColor="#FFFFFF"
-    android:textSize="36sp"/>
+    <TextView
+        android:id="@+id/textSuccess1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="SUCCESSFUL"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp"/>
     <TextView
         android:id="@+id/textSuccess2"
         android:layout_width="wrap_content"

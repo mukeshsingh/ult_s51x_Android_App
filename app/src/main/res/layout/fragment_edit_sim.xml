@@ -71,7 +71,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textView17"
         app:singleSelection="true">
 
-
         <Button
             android:id="@+id/btnNoPin"
             style="?attr/materialButtonOutlinedStyle"

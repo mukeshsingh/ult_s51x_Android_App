@@ -11,7 +11,7 @@
         android:id="@+id/imageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/link_broken"/>
+        android:src="@drawable/link_broken_round_red"/>
 
     <TextView
         android:id="@+id/textFail1"
