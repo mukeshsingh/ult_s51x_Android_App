@@ -38,6 +38,11 @@ class UserLiftSettingsActivity : AppCompatActivity() {
             intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
             startActivity(intent)
         }
+      binding.volume.setOnClickListener {
+          val intent = Intent(this, ChangeVolumeActivity::class.java)
+          intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
+          startActivity(intent)
+      }
 
         binding.simInformation.setOnClickListener {
             val intent = Intent(this, ChangeSimInformationActivity::class.java)
