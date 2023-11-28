@@ -106,7 +106,45 @@
                 app:backgroundTint="@color/enableBtn"/>
 
         </LinearLayout>
+            <LinearLayout
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:padding="16dp">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Change Lift Pin Number"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:fontFamily="@font/lato_bold"
+                    android:textColor="@android:color/black"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="20dp" />
+
+                <EditText
+                    android:id="@+id/edit_text_enter_pin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:hint="Select New Pin"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/edittext_outline" />
+                <EditText
+                    android:id="@+id/edit_text_confirm_pin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Confirm New Pin"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:background="@drawable/edittext_outline" />
+
+            </LinearLayout>
         <Button
             android:id="@+id/btn_confirm_sim_pin"
             android:layout_width="match_parent"
