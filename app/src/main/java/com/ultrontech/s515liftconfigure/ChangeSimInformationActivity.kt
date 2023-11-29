@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
@@ -15,6 +16,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityChangeSimInformationBinding
 import com.ultrontech.s515liftconfigure.models.PINNumber
@@ -72,7 +74,7 @@ class ChangeSimInformationActivity : AppCompatActivity() {
             binding.btnNoPinEnable.visibility = View.GONE
         }
 
-        btnConfirm.setOnClickListener {
+        btnConfirm.setOnClickListener { it ->
             when (currentView) {
                 1 -> {
                     val item = loopView.selectedItem
@@ -99,14 +101,20 @@ class ChangeSimInformationActivity : AppCompatActivity() {
                     var pin = binding.editTextEnterPin.text.toString()
                     var confirmPin = binding.editTextConfirmPin.text.toString()
 
-                    if (isPinRequired && pin == confirmPin && pin.length == pinLength) {
+                    if (pin == confirmPin && pin.length == pinLength) {
                         var pinArray = pin.map {
                             it.digitToInt()
                         }.toIntArray()
 
                         BluetoothLeService.service?.setPin(PINNumber(pinLength, pinArray))
+                        finish()
+                    } else if (pin.length != pinLength) {
+                        Snackbar.make(it, "Pin length must be $pinLength digit.", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show()
+                    } else if (pin != confirmPin) {
+                        Snackbar.make(it, "New Pin and Confirm Pin must be match.", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show()
                     }
-                    finish()
                 }
             }
         }
@@ -132,6 +140,7 @@ class ChangeSimInformationActivity : AppCompatActivity() {
             Util.getSimTypeName(SimType.ModemSimTypeUnknown), Util.getSimTypeName(
                 SimType.ModemSimTypeInstallerProvided), Util.getSimTypeName(SimType.ModemSimTypeUserContract), Util.getSimTypeName(
                 SimType.ModemSimTypeUserPAYG)))
+        Log.d(TAG, ">>>>>>>>>>>>>>>>>>>>>> SIM Type: ${BluetoothLeService.service?.device}")
         loopView.selectedItem = BluetoothLeService.service?.device?.simType?.ordinal ?: 0
         binding.txtPinLength.text = pinLength.toString()
 
@@ -162,5 +171,9 @@ class ChangeSimInformationActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_change_sim_information)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
+    }
+
+    companion object {
+        private val TAG = "ChangeSimInformationActivity"
     }
 }

@@ -222,6 +222,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:max="8"
+                        android:min="1"
                         android:progress="5"
                         android:progressDrawable="@drawable/progress"
                         android:thumb="@drawable/thumb"/>

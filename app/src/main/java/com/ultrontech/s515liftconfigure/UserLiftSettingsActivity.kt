@@ -6,12 +6,14 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityUserLiftSettingsBinding
 import com.ultrontech.s515liftconfigure.models.Device
+import com.ultrontech.s515liftconfigure.models.LiftConnectionState
 
 class UserLiftSettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserLiftSettingsBinding
@@ -89,13 +91,47 @@ class UserLiftSettingsActivity : AppCompatActivity() {
         }
     }
 
+    private fun updateConnectState() {
+        with(bluetoothLeService) {
+            when(device?.connectionState) {
+                LiftConnectionState.connected_noauth -> {
+//                    deviceStatus.text = resources.getString(R.string.device_connected_no_auth)
+//                    btnConnect.visibility = View.VISIBLE
+//                    btnEdit.visibility = View.GONE
+//                    showHideCards(View.GONE)
+                    device?.lift?.let { bluetoothLeService.authorise(it) }
+                }
+                LiftConnectionState.connected_auth -> {
+//                    deviceStatus.text = resources.getString(R.string.device_connected)
+//                    btnConnect.visibility = View.GONE
+//                    btnEdit.visibility = View.VISIBLE
+//                    showHideCards(View.VISIBLE)
+                }
+                LiftConnectionState.not_connected -> {
+//                    deviceStatus.text = resources.getString(R.string.device_not_connected)
+//                    btnConnect.visibility = View.VISIBLE
+//                    btnEdit.visibility = View.GONE
+//                    showHideCards(View.GONE)
+                }
+                LiftConnectionState.connect_error -> {
+//                    deviceStatus.text = resources.getString(R.string.device_connect_error)
+//                    btnConnect.visibility = View.VISIBLE
+//                    btnEdit.visibility = View.GONE
+//                    showHideCards(View.GONE)
+                }
+                else -> {}
+            }
+        }
+    }
+
+
     private val deviceUpdateReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
                 BluetoothLeService.ACTION_CONNECTION_UPDATE -> {
                     Log.d(HomeActivity.TAG, "Device connecting.")
 
-//                    updateConnectState()
+                    updateConnectState()
                 }
                 BluetoothLeService.ACTION_UPDATE_INFO -> {
                     Log.d(HomeActivity.TAG, "ACTION_UPDATE_INFO.")

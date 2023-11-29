@@ -878,7 +878,7 @@ class BluetoothLeService : Service() {
         val lift = device?.lift?.let { find(it.liftId) }
         if (lift?.phoneConfigControl == null) return
 
-        Log.d(TAG, "[BT::WRITE] call press delay ($simType)")
+        Log.d(TAG, "[BT::WRITE] SIM Type ($simType)")
         val command: ByteArray = byteArrayOf(S515BTCommand.btCmdSetModemSimType.toByte(), 0x01, simType.ordinal.toByte())
         lift?.phoneConfigControl?.value = command
         val success = writeCharacteristic(lift?.phoneConfigControl!!, value = command)
