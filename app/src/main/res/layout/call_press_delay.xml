@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@color/white">
     <include
         android:id="@+id/toolbar"
         layout="@layout/user_header"/>
@@ -15,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="32dp"
+        android:layout_below="@+id/toolbar">
         <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
@@ -81,4 +82,10 @@
             android:background="@drawable/rounded_button_green_bg"
             app:backgroundTint="#99CC33"/>
     </LinearLayout>
-</LinearLayout>
+    <include
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        layout="@layout/home_back_bottom_bar"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>
