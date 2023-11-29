@@ -42,6 +42,12 @@
         android:theme="@style/Theme.s515LiftConfigure"
         tools:targetApi="31">
         <activity
+            android:name=".UserContactActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MicrophoneSensitivityActivity"
+            android:exported="false" />
+        <activity
             android:name=".ChangeVolumeActivity"
             android:exported="false" />
         <activity

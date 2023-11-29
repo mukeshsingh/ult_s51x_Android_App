@@ -46,6 +46,18 @@ class UserLiftSettingsActivity : AppCompatActivity() {
           startActivity(intent)
       }
 
+        binding.microphoneSensitivity.setOnClickListener {
+            val intent = Intent(this, MicrophoneSensitivityActivity::class.java)
+            intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
+            startActivity(intent)
+        }
+
+        binding.userContactDetail.setOnClickListener {
+            val intent = Intent(this, UserContactActivity::class.java)
+            intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
+            startActivity(intent)
+        }
+
         binding.simInformation.setOnClickListener {
             val intent = Intent(this, ChangeSimInformationActivity::class.java)
             intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
