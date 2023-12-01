@@ -4,16 +4,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
     <include
         android:id="@+id/toolbar"
         layout="@layout/user_header" />
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Handicare V_Link45336"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="35dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/lato_medium"
+        android:textSize="20sp"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        />
     <ScrollView
         tools:context=".UserLiftSettingsActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/title"
         android:layout_above="@+id/footer">
 
         <LinearLayout
@@ -21,19 +35,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="20dp">
+            android:paddingBottom="30dp">
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Handicare V_Link45336"
-                android:layout_gravity="center"
-                android:layout_marginBottom="35dp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/lato_medium"
-                android:textSize="20sp"
-                />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"

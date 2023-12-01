@@ -53,7 +53,9 @@ class AddLiftActivity : AppCompatActivity() {
                 if (pinStr.length == 6 && ProfileStore.AddLiftPin == pinStr) {
                     val accessKey = pinStr.map { it.digitToInt() }.toIntArray()
                     val userLift = lift?.let { lft -> UserLift(liftId = lft.id, liftName = lft.name, accessKey = PINNumber(6, accessKey)) }
+
                     if (userLift != null) {
+                        if (profileStore.hasEngineerCapability) userLift.liftType = profileStore.selectedLiftType
                         profileStore.add(userLift)
                     }
 

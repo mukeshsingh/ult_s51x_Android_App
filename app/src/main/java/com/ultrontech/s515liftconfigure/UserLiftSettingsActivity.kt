@@ -20,6 +20,7 @@ class UserLiftSettingsActivity : AppCompatActivity() {
     private var liftId: String? = null
     private val bluetoothLeService: BluetoothLeService = BluetoothLeService.service!!
     private lateinit var liftName: TextView
+    private var hasEngineerCapability: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +28,7 @@ class UserLiftSettingsActivity : AppCompatActivity() {
         binding = ActivityUserLiftSettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        hasEngineerCapability = S515LiftConfigureApp.profileStore.hasEngineerCapability
         liftId = intent.extras?.getString(HomeActivity.INTENT_LIFT_ID)
         liftName = binding.title
         binding.liftName.setOnClickListener { view ->
@@ -68,15 +70,30 @@ class UserLiftSettingsActivity : AppCompatActivity() {
             finish()
         }
         binding.footer.btnHome.setOnClickListener {
-            val intent = Intent(this, MyProductsActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
+            finish()
         }
         binding.removeLift.setOnClickListener {
             bluetoothLeService.device?.lift?.let { it1 ->
                 S515LiftConfigureApp.profileStore.remove(it1)
                 finish()
             }
+        }
+
+        if (hasEngineerCapability) {
+            binding.engineerBoardDetail.visibility = View.VISIBLE
+            binding.engineerContactDetail.visibility = View.VISIBLE
+            binding.emergencyServiceDetails.visibility = View.VISIBLE
+            binding.dialTimeout.visibility = View.VISIBLE
+            binding.callPressDelay.visibility = View.VISIBLE
+
+            binding.br1.visibility = View.VISIBLE
+            binding.br2.visibility = View.VISIBLE
+            binding.br3.visibility = View.VISIBLE
+            binding.br4.visibility = View.VISIBLE
+            binding.br5.visibility = View.VISIBLE
+
+            binding.disconnectLift.visibility = View.GONE
+            binding.removeLift.visibility = View.GONE
         }
     }
 

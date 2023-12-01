@@ -1,23 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_marginHorizontal="20dp"
-    android:layout_marginTop="20dp"
-    >
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Handicare V_Link45336"
-        android:layout_gravity="center"
-        android:layout_marginBottom="35dp"
-        android:textColor="@color/text_color_title"
-        android:textSize="25sp"
-        />
+    android:layout_marginTop="20dp">
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -29,30 +18,35 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
         <ImageView
+            android:id="@+id/img_stair_lift"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/lift_name"
+            android:src="@drawable/stair_lift"
             android:layout_marginLeft="10dp" />
         <ImageView
+            android:id="@+id/img_elevator"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/elavator_dark"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/elevator"
+            android:visibility="gone" />
+        <ImageView
+            android:id="@+id/img_vertical_lift"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:visibility="gone"
+            android:src="@drawable/vertical_lift"
             android:layout_marginLeft="10dp" />
         <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:visibility="gone"
-        android:src="@drawable/vertical_lift_dark"
-        android:layout_marginLeft="10dp" />
-        <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:visibility="gone"
-        android:src="@drawable/inclined_lift_dark"
-        android:layout_marginLeft="10dp" />
+            android:id="@+id/img_inclined_lift"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:visibility="gone"
+            android:src="@drawable/inclined_lift"
+            android:layout_marginLeft="10dp" />
 
         <TextView
+            android:id="@+id/txt_lift_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -61,26 +55,25 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             />
-
         <ImageView
+            android:id="@+id/img_online_icon"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
             android:src="@drawable/linked"
-            android:layout_marginLeft="10dp" />
+            android:visibility="gone"/>
         <ImageView
+            android:id="@+id/img_offline_icon"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
             android:src="@drawable/out_of_signal"
-            android:visibility="gone"
-            android:layout_marginLeft="10dp" />
+            android:visibility="visible" />
 
     </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"/>
-
-
-
 
 </LinearLayout>

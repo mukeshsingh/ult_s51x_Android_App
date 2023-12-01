@@ -235,6 +235,7 @@ data class UserLift(
     var liftId: String,
     var liftName: String,
     var accessKey: PINNumber,
+    var liftType: String = "",
     var userContact1Name: String = "",
     var userContact2Name: String = "",
     var userContact3Name: String = "",

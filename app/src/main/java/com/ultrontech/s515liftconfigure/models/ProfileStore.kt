@@ -8,6 +8,7 @@ import java.util.UUID
 data class ProfileStore (
     var userDevices : Array<UserLift> = emptyArray(),
     var userName: String = "",
+    var selectedLiftType: String = "",
     var hasEngineerCapability: Boolean = false,
     var allowBiometrics: Boolean = false
 ) {

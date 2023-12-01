@@ -42,6 +42,21 @@
         android:theme="@style/Theme.s515LiftConfigure"
         tools:targetApi="31">
         <activity
+            android:name=".ChangeJobActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BoardDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SelectLiftTypeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EngineerHomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".UserContactActivity"
             android:exported="false" />
         <activity

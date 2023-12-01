@@ -9,50 +9,86 @@ import android.os.Bundle
 import android.os.IBinder
 import android.provider.Settings
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.ultrontech.s515liftconfigure.adapters.RecyclerViewAdapter
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothState
-import com.ultrontech.s515liftconfigure.databinding.ActivityMyProductsBinding
+import com.ultrontech.s515liftconfigure.databinding.ActivityEngineerHomeBinding
 
-class MyProductsActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMyProductsBinding
-    private lateinit var btnFindLift: Toolbar
-    private lateinit var noProduct: LinearLayout
+class EngineerHomeActivity : AppCompatActivity() {
+    private lateinit var adapter: RecyclerViewAdapter
+    private lateinit var itemTouchHelper: ItemTouchHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMyProductsBinding.inflate(layoutInflater)
-        btnFindLift = binding.btnFindLift
-        noProduct = binding.noProduct
-        llUserLifts = binding.llUserLifts
-
-        btnFindLift.setOnClickListener {
-            val intent = Intent(this, FindLiftActivity::class.java)
-            startActivity(intent)
-        }
-
+        binding = ActivityEngineerHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
+        noProduct = binding.noProduct
+        lvUserLifts = binding.lvUserLifts
 
-        inflater = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val userDevices = S515LiftConfigureApp.profileStore.userDevices
+        val data = userDevices.toList()
+        if (userDevices.isNotEmpty()) {
+            lvUserLifts.visibility = View.VISIBLE
+            noProduct.visibility = View.GONE
+        } else {
+            lvUserLifts.visibility = View.GONE
+            noProduct.visibility = View.VISIBLE
+        }
 
-        scanLifts()
+        adapter = RecyclerViewAdapter(this, data)
+        lvUserLifts.adapter = adapter
+        lvUserLifts.layoutManager = LinearLayoutManager(this)
+
+        // Setup swipe gestures using ItemTouchHelper
+        itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                // Handle swipe
+                val position = viewHolder.layoutPosition
+                val item = adapter.getItem(position)
+                Toast.makeText(this@EngineerHomeActivity, "Swiped left on $item", Toast.LENGTH_SHORT)
+                    .show()
+
+                // Toggle visibility of buttons layout
+                val vh = viewHolder as RecyclerViewAdapter.ViewHolder
+                vh.imgOnline.visibility =
+                    if (vh.imgOnline.visibility == View.VISIBLE) View.INVISIBLE else View.VISIBLE
+
+                // Reset swipe action
+                itemTouchHelper.startSwipe(viewHolder)
+            }
+        })
+
+        itemTouchHelper.attachToRecyclerView(lvUserLifts)
+
+        btnFindLift = binding.btnFindLift
+        btnFindLift.setOnClickListener {
+            val intent = Intent(this, SelectLiftTypeActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private val serviceConnection: ServiceConnection = object : ServiceConnection {
@@ -162,42 +198,6 @@ class MyProductsActivity : AppCompatActivity() {
             }
         }
 
-    private fun showUserDevices() {
-        llUserLifts.removeAllViews()
-        val userDevices = S515LiftConfigureApp.profileStore.userDevices
-        if (userDevices.isNotEmpty()) {
-            llUserLifts.visibility = View.VISIBLE
-            noProduct.visibility = View.GONE
-        } else {
-            llUserLifts.visibility = View.GONE
-            noProduct.visibility = View.VISIBLE
-        }
-
-        userDevices.forEach {userLift ->
-            val cardView = inflater.inflate(R.layout.card_component, null, false)
-            val liftName = cardView.findViewById<TextView>(R.id.txt_lift_name)
-            val btnEditLiftDetail = cardView.findViewById<Button>(R.id.btnEditLiftDetail)
-            liftName.text = userLift.liftName
-
-            btnEditLiftDetail.setOnClickListener {
-                val lift = BluetoothLeService.service?.find(userLift.liftId)
-                if (lift?.modelNumber != null && lift.modelNumber!!.isNotEmpty()) {
-                    val intent = Intent(this, UserLiftSettingsActivity::class.java)
-                    intent.putExtra(HomeActivity.INTENT_LIFT_ID, userLift.liftId)
-                    startActivity(intent)
-                } else {
-                    this@MyProductsActivity?.let { it1 ->
-                        S515LiftConfigureApp.instance.basicAlert(
-                            it1, "The mobile application is waiting for the connected BT device to finish processing."
-                        ){}
-                    }
-                }
-            }
-
-            llUserLifts.addView(cardView)
-        }
-    }
-
     private val gattUpdateReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
@@ -228,6 +228,7 @@ class MyProductsActivity : AppCompatActivity() {
 
                 BluetoothLeService.ACTION_BLUETOOTH_DEVICE_FOUND -> {
                     Log.d(HomeActivity.TAG, "Device found.")
+                    lvUserLifts.invalidate()
                 }
             }
         }
@@ -257,7 +258,8 @@ class MyProductsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
-        showUserDevices()
+        scanLifts()
+        lvUserLifts.invalidate()
     }
 
     override fun onPause() {
@@ -286,12 +288,13 @@ class MyProductsActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val TAG = "MyProductActivity"
-        const val INTENT_LIFT_ID = "com.ultrontech.s515liftconfigure.INTENT_LIFT_ID"
+        const val TAG = "EngineerHomeActivity"
     }
 
+    lateinit var binding: ActivityEngineerHomeBinding
+    private lateinit var btnFindLift: Toolbar
+    private lateinit var noProduct: LinearLayout
     private var state: BluetoothState = BluetoothState.Connecting
     private var bluetoothService : BluetoothLeService? = null
-    private lateinit var llUserLifts: LinearLayout
-    private lateinit var inflater: LayoutInflater
-    private lateinit var userName: TextView}
+    private lateinit var lvUserLifts: RecyclerView
+}
