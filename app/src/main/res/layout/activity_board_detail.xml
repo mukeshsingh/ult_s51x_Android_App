@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/border_background"
-                android:padding="16dp">
+                android:padding="1dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -180,6 +180,33 @@
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
                     </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_btn_edit_wifi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:background="#24A3EB"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/edit_white"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="8dp"/>
+
+                    <TextView
+                        android:id="@+id/edit_text_wifi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="EDIT"
+                        android:textSize="18sp"
+                        android:textColor="@android:color/white"
+                        android:fontFamily="@font/lato_bold"
+                        android:layout_gravity="center_vertical"/>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout

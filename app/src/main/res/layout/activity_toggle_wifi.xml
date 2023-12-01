@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".ChangeJobActivity"
+    android:background="@color/white">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/user_header"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="100dp"
+        android:padding="32dp"
+        android:layout_below="@+id/toolbar">
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/engineer_board_detail"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center_horizontal" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WIFI Details"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:fontFamily="@font/lato_bold"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp" />
+
+        <EditText
+            android:id="@+id/edt_job_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="WIFI SSID"
+            android:textColorHint="@color/lightGrey"
+            android:textColor="@color/black"
+            android:fontFamily="@font/lato_regular"
+            android:textSize="16sp"
+            android:padding="12dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/edittext_outline" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_no_security"
+                android:layout_width="0dp"
+                android:layout_height="54dp"
+                android:layout_weight="1"
+                android:text="NO SECURITY"
+                android:textSize="16sp"
+                android:fontFamily="@font/lato_regular"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/enableBtn"
+                app:strokeColor="@color/enableBtn"
+                app:strokeWidth="1dp"
+                app:cornerRadius="8dp"
+                app:backgroundTint="@color/disableBtn"
+                android:visibility="gone"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_wep_wpa"
+                android:layout_width="0dp"
+                android:layout_height="54dp"
+                android:layout_weight="1"
+                android:text="WEP/WPA"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                app:strokeColor="@color/enableBtn"
+                app:strokeWidth="1dp"
+                app:cornerRadius="8dp"
+                app:backgroundTint="@color/enableBtn"
+                android:visibility="gone"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_no_security_enable"
+                android:layout_width="0dp"
+                android:layout_height="54dp"
+                android:layout_weight="1"
+                android:text="NO SECURITY"
+                android:textSize="16sp"
+                android:fontFamily="@font/lato_regular"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/white"
+                app:strokeColor="@color/enableBtn"
+                app:strokeWidth="1dp"
+                app:cornerRadius="8dp"
+                app:backgroundTint="@color/enableBtn"
+                android:visibility="visible"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_wba_wpa_disabled"
+                android:layout_width="0dp"
+                android:layout_height="54dp"
+                android:layout_weight="1"
+                android:text="WEP/WPA"
+                android:textSize="16sp"
+                android:textColor="@color/enableBtn"
+                app:strokeColor="@color/enableBtn"
+                app:strokeWidth="1dp"
+                app:cornerRadius="8dp"
+                app:backgroundTint="@color/disableBtn"
+                android:visibility="visible"/>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/edt_client_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="WIFI Password"
+            android:textColorHint="@color/lightGrey"
+            android:textColor="@color/black"
+            android:fontFamily="@font/lato_regular"
+            android:textSize="16sp"
+            android:padding="12dp"
+            android:background="@drawable/edittext_outline" />
+
+        <Button
+            android:id="@+id/btn_confirm_job_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Confirm"
+            android:textSize="18sp"
+            android:layout_marginHorizontal="60dp"
+            android:layout_marginTop="60dp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/rounded_button_green_bg"
+            app:backgroundTint="#99CC33"/>
+    </LinearLayout>
+    <include android:id="@+id/footer"
+        layout="@layout/home_back_bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>
