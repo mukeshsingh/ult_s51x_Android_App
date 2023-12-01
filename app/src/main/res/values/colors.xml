@@ -25,6 +25,7 @@
     <color name="magnify_color">#838788</color>
     <color name="person_text_color">#838788</color>
     <color name="red">#F10000</color>
+    <color name="dark_red">#B70101</color>
     <color name="transparent">#00000000</color>
     <color name="dark_grey">#383838</color>
     <color name="card_bg_color_grey">#727677</color>
@@ -38,4 +39,5 @@
     <color name="text_color_title">#636466</color>
     <color name="grey_border_color">#636466</color>
     <color name="grey_btn_bg">#E5E5E5</color>
+    <color name="blue">#24A3EB</color>
 </resources>

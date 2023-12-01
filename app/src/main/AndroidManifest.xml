@@ -42,7 +42,7 @@
         android:theme="@style/Theme.s515LiftConfigure"
         tools:targetApi="31">
         <activity
-            android:name=".ChnageEmergencyContactActivity"
+            android:name=".ChangeEmergencyContactActivity"
             android:exported="false" />
         <activity
             android:name=".ChangeEngineerContactActivity"

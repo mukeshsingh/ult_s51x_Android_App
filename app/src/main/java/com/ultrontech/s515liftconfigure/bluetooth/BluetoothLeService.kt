@@ -1214,6 +1214,7 @@ fun BluetoothLeService.processSSIDList(data: ByteArray) {
              Log.d(BluetoothLeService.TAG, "SSID - number of ssid in list = $numSSIDs")
             for (s in 0 until numSSIDs) {
                 val se = 2 + s * 34
+                if (data.size < se + 34) break
                 val sx = data.copyOfRange(se, se + 34)
                 Log.d(BluetoothLeService.TAG, "SSID($s) = (${sx.decodeToString()})")
             }

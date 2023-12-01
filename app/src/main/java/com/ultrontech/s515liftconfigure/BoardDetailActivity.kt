@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
+import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityBoardDetailBinding
 
 class BoardDetailActivity : AppCompatActivity() {
     lateinit var binding: ActivityBoardDetailBinding
+    private val bluetoothLeService: BluetoothLeService = BluetoothLeService.service!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -20,93 +22,99 @@ class BoardDetailActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.llBtnEditWifi.setOnClickListener {
+            val intent = Intent(this, ChangeWifiActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.footer.btnHome.setOnClickListener {
             finish()
         }
         binding.footer.btnBack.setOnClickListener {
             finish()
         }
+
+        updateWifiDetail()
+        updateInfo()
+        updateJob()
     }
 
-    fun updateWifiDetail() {
+    private fun updateWifiDetail() {
         with(bluetoothLeService) {
             if (device?.connectedSSID != null) {
-                ssidConfiguredLabel.text = resources.getString(com.ultrontech.s515liftconfigure.R.string.ssid_configured)
-                wifiSsid.visibility = android.view.View.VISIBLE
-                wifiSsid.text = device?.connectedSSID
+                binding.ssidConfiguredLabel.text = resources.getString(R.string.ssid_configured)
+                binding.ssidConfiguredLabel.setTextColor(resources.getColor(R.color.text_color_title, theme))
             } else {
-                ssidConfiguredLabel.text = resources.getString(com.ultrontech.s515liftconfigure.R.string.ssid_not_configured)
-                wifiSsid.visibility = android.view.View.GONE
+                binding.ssidConfiguredLabel.text = resources.getString(R.string.ssid_not_configured)
+                binding.ssidConfiguredLabel.setTextColor(resources.getColor(R.color.dark_red, theme))
             }
 
             if (device?.wifiAvailable == true) {
-                wifiAvailableStatus.text = resources.getString(com.ultrontech.s515liftconfigure.R.string.wifi_available_status)
-                wifiAvailableStatus.setTextColor(resources.getColor(com.ultrontech.s515liftconfigure.R.color.white, theme))
+                binding.wifiAvailableStatus.text = resources.getString(R.string.wifi_available_status)
+                binding.wifiAvailableStatus.setTextColor(resources.getColor(R.color.text_color_title, theme))
             } else {
-                wifiAvailableStatus.text = resources.getString(com.ultrontech.s515liftconfigure.R.string.wifi_not_available_status)
-                wifiAvailableStatus.setTextColor(resources.getColor(com.ultrontech.s515liftconfigure.R.color.custom_pink, theme))
+                binding.wifiAvailableStatus.text = resources.getString(R.string.wifi_not_available_status)
+                binding.wifiAvailableStatus.setTextColor(resources.getColor(R.color.red, theme))
             }
 
             if (device?.wifiConnected == true) {
-                wifiConnectedStatus.text = resources.getString(com.ultrontech.s515liftconfigure.R.string.wifi_connected)
-                wifiConnectedStatus.setTextColor(resources.getColor(com.ultrontech.s515liftconfigure.R.color.white, theme))
+                binding.wifiConnectedStatus.text = resources.getString(R.string.wifi_connected)
+                binding.wifiConnectedStatus.setTextColor(resources.getColor(R.color.text_color_title, theme))
             } else {
-                wifiConnectedStatus.text = resources.getString(com.ultrontech.s515liftconfigure.R.string.wifi_not_connected)
-                wifiConnectedStatus.setTextColor(resources.getColor(com.ultrontech.s515liftconfigure.R.color.red, theme))
+                binding.wifiConnectedStatus.text = resources.getString(R.string.wifi_not_connected)
+                binding.wifiConnectedStatus.setTextColor(resources.getColor(R.color.red, theme))
             }
         }
     }
 
-    fun updateInfo() {
+    private fun updateInfo() {
         with(bluetoothLeService) {
             if (device?.commsBoard != null) {
                 if (device?.commsBoard!!.capabilities.getAll()[0].rawValue == 1u) {
-                    capGSM.background = androidx.core.content.res.ResourcesCompat.getDrawable(resources, com.ultrontech.s515liftconfigure.R.drawable.green_rounded_bg, theme)
+                    binding.capGSM.background = ResourcesCompat.getDrawable(resources, R.drawable.circle_bullet_green, theme)
                 } else {
-                    capGSM.background = androidx.core.content.res.ResourcesCompat.getDrawable(resources, com.ultrontech.s515liftconfigure.R.drawable.grey_rounded_bg, theme)
+                    binding.capGSM.background = ResourcesCompat.getDrawable(resources, R.drawable.circle_bullet_red, theme)
                 }
                 if (device?.commsBoard!!.capabilities.getAll()[0].rawValue == 2u) {
-                    capDiagnostics.background = androidx.core.content.res.ResourcesCompat.getDrawable(resources, com.ultrontech.s515liftconfigure.R.drawable.green_rounded_bg, theme)
+                    binding.capDiagnostics.background = ResourcesCompat.getDrawable(resources, R.drawable.circle_bullet_green, theme)
                 } else {
-                    capDiagnostics.background = androidx.core.content.res.ResourcesCompat.getDrawable(resources, com.ultrontech.s515liftconfigure.R.drawable.grey_rounded_bg, theme)
+                    binding.capDiagnostics.background = ResourcesCompat.getDrawable(resources, R.drawable.circle_bullet_red, theme)
                 }
                 if (device?.commsBoard!!.capabilities.getAll()[0].rawValue == 4u) {
-                    capWifi.background = androidx.core.content.res.ResourcesCompat.getDrawable(resources, com.ultrontech.s515liftconfigure.R.drawable.green_rounded_bg, theme)
+                    binding.capWifi.background = ResourcesCompat.getDrawable(resources, R.drawable.circle_bullet_green, theme)
                 } else {
-                    capWifi.background = androidx.core.content.res.ResourcesCompat.getDrawable(resources, com.ultrontech.s515liftconfigure.R.drawable.grey_rounded_bg, theme)
+                    binding.capWifi.background = ResourcesCompat.getDrawable(resources, R.drawable.circle_bullet_red, theme)
                 }
 
                 if (device?.commsBoard!!.capabilities.getAll()[0].rawValue == 8u) {
-                    capWifiAP.background = androidx.core.content.res.ResourcesCompat.getDrawable(resources, com.ultrontech.s515liftconfigure.R.drawable.green_rounded_bg, theme)
+                    binding.capWifiAP.background = ResourcesCompat.getDrawable(resources, R.drawable.circle_bullet_green, theme)
                 } else {
-                    capWifiAP.background = androidx.core.content.res.ResourcesCompat.getDrawable(resources, com.ultrontech.s515liftconfigure.R.drawable.grey_rounded_bg, theme)
+                    binding.capWifiAP.background = ResourcesCompat.getDrawable(resources, R.drawable.circle_bullet_red, theme)
                 }
             }
         }
     }
 
-    fun updateJob() {
+    private fun updateJob() {
         with(bluetoothLeService) {
             if (device?.job != null && device?.job?.length!! > 0) {
-                jobLabel.visibility= android.view.View.VISIBLE
-                job.text = device?.job
-                jobLabel.text = resources.getString(com.ultrontech.s515liftconfigure.R.string.job_name)
-                job.setTextColor(resources.getColor(com.ultrontech.s515liftconfigure.R.color.white, theme))
+                binding.jobLabel.visibility = View.VISIBLE
+                binding.job.text = device?.job
+                binding.jobLabel.text = resources.getString(R.string.job_name)
             } else {
-                jobLabel.visibility= android.view.View.GONE
-                job.text = resources.getString(com.ultrontech.s515liftconfigure.R.string.job_not_configured)
-                job.setTextColor(resources.getColor(com.ultrontech.s515liftconfigure.R.color.custom_pink, theme))
+                binding.jobLabel.visibility = View.GONE
+                binding.job.text = resources.getString(R.string.job_not_configured)
+                binding.job.setTextColor(resources.getColor(R.color.dark_red, theme))
             }
 
             if (device?.client != null && device?.client?.length!! > 0) {
-                clientLabel.visibility= android.view.View.VISIBLE
-                client.text = device?.client
-                clientLabel.text = resources.getString(com.ultrontech.s515liftconfigure.R.string.client)
-                client.setTextColor(resources.getColor(com.ultrontech.s515liftconfigure.R.color.white, theme))
+                binding.clientLabel.visibility = View.VISIBLE
+                binding.client.text = device?.client
+                binding.clientLabel.text = resources.getString(R.string.client)
             } else {
-                clientLabel.visibility= android.view.View.GONE
-                client.text = resources.getString(com.ultrontech.s515liftconfigure.R.string.job_not_configured)
-                client.setTextColor(resources.getColor(com.ultrontech.s515liftconfigure.R.color.custom_pink, theme))
+                binding.clientLabel.visibility = View.GONE
+                binding.client.text = resources.getString(R.string.job_not_configured)
+                binding.client.setTextColor(resources.getColor(R.color.dark_red, theme))
             }
         }
     }

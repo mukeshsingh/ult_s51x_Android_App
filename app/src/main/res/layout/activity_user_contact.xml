@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:padding="16dp"
-    tools:context=".UserContactActivity">
+    tools:context=".UserContactActivity"
+    android:background="@color/white">
     <include
         android:id="@+id/toolbar"
         layout="@layout/user_header"/>
     <LinearLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:layout_below="@+id/toolbar">
         <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
@@ -40,7 +39,7 @@
             android:layout_height="wrap_content"
             android:text="Contact 1"
             android:textSize="18sp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/lato_bold"
             android:textColor="@android:color/black"/>
         <View
@@ -48,17 +47,13 @@
             android:layout_height="1dp"
             android:background="@android:color/darker_gray"/>
         <LinearLayout
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="76dp"
             android:orientation="horizontal"
             >
 
             <LinearLayout
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_weight="1"
@@ -66,52 +61,47 @@
 
                 >
                 <LinearLayout
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/edit_contact_name"
+                        android:id="@+id/contact_name1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Peter Parker"
                         android:textSize="16sp"
                         android:fontFamily="@font/lato"
                         android:textColor="@android:color/black"
-                        android:layout_marginBottom="10dp" />
+                        android:layout_marginBottom="5dp" />
                     <TextView
-                        android:id="@+id/text_mob_number"
+                        android:id="@+id/phone1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="+19996667272"
                         android:textSize="16sp"
                         android:fontFamily="@font/lato_bold"
                         android:textColor="@android:color/black"
-                        android:layout_marginBottom="10dp" />
+                        android:layout_marginBottom="5dp" />
 
                 </LinearLayout>
 
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/edit_contact_detail"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="wrap_content"
+                android:id="@+id/edit_contact_detail1"
+                android:layout_width="42dp"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:padding="16dp"
-                android:background="#24A3EB"
+                android:background="@color/blue"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center">
 
                 <ImageView
+                    android:id="@+id/img1"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/edit_white"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="8dp"/>
+                    android:layout_gravity="center_vertical"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -120,14 +110,12 @@
             android:layout_height="1dp"
             android:background="@android:color/darker_gray"/>
 
-
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Contact 2"
             android:textSize="18sp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/lato_bold"
             android:textColor="@android:color/black"/>
         <View
@@ -135,70 +123,60 @@
             android:layout_height="1dp"
             android:background="@android:color/darker_gray"/>
         <LinearLayout
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="76dp"
             android:orientation="horizontal"
             >
 
             <LinearLayout
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_weight="1"
-                android:padding="12dp"
-
+                android:paddingVertical="8dp"
                 >
                 <LinearLayout
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/edit_contact_name2"
+                        android:id="@+id/contact_name2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Peter Parker"
                         android:textSize="16sp"
                         android:fontFamily="@font/lato"
                         android:textColor="@android:color/black"
-                        android:layout_marginBottom="10dp" />
+                        android:layout_marginBottom="5dp" />
                     <TextView
-                        android:id="@+id/text_mob_number2"
+                        android:id="@+id/phone2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="+19996667272"
                         android:textSize="16sp"
                         android:fontFamily="@font/lato_bold"
                         android:textColor="@android:color/black"
-                        android:layout_marginBottom="10dp" />
+                        android:layout_marginBottom="5dp" />
 
                 </LinearLayout>
 
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/edit_contact_detail2"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="wrap_content"
+                android:layout_width="42dp"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:padding="16dp"
-                android:background="#24A3EB"
+                android:background="@color/blue"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center">
 
                 <ImageView
+                    android:id="@+id/img2"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/edit_white"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="8dp"/>
+                    android:layout_gravity="center_vertical"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -212,7 +190,7 @@
             android:layout_height="wrap_content"
             android:text="Contact 3"
             android:textSize="18sp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/lato_bold"
             android:textColor="@android:color/black"/>
         <View
@@ -220,10 +198,8 @@
             android:layout_height="1dp"
             android:background="@android:color/darker_gray"/>
         <LinearLayout
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="76dp"
             android:orientation="horizontal"
             >
 
@@ -238,52 +214,46 @@
 
                 >
                 <LinearLayout
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     >
 
                     <TextView
-                        android:id="@+id/edit_contact_name3"
+                        android:id="@+id/contact_name3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Peter Parker"
                         android:textSize="16sp"
                         android:fontFamily="@font/lato"
                         android:textColor="@android:color/black"
-                        android:layout_marginBottom="10dp" />
+                        android:layout_marginBottom="5dp" />
                     <TextView
-                        android:id="@+id/text_mob_number3"
+                        android:id="@+id/phone3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="+19996667272"
                         android:textSize="16sp"
                         android:fontFamily="@font/lato_bold"
                         android:textColor="@android:color/black"
-                        android:layout_marginBottom="10dp" />
-
+                        android:layout_marginBottom="5dp" />
                 </LinearLayout>
-
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/edit_contact_detail3"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="wrap_content"
+                android:layout_width="42dp"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:padding="16dp"
-                android:background="#828282"
+                android:background="@color/grey"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/plus_sign_white"
+                    android:id="@+id/img3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="8dp"/>
+                    android:src="@drawable/plus_sign_white" />
             </LinearLayout>
         </LinearLayout>
 
@@ -291,17 +261,22 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@android:color/darker_gray"/>
+        <Button
+            android:id="@+id/btn_confirm_contact_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Confirm"
+            android:textSize="18sp"
+            android:layout_marginHorizontal="80dp"
+            android:layout_marginTop="50dp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/rounded_button_green_bg"
+            app:backgroundTint="#99CC33"/>
     </LinearLayout>
-    <Button
-        android:id="@+id/btn_confirm_contact_detail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Confirm"
-        android:textSize="18sp"
-        android:layout_marginHorizontal="80dp"
-        android:layout_marginTop="50dp"
-        android:textColor="@android:color/white"
-        android:background="@drawable/rounded_button_green_bg"
-        app:backgroundTint="#99CC33"/>
 
-</LinearLayout>
+    <include android:id="@+id/footer"
+        layout="@layout/home_back_bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

@@ -49,7 +49,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/edit_text_no_ssid"
+                        android:id="@+id/ssid_configured_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="NO SSID CONFIGURED"
@@ -60,7 +60,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="10dp" />
                     <TextView
-                        android:id="@+id/edit_text_wifi_available"
+                        android:id="@+id/wifiAvailableStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Wifi is available on device"
@@ -71,7 +71,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="10dp" />
                     <TextView
-                        android:id="@+id/edit_text_no_wifi"
+                        android:id="@+id/wifiConnectedStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Wifi is not Connected"
@@ -106,9 +106,10 @@
                         android:gravity="center_vertical">
 
                         <View
+                            android:id="@+id/capGSM"
                             android:layout_width="14dp"
                             android:layout_height="14dp"
-                            android:background="@drawable/circle_bullet"
+                            android:background="@drawable/circle_bullet_green"
                             android:layout_marginEnd="8dp"/>
 
                         <TextView
@@ -127,9 +128,10 @@
                         android:layout_marginTop="8dp">
 
                         <View
+                            android:id="@+id/capDiagnostics"
                             android:layout_width="14dp"
                             android:layout_height="14dp"
-                            android:background="@drawable/circle_bullet"
+                            android:background="@drawable/circle_bullet_green"
                             android:layout_marginEnd="8dp"/>
 
                         <TextView
@@ -148,9 +150,10 @@
                         android:layout_marginTop="8dp">
 
                         <View
+                            android:id="@+id/capWifi"
                             android:layout_width="14dp"
                             android:layout_height="14dp"
-                            android:background="@drawable/circle_bullet"
+                            android:background="@drawable/circle_bullet_green"
                             android:layout_marginEnd="8dp"/>
 
                         <TextView
@@ -168,9 +171,10 @@
                         android:layout_marginTop="8dp">
 
                         <View
+                            android:id="@+id/capWifiAP"
                             android:layout_width="14dp"
                             android:layout_height="14dp"
-                            android:background="@drawable/circle_bullet"
+                            android:background="@drawable/circle_bullet_green"
                             android:layout_marginEnd="8dp"/>
 
                         <TextView
@@ -227,7 +231,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/edit_text_job_name_title"
+                            android:id="@+id/jobLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Job Name"
@@ -235,8 +239,8 @@
                             android:fontFamily="@font/lato_medium"
                             android:textColor="@android:color/black"
                             android:layout_marginBottom="10dp" />
-                        <EditText
-                            android:id="@+id/edit_text_job_name"
+                        <TextView
+                            android:id="@+id/job"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="12334 Parker Avenue"
@@ -252,7 +256,7 @@
                         android:orientation="vertical"
                         android:background="@drawable/single_line_border">
                         <TextView
-                            android:id="@+id/edit_text_client_name_title"
+                            android:id="@+id/clientLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Client Name"
@@ -262,7 +266,7 @@
                             android:textColor="@android:color/black"
                             android:layout_marginBottom="10dp" />
                         <TextView
-                            android:id="@+id/edit_text_client_name"
+                            android:id="@+id/client"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Peter Parker"

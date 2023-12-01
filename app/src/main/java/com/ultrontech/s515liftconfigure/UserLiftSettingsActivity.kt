@@ -9,10 +9,8 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.ui.AppBarConfiguration
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityUserLiftSettingsBinding
-import com.ultrontech.s515liftconfigure.databinding.ChangeEmergencyServicesDetailsBinding
 import com.ultrontech.s515liftconfigure.models.Device
 import com.ultrontech.s515liftconfigure.models.LiftConnectionState
 
@@ -80,7 +78,7 @@ class UserLiftSettingsActivity : AppCompatActivity() {
         }
 
         binding.emergencyServiceDetails.setOnClickListener {
-            val intent = Intent(this, ChangeEmergencyServicesDetailsBinding::class.java)
+            val intent = Intent(this, ChangeEmergencyContactActivity::class.java)
             intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
             startActivity(intent)
         }
@@ -99,6 +97,12 @@ class UserLiftSettingsActivity : AppCompatActivity() {
 
         binding.dialTimeout.setOnClickListener {
             val intent = Intent(this, ChangeDialTimeoutActivity::class.java)
+            intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
+            startActivity(intent)
+        }
+
+        binding.userContactDetail.setOnClickListener {
+            val intent = Intent(this, UserContactActivity::class.java)
             intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
             startActivity(intent)
         }
