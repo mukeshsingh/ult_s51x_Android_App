@@ -42,6 +42,24 @@
         android:theme="@style/Theme.s515LiftConfigure"
         tools:targetApi="31">
         <activity
+            android:name=".ChnageEmergencyContactActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChangeEngineerContactActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChangeUserContactActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChangeDialTimeoutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChangeCallPressDelayActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChangeWifiActivity"
+            android:exported="false" />
+        <activity
             android:name=".ChangeJobActivity"
             android:exported="false" />
         <activity

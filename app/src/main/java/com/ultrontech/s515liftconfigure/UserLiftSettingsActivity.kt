@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityUserLiftSettingsBinding
+import com.ultrontech.s515liftconfigure.databinding.ChangeEmergencyServicesDetailsBinding
 import com.ultrontech.s515liftconfigure.models.Device
 import com.ultrontech.s515liftconfigure.models.LiftConnectionState
 
@@ -62,6 +63,42 @@ class UserLiftSettingsActivity : AppCompatActivity() {
 
         binding.simInformation.setOnClickListener {
             val intent = Intent(this, ChangeSimInformationActivity::class.java)
+            intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
+            startActivity(intent)
+        }
+
+        binding.engineerBoardDetail.setOnClickListener {
+            val intent = Intent(this, BoardDetailActivity::class.java)
+            intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
+            startActivity(intent)
+        }
+
+        binding.engineerContactDetail.setOnClickListener {
+            val intent = Intent(this, ChangeEngineerContactActivity::class.java)
+            intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
+            startActivity(intent)
+        }
+
+        binding.emergencyServiceDetails.setOnClickListener {
+            val intent = Intent(this, ChangeEmergencyServicesDetailsBinding::class.java)
+            intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
+            startActivity(intent)
+        }
+
+        binding.userContactDetail.setOnClickListener {
+            val intent = Intent(this, ChangeUserContactActivity::class.java)
+            intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
+            startActivity(intent)
+        }
+
+        binding.callPressDelay.setOnClickListener {
+            val intent = Intent(this, ChangeCallPressDelayActivity::class.java)
+            intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
+            startActivity(intent)
+        }
+
+        binding.dialTimeout.setOnClickListener {
+            val intent = Intent(this, ChangeDialTimeoutActivity::class.java)
             intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
             startActivity(intent)
         }
