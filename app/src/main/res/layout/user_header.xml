@@ -14,7 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="20sp"
-        android:src="@drawable/touch_icon"/>
+        android:background="@drawable/rounded_button_green_bg"
+        android:src="@drawable/touch_icon" />
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -18,33 +18,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:elevation="7dp"
-                android:outlineAmbientShadowColor="@color/black"
-                android:outlineSpotShadowColor="@color/black">
-                <ImageView
-                    android:id="@+id/option_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="20sp"
-                    android:src="@drawable/touch_icon"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="20sp"
-                    android:src="@drawable/one_touch_alert_title"
-                    android:layout_gravity="right"/>
-            </androidx.appcompat.widget.Toolbar>
+            <include android:id="@+id/toolbar"
+                layout="@layout/user_header"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="20sp"
-                android:text="My products"
+                android:text="My Products"
                 android:fontFamily="@font/lato_medium"
                 android:textSize="20sp"
                 android:gravity="center"

@@ -9,7 +9,7 @@ import com.ultrontech.s515liftconfigure.databinding.ActivityChangeCallPressDelay
 
 class ChangeCallPressDelayActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChangeCallPressDelayBinding
-    private var value = 5
+    private var value = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChangeCallPressDelayBinding.inflate(layoutInflater)

@@ -150,7 +150,7 @@
 
     <!--  Menu Item  -->
     <string name="account_name">Account Name</string>
-    <string name="account">Account</string>
+    <string name="account">Account Lifts</string>
     <string name="language">Language</string>
     <string name="default_language">English</string>
     <string name="troubleshooting">Troubleshooting</string>

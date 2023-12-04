@@ -43,11 +43,7 @@ class MyProductsActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
-
         inflater = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-
-        scanLifts()
     }
 
     private val serviceConnection: ServiceConnection = object : ServiceConnection {
@@ -252,6 +248,8 @@ class MyProductsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
+        scanLifts()
+        registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
         showUserDevices()
     }
 
@@ -263,9 +261,9 @@ class MyProductsActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
 
-        if (bluetoothService != null) {
-            bluetoothService!!.close()
-        }
+        try { bluetoothService!!.close() } catch (e: Exception) { }
+        try { bluetoothService!!.disconnect() } catch (e: Exception) { }
+        try { BluetoothLeService.service!!.unbindService(serviceConnection) } catch (e: Exception) { }
     }
 
     private fun makeGattUpdateIntentFilter(): IntentFilter? {

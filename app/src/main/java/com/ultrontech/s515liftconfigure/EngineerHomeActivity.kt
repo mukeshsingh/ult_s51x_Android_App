@@ -3,6 +3,7 @@ package com.ultrontech.s515liftconfigure
 import android.Manifest
 import android.content.*
 import android.content.pm.PackageManager
+import android.graphics.drawable.AnimationDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -11,7 +12,6 @@ import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -99,6 +99,7 @@ class EngineerHomeActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
+            binding.toolbar.optionBtn.background = null
             binding.toolbar.optionBtn.setOnClickListener {
                 if (binding.optionMenu.llOptionMenu.visibility == View.GONE) {
                     binding.optionMenu.llOptionMenu.visibility = View.VISIBLE
@@ -115,9 +116,14 @@ class EngineerHomeActivity : AppCompatActivity() {
             }
             binding.optionMenu.llMenuLanguage.setOnClickListener {
                 binding.optionMenu.llOptionMenu.visibility = View.GONE
+                val intent = Intent(this@EngineerHomeActivity, LanguageSelectorActivity::class.java)
+                startActivity(intent)
             }
             binding.optionMenu.llMenuTroubleshoot.setOnClickListener {
                 binding.optionMenu.llOptionMenu.visibility = View.GONE
+                val intent = Intent(this@EngineerHomeActivity, TroubleshootingActivity::class.java)
+                startActivity(intent)
+
             }
             binding.optionMenu.llOptionMenu.setOnClickListener {
                 binding.optionMenu.llOptionMenu.visibility = View.GONE
@@ -279,18 +285,22 @@ class EngineerHomeActivity : AppCompatActivity() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
                 BluetoothLeService.ACTION_GATT_CONNECTING -> {
+                    showLoader()
                     updateConnectionState(BluetoothState.Connecting)
                 }
 
                 BluetoothLeService.ACTION_GATT_CONNECTED -> {
+                    stopLoader()
                     updateConnectionState(BluetoothState.Connected)
                 }
 
                 BluetoothLeService.ACTION_GATT_CONNECTION_FAILURE -> {
+                    stopLoader()
                     updateConnectionState(BluetoothState.ConnectionFailure)
                 }
 
                 BluetoothLeService.ACTION_GATT_DISCONNECTED -> {
+                    stopLoader()
                     updateConnectionState(BluetoothState.NotConnected)
                 }
 
@@ -299,17 +309,31 @@ class EngineerHomeActivity : AppCompatActivity() {
                 }
 
                 BluetoothLeService.ACTION_GATT_SERVICES_AUTHENTICATED -> {
+                    stopLoader()
                     // Show all the supported services and characteristics on the user interface.
                     updateConnectionState(BluetoothState.Connected)
                 }
 
                 BluetoothLeService.ACTION_BLUETOOTH_DEVICE_FOUND -> {
                     Log.d(HomeActivity.TAG, "Device found.")
+                    stopLoader()
                     lvUserLifts.invalidate()
                     adapter.notifyDataSetChanged()
                 }
+
+                BluetoothLeService.ACTION_LIFT_LIST_UPDATED -> {
+                    stopLoader()
+                }
             }
         }
+    }
+
+    private fun stopLoader() {
+
+    }
+
+    private fun showLoader() {
+
     }
 
     fun updateConnectionState(state: BluetoothState) {
@@ -341,9 +365,12 @@ class EngineerHomeActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
 
         if (S515LiftConfigureApp.profileStore.userName.isNotEmpty()) {
-            binding.optionMenu.txtAccount.text = S515LiftConfigureApp.profileStore.userName
+            val name = S515LiftConfigureApp.profileStore.userName.replaceFirstChar { char -> char.uppercase()}
+            binding.optionMenu.txtAccount.text = name
+            binding.title.text = (name + " Lifts")
         } else {
             binding.optionMenu.txtAccount.text = resources.getString(R.string.account)
+            binding.title.text = resources.getString(R.string.account)
         }
     }
 
@@ -355,9 +382,9 @@ class EngineerHomeActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
 
-        if (bluetoothService != null) {
-            bluetoothService!!.close()
-        }
+        try { bluetoothService!!.close() } catch (e: Exception) { }
+        try { bluetoothService!!.disconnect() } catch (e: Exception) { }
+        try { BluetoothLeService.service!!.unbindService(serviceConnection) } catch (e: Exception) { }
     }
 
     private fun makeGattUpdateIntentFilter(): IntentFilter? {
@@ -369,6 +396,7 @@ class EngineerHomeActivity : AppCompatActivity() {
             addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED)
             addAction(BluetoothLeService.ACTION_GATT_SERVICES_AUTHENTICATED)
             addAction(BluetoothLeService.ACTION_BLUETOOTH_DEVICE_FOUND)
+            addAction(BluetoothLeService.ACTION_LIFT_LIST_UPDATED)
         }
     }
 
