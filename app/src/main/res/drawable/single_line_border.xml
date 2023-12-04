@@ -6,14 +6,14 @@
         android:left="-1dp"
         android:right="-1dp">
         <shape>
-            <solid android:color="#636466" /> <!-- Border color -->
+            <solid android:color="@color/grey_border_color" /> <!-- Border color -->
         </shape>
     </item>
 
     <!-- Background -->
     <item android:top="1dp">
         <shape>
-            <solid android:color="#FFFFFF" /> <!-- Background color -->
+            <solid android:color="@color/white" /> <!-- Background color -->
         </shape>
     </item>
 </layer-list>

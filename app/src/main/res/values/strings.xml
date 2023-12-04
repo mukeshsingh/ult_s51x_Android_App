@@ -16,7 +16,7 @@
     <string name="network">NETWORK</string>
     <string name="cancel">Cancel</string>
     <string name="update">Update</string>
-    <string name="engineer_logout">Engineer Logout</string>
+    <string name="engineer_logout">LOG OUT</string>
     <string name="cancel2">Cancel</string>
     <string name="client_name2">Client Name</string>
     <string name="ultron_test2">Ultron Test</string>
@@ -147,4 +147,12 @@
     <string name="new_lift">"Find new lift"</string>
     <string name="title_activity_user_lift_settings">UserLiftSettingsActivity</string>
     <string name="title_activity_change_sim_information">ChangeSimInformationActivity</string>
+
+    <!--  Menu Item  -->
+    <string name="account_name">Account Name</string>
+    <string name="account">Account</string>
+    <string name="language">Language</string>
+    <string name="default_language">English</string>
+    <string name="troubleshooting">Troubleshooting</string>
+    <string name="access_resources">Access Resources</string>
 </resources>

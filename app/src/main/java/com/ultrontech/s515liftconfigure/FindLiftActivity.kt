@@ -31,7 +31,10 @@ class FindLiftActivity : AppCompatActivity() {
         liftList.adapter = bluetoothService?.lifts?.let { LiftListAdapter(this, it) }
 
         homeBtn.setOnClickListener {
-            val intent = Intent(this, MyProductsActivity::class.java)
+            var intent = Intent(this, MyProductsActivity::class.java)
+            if (S515LiftConfigureApp.profileStore.hasEngineerCapability) {
+                intent = Intent(this, EngineerHomeActivity::class.java)
+            }
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }

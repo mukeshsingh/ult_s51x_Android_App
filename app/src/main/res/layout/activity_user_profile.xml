@@ -1,94 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/black">
-
-
-    <TextView
-        android:id="@+id/textView32"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="80dp"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:text="@string/name"
-        android:textColor="#838788"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout4"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".UserProfileActivity">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/user_header"/>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="112dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/cardcorner"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="100dp"
+        android:padding="32dp"
+        android:layout_below="@+id/toolbar">
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/touch_icon"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center_horizontal"
+            />
         <TextView
-            android:id="@+id/textView40"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="sans-serif-condensed-medium"
-            android:text="@string/enterName"
-            android:textColor="#fff"
-            android:textSize="16sp"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <View
-            android:id="@+id/view5"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#838788"
-            android:layout_marginHorizontal="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView40"
-            app:layout_constraintVertical_bias="0.183"
-            tools:layout_editor_absoluteX="0dp"></View>
+            android:text="Change Profile Name"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:fontFamily="@font/lato_bold"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp" />
 
         <EditText
             android:id="@+id/edt_profile_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="8dp"
-            android:padding="10dp"
-            android:background="@android:color/transparent"
-            android:hint="@string/profile_name_hint"
-            android:outlineProvider="none"
-            android:textColor="#fff"
-            android:textColorHint="#838788"
-            android:textSize="28sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="User Profile"
-        android:textColor="@color/white"
-        android:textSize="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:inputType="text"
+            android:hint="Phone"
+            android:textColorHint="@color/lightGrey"
+            android:textColor="@color/black"
+            android:fontFamily="@font/lato_regular"
+            android:textSize="16sp"
+            android:padding="12dp"
+            android:background="@drawable/edittext_outline" />
+        <Button
+            android:id="@+id/btn_confirm_profile_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Confirm"
+            android:textSize="18sp"
+            android:layout_marginHorizontal="60dp"
+            android:layout_marginTop="60dp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/rounded_button_green_bg"
+            app:backgroundTint="#99CC33"/>
+    </LinearLayout>
+    <include android:id="@+id/footer"
+        layout="@layout/home_back_bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

@@ -1,28 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_marginHorizontal="20dp"
-    android:layout_marginTop="20dp">
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+    android:layout_height="51dp"
+    android:layout_margin="20dp">
     <LinearLayout
-        android:id="@+id/engineer_after_link"
+        android:id="@+id/row"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="51dp"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:background="@drawable/top_bottom_border">
         <ImageView
             android:id="@+id/img_stair_lift"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/stair_lift"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginStart="10dp" />
         <ImageView
             android:id="@+id/img_elevator"
             android:layout_width="30dp"
@@ -69,11 +63,53 @@
             android:layout_marginLeft="10dp"
             android:src="@drawable/out_of_signal"
             android:visibility="visible" />
-
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
-
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/llBtnRemove"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="15dp"
+        android:orientation="horizontal"
+        android:background="@color/dark_red"
+        android:layout_alignParentStart="true"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="REMOVE"
+            android:fontFamily="@font/lato_semibold"
+            android:textSize="16dp"
+            android:textColor="@color/white"/>
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="15dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/delete_white"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/llBtnConnect"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="15dp"
+        android:orientation="horizontal"
+        android:background="@color/blue"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="DISCONNECT"
+            android:fontFamily="@font/lato_semibold"
+            android:textSize="16dp"
+            android:textColor="@color/white"/>
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="15dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/link_broken"/>
+    </LinearLayout>
+</RelativeLayout>

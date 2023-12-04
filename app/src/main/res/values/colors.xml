@@ -40,4 +40,5 @@
     <color name="grey_border_color">#636466</color>
     <color name="grey_btn_bg">#E5E5E5</color>
     <color name="blue">#24A3EB</color>
+    <color name="overlay">#00000055</color>
 </resources>

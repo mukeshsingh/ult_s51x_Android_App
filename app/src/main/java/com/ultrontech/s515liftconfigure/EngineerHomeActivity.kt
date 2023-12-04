@@ -24,6 +24,7 @@ import com.ultrontech.s515liftconfigure.adapters.RecyclerViewAdapter
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothState
 import com.ultrontech.s515liftconfigure.databinding.ActivityEngineerHomeBinding
+import com.ultrontech.s515liftconfigure.models.UserLift
 
 class EngineerHomeActivity : AppCompatActivity() {
     private lateinit var adapter: RecyclerViewAdapter
@@ -35,60 +36,136 @@ class EngineerHomeActivity : AppCompatActivity() {
         binding = ActivityEngineerHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        noProduct = binding.noProduct
-        lvUserLifts = binding.lvUserLifts
+        with(S515LiftConfigureApp) {
+            noProduct = binding.noProduct
+            lvUserLifts = binding.lvUserLifts
 
-        val userDevices = S515LiftConfigureApp.profileStore.userDevices
-        val data = userDevices.toList()
-        if (userDevices.isNotEmpty()) {
-            lvUserLifts.visibility = View.VISIBLE
-            noProduct.visibility = View.GONE
-        } else {
-            lvUserLifts.visibility = View.GONE
-            noProduct.visibility = View.VISIBLE
-        }
-
-        adapter = RecyclerViewAdapter(this, data)
-        lvUserLifts.adapter = adapter
-        lvUserLifts.layoutManager = LinearLayoutManager(this)
-
-        // Setup swipe gestures using ItemTouchHelper
-        itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
-            0,
-            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-        ) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
+            var userDevices = profileStore.userDevices
+            var data = userDevices.toList()
+            if (userDevices.isNotEmpty()) {
+                lvUserLifts.visibility = View.VISIBLE
+                noProduct.visibility = View.GONE
+            } else {
+                lvUserLifts.visibility = View.GONE
+                noProduct.visibility = View.VISIBLE
             }
 
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                // Handle swipe
-                val position = viewHolder.layoutPosition
-                val item = adapter.getItem(position)
-                Toast.makeText(this@EngineerHomeActivity, "Swiped left on $item", Toast.LENGTH_SHORT)
-                    .show()
+            adapter = RecyclerViewAdapter(this@EngineerHomeActivity, data)
+            lvUserLifts.adapter = adapter
+            lvUserLifts.layoutManager = LinearLayoutManager(this@EngineerHomeActivity)
 
-                // Toggle visibility of buttons layout
-                val vh = viewHolder as RecyclerViewAdapter.ViewHolder
-                vh.imgOnline.visibility =
-                    if (vh.imgOnline.visibility == View.VISIBLE) View.INVISIBLE else View.VISIBLE
+            // Setup swipe gestures using ItemTouchHelper
+            itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+                0,
+                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+            ) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    return false
+                }
 
-                // Reset swipe action
-                itemTouchHelper.startSwipe(viewHolder)
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    // Handle swipe
+                    val position = viewHolder.layoutPosition
+                    val item = adapter.getItem(position)
+
+                    val vh = viewHolder as RecyclerViewAdapter.ViewHolder
+                    if (direction == ItemTouchHelper.LEFT && vh.btnConnect.visibility == View.GONE) {
+                        vh.btnConnect.visibility = View.VISIBLE
+                        vh.btnRemove.visibility = View.GONE
+                    } else if (direction == ItemTouchHelper.LEFT) {
+                        vh.btnConnect.visibility = View.GONE
+                        vh.btnRemove.visibility = View.GONE
+                    } else if (direction == ItemTouchHelper.RIGHT && vh.btnRemove.visibility == View.GONE) {
+                        vh.btnRemove.visibility = View.VISIBLE
+                        vh.btnConnect.visibility = View.GONE
+                    } else if (direction == ItemTouchHelper.RIGHT) {
+                        vh.btnRemove.visibility = View.GONE
+                        vh.btnConnect.visibility = View.GONE
+                    }
+
+                    // Reset swipe action
+                    itemTouchHelper.startSwipe(viewHolder)
+                }
+            })
+
+            itemTouchHelper.attachToRecyclerView(lvUserLifts)
+            btnFindLift = binding.footer
+            btnFindLift.setOnClickListener {
+                val intent = Intent(this@EngineerHomeActivity, SelectLiftTypeActivity::class.java)
+                startActivity(intent)
             }
-        })
 
-        itemTouchHelper.attachToRecyclerView(lvUserLifts)
+            binding.toolbar.optionBtn.setOnClickListener {
+                if (binding.optionMenu.llOptionMenu.visibility == View.GONE) {
+                    binding.optionMenu.llOptionMenu.visibility = View.VISIBLE
+                } else {
+                    binding.optionMenu.llOptionMenu.visibility = View.GONE
+                }
+            }
 
-        btnFindLift = binding.btnFindLift
-        btnFindLift.setOnClickListener {
-            val intent = Intent(this, SelectLiftTypeActivity::class.java)
-            startActivity(intent)
+            binding.optionMenu.llMenuAccount.setOnClickListener {
+                binding.optionMenu.llOptionMenu.visibility = View.GONE
+
+                val intent = Intent(this@EngineerHomeActivity, UserProfileActivity::class.java)
+                startActivity(intent)
+            }
+            binding.optionMenu.llMenuLanguage.setOnClickListener {
+                binding.optionMenu.llOptionMenu.visibility = View.GONE
+            }
+            binding.optionMenu.llMenuTroubleshoot.setOnClickListener {
+                binding.optionMenu.llOptionMenu.visibility = View.GONE
+            }
+            binding.optionMenu.llOptionMenu.setOnClickListener {
+                binding.optionMenu.llOptionMenu.visibility = View.GONE
+            }
+            binding.optionMenu.llLogout.setOnClickListener {
+                binding.optionMenu.llOptionMenu.visibility = View.GONE
+
+                with(S515LiftConfigureApp) {
+                    profileStore.logout()
+                    val intent = Intent(this@EngineerHomeActivity, SplashActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                }
+            }
+
+            binding.askLogout.llRemovePopup.setOnClickListener {
+                binding.askLogout.llRemovePopup.visibility = View.GONE
+            }
+            binding.askLogout.btnYesRemove.setOnClickListener {
+                binding.askLogout.llRemovePopup.visibility = View.GONE
+                liftToRemove?.let { it1 ->
+                    run {
+                        profileStore.remove(it1)
+                        liftToRemove = null
+                        userDevices = profileStore.userDevices
+                        data = userDevices.toList()
+                        adapter = RecyclerViewAdapter(this@EngineerHomeActivity, data)
+                        lvUserLifts.adapter = adapter
+                    }
+                }
+            }
         }
+    }
+
+    private var liftToRemove: UserLift? = null
+    private var liftToConnect: UserLift? = null
+    fun showRemovePopup(lift: UserLift) {
+        liftToRemove = lift
+        binding.askLogout.llRemovePopup.visibility = View.VISIBLE
+    }
+
+    fun showConnectPopup(lift: UserLift) {
+        liftToConnect = lift
+//        binding.askLogout.llRemovePopup.visibility = View.VISIBLE
+    }
+
+    override fun onAttachedToWindow() {
+        openOptionsMenu()
     }
 
     private val serviceConnection: ServiceConnection = object : ServiceConnection {
@@ -229,6 +306,7 @@ class EngineerHomeActivity : AppCompatActivity() {
                 BluetoothLeService.ACTION_BLUETOOTH_DEVICE_FOUND -> {
                     Log.d(HomeActivity.TAG, "Device found.")
                     lvUserLifts.invalidate()
+                    adapter.notifyDataSetChanged()
                 }
             }
         }
@@ -260,6 +338,13 @@ class EngineerHomeActivity : AppCompatActivity() {
         registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
         scanLifts()
         lvUserLifts.invalidate()
+        adapter.notifyDataSetChanged()
+
+        if (S515LiftConfigureApp.profileStore.userName.isNotEmpty()) {
+            binding.optionMenu.txtAccount.text = S515LiftConfigureApp.profileStore.userName
+        } else {
+            binding.optionMenu.txtAccount.text = resources.getString(R.string.account)
+        }
     }
 
     override fun onPause() {
