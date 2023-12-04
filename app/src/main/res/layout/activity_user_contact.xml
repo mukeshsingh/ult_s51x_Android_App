@@ -175,7 +175,7 @@
                     android:id="@+id/img2"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/edit_white"
+                    android:src="@drawable/plus_sign_white"
                     android:layout_gravity="center_vertical"/>
             </LinearLayout>
         </LinearLayout>
@@ -250,8 +250,8 @@
 
                 <ImageView
                     android:id="@+id/img3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/plus_sign_white" />
             </LinearLayout>

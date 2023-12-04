@@ -7,19 +7,33 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.EditText
 import androidx.activity.addCallback
+import com.ultrontech.s515liftconfigure.databinding.ActivityUserProfileBinding
 import com.ultrontech.s515liftconfigure.models.ProfileStore
 
 class UserProfileActivity : AppCompatActivity() {
-    private lateinit var profileName: EditText
+    lateinit var binding: ActivityUserProfileBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user_profile)
 
-        profileName = findViewById(R.id.edt_profile_name)
-        profileName.setText(S515LiftConfigureApp.profileStore.userName)
+        binding = ActivityUserProfileBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
+        binding.edtProfileName.setText(S515LiftConfigureApp.profileStore.userName)
+
+        binding.btnConfirmProfileName.setOnClickListener {
+            S515LiftConfigureApp.profileStore.update(binding.edtProfileName.text.toString())
+            finish()
+        }
         onBackPressedDispatcher.addCallback {
-            S515LiftConfigureApp.profileStore.update(profileName.text.toString())
+            S515LiftConfigureApp.profileStore.update(binding.edtProfileName.text.toString())
+            finish()
+        }
+
+        binding.footer.btnHome.setOnClickListener {
+            finish()
+        }
+
+        binding.footer.btnBack.setOnClickListener {
             finish()
         }
     }

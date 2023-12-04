@@ -120,6 +120,12 @@ class UserLiftSettingsActivity : AppCompatActivity() {
             }
         }
 
+        binding.disconnectLift.setOnClickListener {
+            bluetoothLeService.device?.lift?.let {
+                linkDevice()
+            }
+        }
+
         if (hasEngineerCapability) {
             binding.engineerBoardDetail.visibility = View.VISIBLE
             binding.engineerContactDetail.visibility = View.VISIBLE

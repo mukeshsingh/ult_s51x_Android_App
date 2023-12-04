@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ultrontech.s515liftconfigure.*
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
+import com.ultrontech.s515liftconfigure.models.Device
 import com.ultrontech.s515liftconfigure.models.UserLift
 
 class RecyclerViewAdapter(private val context: Context, private val data: List<UserLift>) :
@@ -87,6 +88,27 @@ class RecyclerViewAdapter(private val context: Context, private val data: List<U
                     }
                 }
             }
+
+            viewHolder.btnRemove.setOnClickListener {
+                viewHolder.btnRemove.visibility = View.GONE
+                (context as EngineerHomeActivity).showRemovePopup(item)
+            }
+            viewHolder.btnConnect.setOnClickListener {
+                viewHolder.btnConnect.visibility = View.GONE
+                (context as EngineerHomeActivity).showConnectPopup(item)
+            }
+        }
+    }
+
+    private fun linkDevice (item: UserLift) {
+        if (item.liftId != null) {
+            val lift = S515LiftConfigureApp.profileStore.find(item.liftId!!)
+            if (lift != null) {
+                var device = Device(lift = lift)
+                BluetoothLeService.service?.link(device)
+
+//                liftName.text = lift?.liftName ?: ""
+            }
         }
     }
 
@@ -107,5 +129,7 @@ class RecyclerViewAdapter(private val context: Context, private val data: List<U
         val imgElevator: ImageView = view.findViewById(R.id.img_elevator)
         val imgOnline: ImageView = view.findViewById(R.id.img_online_icon)
         val imgOffline: ImageView = view.findViewById(R.id.img_offline_icon)
+        val btnRemove: LinearLayout = view.findViewById(R.id.llBtnRemove)
+        val btnConnect: LinearLayout = view.findViewById(R.id.llBtnConnect)
     }
 }

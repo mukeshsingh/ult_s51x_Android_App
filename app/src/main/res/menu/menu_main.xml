@@ -3,8 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.ultrontech.s515liftconfigure.HomeActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_logout"
         android:orderInCategory="100"
-        android:title="@string/app_name"
+        android:title="@string/engineer_logout"
+        android:contentDescription="@string/sim_information"
+        android:menuCategory="alternative"
+        android:tooltipText="@string/engineer_logout"
         app:showAsAction="never" />
+<!--        android:actionLayout="menu_item"-->
+<!--         />-->
 </menu>
