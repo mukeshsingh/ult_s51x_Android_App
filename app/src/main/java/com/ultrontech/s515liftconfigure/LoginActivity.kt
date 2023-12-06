@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import com.ultrontech.s515liftconfigure.databinding.ActivityLoginBinding
@@ -31,5 +32,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
+
+        binding.toolbar.optionBtn.visibility = View.GONE
     }
 }

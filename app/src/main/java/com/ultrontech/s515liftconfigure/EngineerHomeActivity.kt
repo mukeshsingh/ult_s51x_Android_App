@@ -3,7 +3,6 @@ package com.ultrontech.s515liftconfigure
 import android.Manifest
 import android.content.*
 import android.content.pm.PackageManager
-import android.graphics.drawable.AnimationDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle

@@ -113,6 +113,6 @@
         android:id="@+id/option_menu"
         layout="@layout/option_menu" />
     <include
-        android:id="@+id/askLogout"
+        android:id="@+id/confirmRemoveLift"
         layout="@layout/remove_lift_screen" />
 </RelativeLayout>
