@@ -271,4 +271,7 @@
         android:layout_height="?attr/actionBarSize"
         layout="@layout/home_back_bottom_bar"
         android:layout_alignParentBottom="true" />
+    <include
+        android:id="@+id/option_menu"
+        layout="@layout/option_menu" />
 </RelativeLayout>

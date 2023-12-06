@@ -32,7 +32,9 @@ class MyProductsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMyProductsBinding.inflate(layoutInflater)
-        btnFindLift = binding.btnFindLift
+        setContentView(binding.root)
+
+        btnFindLift = binding.footer
         noProduct = binding.noProduct
         llUserLifts = binding.llUserLifts
 
@@ -41,9 +43,48 @@ class MyProductsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        setContentView(binding.root)
-
         inflater = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+
+        // ****************** Option Menu Start ******************
+        binding.toolbar.optionBtn.setOnClickListener {
+            if (binding.optionMenu.llOptionMenu.visibility == View.GONE) {
+                binding.optionMenu.llOptionMenu.visibility = View.VISIBLE
+            } else {
+                binding.optionMenu.llOptionMenu.visibility = View.GONE
+            }
+        }
+
+        binding.optionMenu.llMenuAccount.setOnClickListener {
+            binding.optionMenu.llOptionMenu.visibility = View.GONE
+
+            val intent = Intent(this@MyProductsActivity, UserProfileActivity::class.java)
+            startActivity(intent)
+        }
+        binding.optionMenu.llMenuLanguage.setOnClickListener {
+            binding.optionMenu.llOptionMenu.visibility = View.GONE
+            val intent = Intent(this@MyProductsActivity, LanguageSelectorActivity::class.java)
+            startActivity(intent)
+        }
+        binding.optionMenu.llMenuTroubleshoot.setOnClickListener {
+            binding.optionMenu.llOptionMenu.visibility = View.GONE
+            val intent = Intent(this@MyProductsActivity, TroubleshootingActivity::class.java)
+            startActivity(intent)
+
+        }
+        binding.optionMenu.llOptionMenu.setOnClickListener {
+            binding.optionMenu.llOptionMenu.visibility = View.GONE
+        }
+        binding.optionMenu.llLogout.setOnClickListener {
+            binding.optionMenu.llOptionMenu.visibility = View.GONE
+
+            with(S515LiftConfigureApp) {
+                profileStore.logout()
+                val intent = Intent(this@MyProductsActivity, SplashActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            }
+        }
+        // ****************** Option Menu End ******************
     }
 
     private val serviceConnection: ServiceConnection = object : ServiceConnection {
