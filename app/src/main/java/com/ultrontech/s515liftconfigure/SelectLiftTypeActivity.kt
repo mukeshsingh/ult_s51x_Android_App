@@ -3,6 +3,7 @@ package com.ultrontech.s515liftconfigure
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.content.res.ResourcesCompat
 import com.ultrontech.s515liftconfigure.databinding.ActivitySelectLiftTypeBinding
 
 class SelectLiftTypeActivity : AppCompatActivity() {
@@ -16,6 +17,12 @@ class SelectLiftTypeActivity : AppCompatActivity() {
 
         binding.stairLift.setOnClickListener {
             liftType = "stairLift"
+
+            binding.imgStairLift.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.stair_lift_dark, this.theme))
+            binding.imgInclinedLift.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.inclined_lift, this.theme))
+            binding.imgVerticalLift.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.vertical_lift, this.theme))
+            binding.imgElevator.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.elevator, this.theme))
+
             binding.stairLiftBg.background =
                 resources.getDrawable(R.drawable.rounded_corner_bg_right_enable, this.theme)
             binding.inclinedLiftBg.background =
@@ -28,6 +35,12 @@ class SelectLiftTypeActivity : AppCompatActivity() {
 
         binding.inclinedLift.setOnClickListener {
             liftType = "inclinedLift"
+
+            binding.imgStairLift.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.stair_lift, this.theme))
+            binding.imgInclinedLift.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.inclined_lift_dark, this.theme))
+            binding.imgVerticalLift.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.vertical_lift, this.theme))
+            binding.imgElevator.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.elevator, this.theme))
+
             binding.stairLiftBg.background =
                 resources.getDrawable(R.drawable.rounded_corner_bg_right_disable, this.theme)
             binding.inclinedLiftBg.background =
@@ -40,6 +53,12 @@ class SelectLiftTypeActivity : AppCompatActivity() {
 
         binding.verticalLift.setOnClickListener {
             liftType = "verticalLift"
+
+            binding.imgStairLift.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.stair_lift, this.theme))
+            binding.imgInclinedLift.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.inclined_lift, this.theme))
+            binding.imgVerticalLift.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.vertical_lift_dark, this.theme))
+            binding.imgElevator.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.elevator, this.theme))
+
             binding.stairLiftBg.background =
                 resources.getDrawable(R.drawable.rounded_corner_bg_right_disable, this.theme)
             binding.inclinedLiftBg.background =
@@ -52,6 +71,12 @@ class SelectLiftTypeActivity : AppCompatActivity() {
 
         binding.elevator.setOnClickListener {
             liftType = "elevator"
+
+            binding.imgStairLift.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.stair_lift, this.theme))
+            binding.imgInclinedLift.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.inclined_lift, this.theme))
+            binding.imgVerticalLift.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.vertical_lift, this.theme))
+            binding.imgElevator.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.elevator_dark, this.theme))
+
             binding.stairLiftBg.background =
                 resources.getDrawable(R.drawable.rounded_corner_bg_right_disable, this.theme)
             binding.inclinedLiftBg.background =

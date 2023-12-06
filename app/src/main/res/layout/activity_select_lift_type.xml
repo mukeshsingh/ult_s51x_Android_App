@@ -42,6 +42,7 @@
                 android:layout_margin="1dp"
                 android:background="@drawable/rounded_corner_bg">
                 <ImageView
+                    android:id="@+id/img_stair_lift"
                     android:layout_width="80dp"
                     android:layout_height="70dp"
                     android:scaleType="centerCrop"
@@ -88,6 +89,7 @@
                 android:background="@drawable/rounded_corner_bg">
 
                 <ImageView
+                    android:id="@+id/img_vertical_lift"
                     android:layout_width="80dp"
                     android:layout_height="70dp"
                     android:scaleType="centerCrop"
@@ -135,6 +137,7 @@
                 android:background="@drawable/rounded_corner_bg">
 
                 <ImageView
+                    android:id="@+id/img_inclined_lift"
                     android:layout_width="80dp"
                     android:layout_height="70dp"
                     android:scaleType="centerCrop"
@@ -183,6 +186,7 @@
                 android:background="@drawable/rounded_corner_bg">
 
                 <ImageView
+                    android:id="@+id/img_elevator"
                     android:layout_width="80dp"
                     android:layout_height="70dp"
                     android:scaleType="centerCrop"
