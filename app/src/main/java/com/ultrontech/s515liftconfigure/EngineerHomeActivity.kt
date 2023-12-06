@@ -98,7 +98,24 @@ class EngineerHomeActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
-            binding.toolbar.optionBtn.background = null
+            binding.confirmRemoveLift.llRemovePopup.setOnClickListener {
+                binding.confirmRemoveLift.llRemovePopup.visibility = View.GONE
+            }
+            binding.confirmRemoveLift.btnYesRemove.setOnClickListener {
+                binding.confirmRemoveLift.llRemovePopup.visibility = View.GONE
+                liftToRemove?.let { it1 ->
+                    run {
+                        profileStore.remove(it1)
+                        liftToRemove = null
+                        userDevices = profileStore.userDevices
+                        data = userDevices.toList()
+                        adapter = RecyclerViewAdapter(this@EngineerHomeActivity, data)
+                        lvUserLifts.adapter = adapter
+                    }
+                }
+            }
+
+            // ****************** Option Menu Start ******************
             binding.toolbar.optionBtn.setOnClickListener {
                 if (binding.optionMenu.llOptionMenu.visibility == View.GONE) {
                     binding.optionMenu.llOptionMenu.visibility = View.VISIBLE
@@ -137,23 +154,7 @@ class EngineerHomeActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
             }
-
-            binding.askLogout.llRemovePopup.setOnClickListener {
-                binding.askLogout.llRemovePopup.visibility = View.GONE
-            }
-            binding.askLogout.btnYesRemove.setOnClickListener {
-                binding.askLogout.llRemovePopup.visibility = View.GONE
-                liftToRemove?.let { it1 ->
-                    run {
-                        profileStore.remove(it1)
-                        liftToRemove = null
-                        userDevices = profileStore.userDevices
-                        data = userDevices.toList()
-                        adapter = RecyclerViewAdapter(this@EngineerHomeActivity, data)
-                        lvUserLifts.adapter = adapter
-                    }
-                }
-            }
+            // ****************** Option Menu End ******************
         }
     }
 
@@ -161,7 +162,7 @@ class EngineerHomeActivity : AppCompatActivity() {
     private var liftToConnect: UserLift? = null
     fun showRemovePopup(lift: UserLift) {
         liftToRemove = lift
-        binding.askLogout.llRemovePopup.visibility = View.VISIBLE
+        binding.confirmRemoveLift.llRemovePopup.visibility = View.VISIBLE
     }
 
     fun showConnectPopup(lift: UserLift) {

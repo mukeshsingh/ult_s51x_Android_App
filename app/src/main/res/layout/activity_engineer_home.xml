@@ -115,4 +115,7 @@
     <include
         android:id="@+id/confirmRemoveLift"
         layout="@layout/remove_lift_screen" />
+    <include
+        android:id="@+id/confirmLogoutPopup"
+        layout="@layout/logout_screen" />
 </RelativeLayout>

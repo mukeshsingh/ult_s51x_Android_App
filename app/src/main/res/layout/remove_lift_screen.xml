@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#80000000"
-    android:visibility="visible">
+    android:visibility="gone">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -32,19 +32,19 @@
                 android:layout_marginBottom="10dp"
                 android:gravity="center_vertical">
 
-
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="28dp"
+                    android:layout_height="31dp"
                     android:src="@drawable/icon_trash"
                     android:layout_marginLeft="10dp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="DISCONNECT THIS LIFT"
+                    android:text="REMOVE THIS LIFT"
                     android:textColor="#B70101"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/lato_semibold"
                     android:textAlignment="center"
                     />
             </LinearLayout>
@@ -57,6 +57,7 @@
                 android:layout_height="wrap_content"
                 android:text="Are you sure you want to remove your lift?"
                 android:textColor="@color/black"
+                android:fontFamily="@font/lato_regular"
                 android:layout_marginTop="25dp"
                 android:textSize="18sp"
                 android:textAlignment="center"
@@ -87,7 +88,8 @@
                         android:layout_weight="1"
                         android:text="YES, I'M SURE"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
+                        android:fontFamily="@font/lato_semibold"
                         android:textAlignment="center"
                         />
 

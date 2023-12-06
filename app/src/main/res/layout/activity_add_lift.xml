@@ -76,8 +76,13 @@
 
     </LinearLayout>
 
-    <include layout="@layout/home_back_bottom_bar"
+    <include
+        android:id="@+id/footer"
+        layout="@layout/home_back_bottom_bar"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"/>
+    <include
+        android:id="@+id/option_menu"
+        layout="@layout/option_menu" />
 </RelativeLayout>
