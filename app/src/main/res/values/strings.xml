@@ -72,10 +72,10 @@
     <string name="wifi_available_status">Wifi is available on device</string>
     <string name="wifi_not_available_status">Wifi is not available on device</string>
     <string name="wifi_not_connected">Wifi is not connected</string>
-    <string name="wifi_connected">Wifi is not connected</string>
+    <string name="wifi_connected">Wifi is connected</string>
     <string name="job_name">Job Name</string>
     <string name="job_not_configured">No Job Configured</string>
-    <string name="client">Client</string>
+    <string name="client">Client Name</string>
     <string name="technology">Ultron Technologies</string>
     <string name="board">Board Capabilities</string>
     <string name="gsm">GSM</string>

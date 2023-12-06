@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="20dp"
         android:padding="32dp"
         android:layout_below="@+id/toolbar">
         <ImageView
@@ -28,9 +28,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SIM Information"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:gravity="center"
             android:fontFamily="@font/lato_bold"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose New SIM PIN"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:fontFamily="@font/lato"
             android:textColor="@android:color/black"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="20dp" />
@@ -40,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberPassword"
-            android:hint="New Pin"
+            android:hint="Select New PIN"
             android:textColorHint="@color/lightGrey"
             android:textColor="@color/black"
             android:fontFamily="@font/lato_regular"
@@ -54,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberPassword"
-            android:hint="Confirm New Pin"
+            android:hint="Confirm New PIN"
             android:textColorHint="@color/lightGrey"
             android:textColor="@color/black"
             android:fontFamily="@font/lato_regular"

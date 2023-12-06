@@ -1,5 +1,6 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -17,7 +18,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/stair_lift"/>
+            android:src="@drawable/stair_lift_dark"/>
 
         <View
             android:layout_width="1dp"
@@ -58,7 +59,8 @@
         android:gravity="center_horizontal"
         android:padding="16dp"
         android:background="@drawable/rounded_button_bg"
-        android:text="EDIT LIFT DETAIL"
+        app:backgroundTint="@color/grey_btn_bg"
+        android:text="EDIT LIFT DETAILS"
         android:textColor="@color/black"
         android:fontFamily="@font/lato_semibold"
         android:textSize="18sp"/>

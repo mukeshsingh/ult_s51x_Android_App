@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="20dp"
         android:layout_below="@+id/toolbar"
         android:padding="32dp">
         <ImageView
@@ -55,7 +55,8 @@
             android:text="Confirm"
             android:textSize="18sp"
             android:layout_marginHorizontal="60dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="70dp"
+            android:fontFamily="@font/lato_semibold"
             android:textColor="@android:color/white"
             android:background="@drawable/rounded_button_green_bg"
             app:backgroundTint="#99CC33"/>
