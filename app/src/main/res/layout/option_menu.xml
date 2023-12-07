@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:paddingRight="15dp"
     android:orientation="vertical"
-    android:visibility="visible"
+    android:visibility="gone"
     android:background="#80000000"
     android:layout_below="@+id/toolbar"
     android:layout_above="@+id/footer">
@@ -152,13 +152,14 @@
                 android:textColor="@color/white"/>
         </LinearLayout>
         <TextView
-            android:id="@+id/version_id"
+            android:id="@+id/version"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lato"
             android:gravity="center"
             android:textSize="16sp"
             android:text="Version 1.1"
+            android:visibility="gone"
             android:textColor="@color/black"/>
     </LinearLayout>
 </LinearLayout>

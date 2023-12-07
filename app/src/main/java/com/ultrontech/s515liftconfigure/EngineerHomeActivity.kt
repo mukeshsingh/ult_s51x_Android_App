@@ -154,6 +154,9 @@ class EngineerHomeActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
             }
+
+            binding.optionMenu.version.visibility = View.VISIBLE
+            binding.optionMenu.version.text = "Version ${BuildConfig.VERSION_NAME}"
             // ****************** Option Menu End ******************
         }
     }

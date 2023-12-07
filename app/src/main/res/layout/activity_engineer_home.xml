@@ -99,6 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="18sp"
+            android:textColor="@color/white"
             android:fontFamily="@font/lato_semibold"
             android:text="FIND NEW LIFT" />
         <ImageView
