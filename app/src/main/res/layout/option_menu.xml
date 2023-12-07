@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:paddingRight="15dp"
     android:orientation="vertical"
-    android:visibility="gone"
+    android:visibility="visible"
     android:background="#80000000"
     android:layout_below="@+id/toolbar"
     android:layout_above="@+id/footer">
@@ -151,5 +151,14 @@
                 android:text="@string/engineer_logout"
                 android:textColor="@color/white"/>
         </LinearLayout>
+        <TextView
+            android:id="@+id/version_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:text="v1.2"
+            android:textColor="@color/black"/>
     </LinearLayout>
 </LinearLayout>

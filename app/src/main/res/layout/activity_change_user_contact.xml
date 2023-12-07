@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="20dp"
         android:padding="32dp"
         android:layout_below="@+id/toolbar">
         <ImageView
@@ -53,7 +53,7 @@
             android:text="*Contact names are only stored on your mobile device and not sent to the lift."
             android:textSize="13sp"
             android:fontFamily="@font/lato"
-            android:textColor="@android:color/black"
+            android:textColor="#636466"
             android:layout_marginBottom="20dp" />
 
         <EditText
@@ -74,7 +74,7 @@
             android:text="*Phone numbers are sent to your lift for use as emergency call numbers"
             android:textSize="13sp"
             android:fontFamily="@font/lato"
-            android:textColor="@android:color/black"
+            android:textColor= "#636466"
             android:layout_marginBottom="20dp" />
 
         <Button
