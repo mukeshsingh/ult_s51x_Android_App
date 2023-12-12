@@ -31,7 +31,12 @@ class UserProfileActivity : AppCompatActivity() {
         }
 
         binding.footer.btnHome.setOnClickListener {
-            val intent = Intent(this@UserProfileActivity, HomeActivity::class.java)
+            var intent = Intent(this@UserProfileActivity, MyProductsActivity::class.java)
+
+            if (S515LiftConfigureApp.profileStore.hasEngineerCapability) {
+                intent = Intent(this@UserProfileActivity, EngineerHomeActivity::class.java)
+            }
+
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }

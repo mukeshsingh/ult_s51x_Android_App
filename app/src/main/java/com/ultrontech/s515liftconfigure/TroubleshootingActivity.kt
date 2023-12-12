@@ -44,7 +44,12 @@ class TroubleshootingActivity : AppCompatActivity() {
         }
 
         binding.footer.btnHome.setOnClickListener {
-            val intent = Intent(this@TroubleshootingActivity, HomeActivity::class.java)
+            var intent = Intent(this@TroubleshootingActivity, MyProductsActivity::class.java)
+
+            if (S515LiftConfigureApp.profileStore.hasEngineerCapability) {
+                intent = Intent(this@TroubleshootingActivity, EngineerHomeActivity::class.java)
+            }
+
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }

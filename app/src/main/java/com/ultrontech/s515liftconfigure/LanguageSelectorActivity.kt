@@ -23,7 +23,12 @@ class LanguageSelectorActivity : AppCompatActivity() {
         }
 
         binding.footer.btnHome.setOnClickListener {
-            val intent = Intent(this@LanguageSelectorActivity, HomeActivity::class.java)
+            var intent = Intent(this@LanguageSelectorActivity, MyProductsActivity::class.java)
+
+            if (S515LiftConfigureApp.profileStore.hasEngineerCapability) {
+                intent = Intent(this@LanguageSelectorActivity, EngineerHomeActivity::class.java)
+            }
+
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
