@@ -28,7 +28,7 @@ class ChangeDialTimeoutActivity : AppCompatActivity() {
 
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 // TODO Auto-generated method stub
-                binding.dialTimeoutValue.text = progress.toString()
+                binding.dialTimeoutValue.text = "${progress}\""
                 value = progress
             }
         })
@@ -47,7 +47,7 @@ class ChangeDialTimeoutActivity : AppCompatActivity() {
 
         with(BluetoothLeService.service?.device) {
             value = this?.callDialTimeout ?: 1
-            binding.dialTimeoutValue.text = value.toString()
+            binding.dialTimeoutValue.text = "${value}\""
             binding.dialTimeoutSlider.progress = value
         }
 

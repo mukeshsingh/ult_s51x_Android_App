@@ -27,7 +27,7 @@ class ChangeCallPressDelayActivity : AppCompatActivity() {
 
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 // TODO Auto-generated method stub
-                binding.callPressValue.text = progress.toString()
+                binding.callPressValue.text = "${progress}\""
                 value = progress
             }
         })
@@ -46,7 +46,7 @@ class ChangeCallPressDelayActivity : AppCompatActivity() {
 
         with(BluetoothLeService.service?.device) {
             value = this?.callPressDelay ?: 1
-            binding.callPressValue.text = value.toString()
+            binding.callPressValue.text = "${value}\""
             binding.callPressSlider.progress = value
         }
 

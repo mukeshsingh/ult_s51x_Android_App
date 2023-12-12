@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityUserContactBinding
 import com.ultrontech.s515liftconfigure.models.PhoneContact
@@ -11,12 +12,12 @@ import com.ultrontech.s515liftconfigure.models.PhoneContact
 class UserContactActivity : AppCompatActivity() {
     lateinit var binding: ActivityUserContactBinding
     private var liftId: String? = null
-    var phone1: PhoneContact? = null
-    var name1: String? = ""
-    var phone2: PhoneContact? = null
-    var name2: String? = ""
-    var phone3: PhoneContact? = null
-    var name3: String? = ""
+    private var phone1: PhoneContact? = null
+    private var name1: String? = ""
+    private var phone2: PhoneContact? = null
+    private var name2: String? = ""
+    private var phone3: PhoneContact? = null
+    private var name3: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,26 +57,26 @@ class UserContactActivity : AppCompatActivity() {
         binding.phone3.text = phone3?.number
 
         if (phone1?.number != null && phone1?.number!!.isNotEmpty()) {
-            binding.img1.setImageDrawable(resources.getDrawable(R.drawable.edit_white, theme))
+            binding.img1.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.edit_white, theme))
             binding.editContactDetail1.setBackgroundColor(resources.getColor(R.color.blue, theme))
         } else {
-            binding.img1.setImageDrawable(resources.getDrawable(R.drawable.plus_sign_white, theme))
+            binding.img1.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.plus_sign_white, theme))
             binding.editContactDetail1.setBackgroundColor(resources.getColor(R.color.grey, theme))
         }
 
         if (phone2?.number != null && phone2?.number!!.isNotEmpty()) {
-            binding.img2.setImageDrawable(resources.getDrawable(R.drawable.edit_white, theme))
+            binding.img2.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.edit_white, theme))
             binding.editContactDetail2.setBackgroundColor(resources.getColor(R.color.blue, theme))
         } else {
-            binding.img2.setImageDrawable(resources.getDrawable(R.drawable.plus_sign_white, theme))
+            binding.img2.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.plus_sign_white, theme))
             binding.editContactDetail2.setBackgroundColor(resources.getColor(R.color.grey, theme))
         }
 
         if (phone3?.number != null && phone3?.number!!.isNotEmpty()) {
             binding.editContactDetail3.setBackgroundColor(resources.getColor(R.color.blue, theme))
-            binding.img3.setImageDrawable(resources.getDrawable(R.drawable.edit_white, theme))
+            binding.img3.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.edit_white, theme))
         } else {
-            binding.img3.setImageDrawable(resources.getDrawable(R.drawable.plus_sign_white, theme))
+            binding.img3.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.plus_sign_white, theme))
             binding.editContactDetail3.setBackgroundColor(resources.getColor(R.color.grey, theme))
         }
 

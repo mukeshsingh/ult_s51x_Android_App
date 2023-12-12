@@ -362,7 +362,7 @@ class EngineerHomeActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
+        registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter(), RECEIVER_NOT_EXPORTED)
         scanLifts()
         lvUserLifts.invalidate()
         adapter.notifyDataSetChanged()

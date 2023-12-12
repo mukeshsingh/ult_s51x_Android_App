@@ -25,13 +25,13 @@ class SelectLiftTypeActivity : AppCompatActivity() {
             binding.imgElevator.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.elevator, this.theme))
 
             binding.stairLiftBg.background =
-                resources.getDrawable(R.drawable.rounded_corner_bg_right_enable, this.theme)
+                ResourcesCompat.getDrawable(resources, R.drawable.rounded_corner_bg_right_enable, this.theme)
             binding.inclinedLiftBg.background =
-                resources.getDrawable(R.drawable.rounded_corner_bg_right_disable, this.theme)
+                ResourcesCompat.getDrawable(resources, R.drawable.rounded_corner_bg_right_disable, this.theme)
             binding.verticalLiftBg.background =
-                resources.getDrawable(R.drawable.rounded_corner_bg_right_disable, this.theme)
+                ResourcesCompat.getDrawable(resources, R.drawable.rounded_corner_bg_right_disable, this.theme)
             binding.elevatorBg.background =
-                resources.getDrawable(R.drawable.rounded_corner_bg_right_disable, this.theme)
+                ResourcesCompat.getDrawable(resources, R.drawable.rounded_corner_bg_right_disable, this.theme)
         }
 
         binding.inclinedLift.setOnClickListener {
@@ -43,13 +43,13 @@ class SelectLiftTypeActivity : AppCompatActivity() {
             binding.imgElevator.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.elevator, this.theme))
 
             binding.stairLiftBg.background =
-                resources.getDrawable(R.drawable.rounded_corner_bg_right_disable, this.theme)
+                ResourcesCompat.getDrawable(resources, R.drawable.rounded_corner_bg_right_disable, this.theme)
             binding.inclinedLiftBg.background =
-                resources.getDrawable(R.drawable.rounded_corner_bg_right_enable, this.theme)
+                ResourcesCompat.getDrawable(resources, R.drawable.rounded_corner_bg_right_enable, this.theme)
             binding.verticalLiftBg.background =
-                resources.getDrawable(R.drawable.rounded_corner_bg_right_disable, this.theme)
+                ResourcesCompat.getDrawable(resources, R.drawable.rounded_corner_bg_right_disable, this.theme)
             binding.elevatorBg.background =
-                resources.getDrawable(R.drawable.rounded_corner_bg_right_disable, this.theme)
+                ResourcesCompat.getDrawable(resources, R.drawable.rounded_corner_bg_right_disable, this.theme)
         }
 
         binding.verticalLift.setOnClickListener {
@@ -61,13 +61,13 @@ class SelectLiftTypeActivity : AppCompatActivity() {
             binding.imgElevator.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.elevator, this.theme))
 
             binding.stairLiftBg.background =
-                resources.getDrawable(R.drawable.rounded_corner_bg_right_disable, this.theme)
+                ResourcesCompat.getDrawable(resources, R.drawable.rounded_corner_bg_right_disable, this.theme)
             binding.inclinedLiftBg.background =
-                resources.getDrawable(R.drawable.rounded_corner_bg_right_disable, this.theme)
+                ResourcesCompat.getDrawable(resources, R.drawable.rounded_corner_bg_right_disable, this.theme)
             binding.verticalLiftBg.background =
-                resources.getDrawable(R.drawable.rounded_corner_bg_right_enable, this.theme)
+                ResourcesCompat.getDrawable(resources, R.drawable.rounded_corner_bg_right_enable, this.theme)
             binding.elevatorBg.background =
-                resources.getDrawable(R.drawable.rounded_corner_bg_right_disable, this.theme)
+                ResourcesCompat.getDrawable(resources, R.drawable.rounded_corner_bg_right_disable, this.theme)
         }
 
         binding.elevator.setOnClickListener {
@@ -79,13 +79,13 @@ class SelectLiftTypeActivity : AppCompatActivity() {
             binding.imgElevator.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.elevator_dark, this.theme))
 
             binding.stairLiftBg.background =
-                resources.getDrawable(R.drawable.rounded_corner_bg_right_disable, this.theme)
+                ResourcesCompat.getDrawable(resources, R.drawable.rounded_corner_bg_right_disable, this.theme)
             binding.inclinedLiftBg.background =
-                resources.getDrawable(R.drawable.rounded_corner_bg_right_disable, this.theme)
+                ResourcesCompat.getDrawable(resources, R.drawable.rounded_corner_bg_right_disable, this.theme)
             binding.verticalLiftBg.background =
-                resources.getDrawable(R.drawable.rounded_corner_bg_right_disable, this.theme)
+                ResourcesCompat.getDrawable(resources, R.drawable.rounded_corner_bg_right_disable, this.theme)
             binding.elevatorBg.background =
-                resources.getDrawable(R.drawable.rounded_corner_bg_right_enable, this.theme)
+                ResourcesCompat.getDrawable(resources, R.drawable.rounded_corner_bg_right_enable, this.theme)
         }
 
         binding.btnSearch.setOnClickListener {

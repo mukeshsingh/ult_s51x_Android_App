@@ -291,9 +291,8 @@ class MyProductsActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
+        registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter(), RECEIVER_NOT_EXPORTED)
         scanLifts()
-        registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
         showUserDevices()
     }
 

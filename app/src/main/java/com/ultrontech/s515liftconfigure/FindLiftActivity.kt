@@ -114,7 +114,7 @@ class FindLiftActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
+        registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter(), RECEIVER_NOT_EXPORTED)
     }
 
     override fun onPause() {

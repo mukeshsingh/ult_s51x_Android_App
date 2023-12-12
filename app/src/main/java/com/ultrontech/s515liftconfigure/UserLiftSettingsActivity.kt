@@ -187,7 +187,7 @@ class UserLiftSettingsActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        registerReceiver(deviceUpdateReceiver, updateIntentFilter())
+        registerReceiver(deviceUpdateReceiver, updateIntentFilter(), RECEIVER_NOT_EXPORTED)
         linkDevice()
     }
 

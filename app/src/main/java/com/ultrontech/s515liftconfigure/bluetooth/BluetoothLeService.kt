@@ -102,7 +102,7 @@ class BluetoothLeService : Service() {
         Log.e(TAG, ">>>>>>>> BluetoothLeService onBind.")
 
         val filter = IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED)
-        registerReceiver(mReceiver, filter)
+        registerReceiver(mReceiver, filter, RECEIVER_NOT_EXPORTED)
 
         return mBinder
     }
