@@ -25,7 +25,7 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Troubleshooting"
+            android:text="@string/troubleshooting"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="35dp"
@@ -62,7 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="My App is crashing"
+                    android:text="@string/my_app_is_crashing"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     />
@@ -87,28 +87,28 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="-Please make sure you are using one of the recommended operating systems:"
+                android:text="@string/please_make_sure_you_are_using_one_of_the_recommended_operating_systems"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Android 13 or higher"
+                    android:text="@string/android_13_or_higher"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     />
                 <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="IOS 16 or higher"
+                android:text="@string/ios_16_or_higher"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="-Update the App"
+                    android:text="@string/update_the_app"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     />
@@ -129,7 +129,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Lifts are not visible"
+                    android:text="@string/lifts_are_not_visible"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     />
@@ -153,7 +153,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="-Check your Bluetooth connection is on, and scan again."
+                    android:text="@string/check_your_bluetooth_connection_is_on_and_scan_again"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     />
@@ -174,7 +174,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Send error report"
+                    android:text="@string/send_error_report"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     />
@@ -198,7 +198,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="-Please use this link to send an Error Report"
+                    android:text="@string/please_use_this_link_to_send_an_error_report"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     />

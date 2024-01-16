@@ -69,7 +69,7 @@
                 android:gravity="center"
                 android:textSize="32sp"
                 android:textColor="@color/text_color_title"
-                android:text="WELCOME" />
+                android:text="@string/welcome" />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
                         android:gravity="center"
                         android:textSize="16sp"
                         android:textColor="@color/black"
-                        android:text="User" />
+                        android:text="@string/user" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -117,7 +117,7 @@
                         android:gravity="center"
                         android:textSize="16sp"
                         android:textColor="@color/black"
-                        android:text="Engineer" />
+                        android:text="@string/engineer" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

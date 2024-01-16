@@ -27,7 +27,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Change Lift Pin Number"
+            android:text="@string/change_lift_pin_number"
             android:textSize="18sp"
             android:gravity="center"
             android:fontFamily="@font/lato_bold"
@@ -41,14 +41,14 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:padding="12dp"
-            android:hint="Select New Pin"
+            android:hint="@string/select_new_pin"
             android:layout_marginBottom="20dp"
             android:background="@drawable/edittext_outline" />
         <EditText
             android:id="@+id/edit_text_confirm_pin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Confirm New Pin"
+            android:hint="@string/confirm_new_pin"
             android:inputType="text"
             android:padding="12dp"
             android:background="@drawable/edittext_outline" />
@@ -58,7 +58,7 @@
             android:id="@+id/btn_change_pin_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Confirm"
+            android:text="@string/confirm"
             android:textSize="18sp"
             android:layout_marginHorizontal="60dp"
             android:layout_marginTop="60dp"

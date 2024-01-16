@@ -2,7 +2,6 @@ package com.ultrontech.s515liftconfigure.fragments
 
 import android.app.Activity
 import android.app.Dialog
-import android.content.DialogInterface.OnShowListener
 import android.graphics.Color
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -10,15 +9,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.annotation.Nullable
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ultrontech.s515liftconfigure.AddLiftActivity
 import com.ultrontech.s515liftconfigure.R
+import com.ultrontech.s515liftconfigure.models.PINNumber
+import com.ultrontech.s515liftconfigure.models.UserLift
+
 
 class UnSuccessAddLiftFragment : BottomSheetDialogFragment() {
     private lateinit var addLiftActivity: AddLiftActivity
+    private lateinit var txtMsg: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +31,10 @@ class UnSuccessAddLiftFragment : BottomSheetDialogFragment() {
         // Inflate the layout for this fragment
         addLiftActivity = (activity as AddLiftActivity)
 
-        return inflater.inflate(R.layout.unsuccessful_transparent_screen, container, false)
+        var view = inflater.inflate(R.layout.unsuccessful_transparent_screen, container, false)
+        txtMsg = view.findViewById(R.id.textFail2)
+        txtMsg.text = AddLiftActivity.lift?.name?: ""
+        return view
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -61,6 +68,6 @@ class UnSuccessAddLiftFragment : BottomSheetDialogFragment() {
 
     override fun onActivityCreated(@Nullable savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        (view!!.parent as View).setBackgroundColor(Color.TRANSPARENT)
+        (requireView().parent as View).setBackgroundColor(Color.TRANSPARENT)
     }
 }

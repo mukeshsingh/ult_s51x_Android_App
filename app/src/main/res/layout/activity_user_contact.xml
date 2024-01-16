@@ -26,7 +26,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="User Contact Details"
+            android:text="@string/user_contact_details"
             android:textSize="18sp"
             android:gravity="center"
             android:fontFamily="@font/lato_bold"
@@ -37,7 +37,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Contact 1"
+            android:text="@string/contact_1"
             android:textSize="18sp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/lato_bold"
@@ -113,7 +113,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Contact 2"
+            android:text="@string/contact_2"
             android:textSize="18sp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/lato_bold"
@@ -188,7 +188,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Contact 3"
+            android:text="@string/contact_3"
             android:textSize="18sp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/lato_bold"
@@ -265,7 +265,7 @@
             android:id="@+id/btn_confirm_contact_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Confirm"
+            android:text="@string/confirm"
             android:textSize="18sp"
             android:layout_marginHorizontal="80dp"
             android:layout_marginTop="50dp"

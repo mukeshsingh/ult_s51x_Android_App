@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Call Press Delay"
+            android:text="@string/call_press_delay"
             android:textSize="18sp"
             android:gravity="center"
             android:fontFamily="@font/lato_bold"
@@ -84,7 +84,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Expressed in seconds.Amount of time needed to press the button to make a call"
+            android:text="@string/expressed_in_seconds_amount_of_time_needed_to_press_the_button_to_make_a_call"
             android:textSize="12sp"
             android:gravity="center"
             android:fontFamily="@font/lato"
@@ -97,7 +97,7 @@
             android:id="@+id/call_press_confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Confirm"
+            android:text="@string/confirm"
             android:textSize="18sp"
             android:layout_marginHorizontal="60dp"
             android:layout_marginTop="60dp"

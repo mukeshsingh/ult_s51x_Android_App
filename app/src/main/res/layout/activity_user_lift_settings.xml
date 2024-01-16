@@ -52,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Lift Name"
+                    android:text="@string/lift_name"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     />
@@ -79,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Lift Pin Number"
+                    android:text="@string/lift_pin_number"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     />
@@ -133,7 +133,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="User Contact detail"
+                    android:text="@string/user_contact_detail"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     />
@@ -160,7 +160,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Volume"
+                    android:text="@string/volume"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     />
@@ -190,7 +190,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Engineer/Board Details"
+                    android:text="@string/engineer_board_details"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     />
@@ -220,7 +220,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Engineer Contact Details"
+                    android:text="@string/engineer_contact_details"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     />
@@ -250,7 +250,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Emergency Service Details"
+                    android:text="@string/emergency_service_details"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     />
@@ -279,7 +279,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Dial Timeout"
+                    android:text="@string/dial_timeout"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     />
@@ -308,7 +308,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Call Press Delay"
+                    android:text="@string/call_press_delay"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     />
@@ -335,7 +335,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Microphone Sensitivity"
+                    android:text="@string/microphone_sensitivity"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     />
@@ -376,7 +376,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="DISCONNECT THIS LIFT"
+                        android:text="@string/disconnect_this_lift"
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textAlignment="center" />
@@ -409,7 +409,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="REMOVE THIS LIFT"
+                        android:text="@string/remove_this_lift"
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textAlignment="center" />

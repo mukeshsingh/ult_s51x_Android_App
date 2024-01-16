@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="SUCCESSFUL"
+        android:text="@string/successful"
         android:textColor="#FFFFFF"
         android:textSize="36sp"/>
     <TextView
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Saveria VLink15E"
+        android:text="@string/lift_connected"
         android:textColor="#FFFFFF"
         android:textSize="18sp"/>
     <TextView
@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="has been added to your account"
+        android:text="@string/has_been_added_to_your_account"
         android:textColor="#FFFFFF"
         android:textSize="18sp"/>
     </LinearLayout>

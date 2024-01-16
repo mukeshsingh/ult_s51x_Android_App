@@ -26,7 +26,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Volume"
+            android:text="@string/volume"
             android:textSize="18sp"
             android:gravity="center"
             android:fontFamily="@font/lato_bold"
@@ -86,7 +86,7 @@
             android:id="@+id/volume_confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Confirm"
+            android:text="@string/confirm"
             android:textSize="18sp"
             android:layout_marginHorizontal="60dp"
             android:layout_marginTop="60dp"

@@ -31,7 +31,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Language"
+                android:text="@string/language"
                 android:textSize="20sp"
                 android:layout_marginTop="30dp"
                 android:gravity="center"
@@ -47,7 +47,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Choose language from options below"
+                    android:text="@string/choose_language_from_options_below"
                     android:textSize="18sp"
                     android:gravity="center"
                     android:fontFamily="@font/lato"
@@ -67,7 +67,7 @@
                 android:id="@+id/btn_confirm_language"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Confirm"
+                android:text="@string/confirm"
                 android:textSize="18sp"
                 android:layout_marginHorizontal="60dp"
                 android:layout_marginTop="60dp"

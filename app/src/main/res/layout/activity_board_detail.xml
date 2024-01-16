@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Engineer/Board Details"
+                android:text="@string/engineer_board_details"
                 android:textSize="18sp"
                 android:gravity="center"
                 android:fontFamily="@font/lato_bold"
@@ -52,7 +52,7 @@
                         android:id="@+id/ssid_configured_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="NO SSID CONFIGURED"
+                        android:text="@string/no_ssid_configured"
                         android:textSize="20sp"
                         android:gravity="center"
                         android:fontFamily="@font/lato_bold"
@@ -63,7 +63,7 @@
                         android:id="@+id/wifiAvailableStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Wifi is available on device"
+                        android:text="@string/wifi_is_available_on_device"
                         android:textSize="16sp"
                         android:gravity="center"
                         android:fontFamily="@font/lato_bold"
@@ -74,7 +74,7 @@
                         android:id="@+id/wifiConnectedStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Wifi is not Connected"
+                        android:text="@string/wifi_is_not_connected"
                         android:textSize="16sp"
                         android:gravity="center"
                         android:fontFamily="@font/lato_bold"
@@ -91,7 +91,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Board Capabilities"
+                        android:text="@string/board_capabilities"
                         android:textSize="18sp"
                         android:gravity="center"
                         android:fontFamily="@font/lato_bold"
@@ -115,7 +115,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="GSM"
+                            android:text="@string/gsm"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
                     </LinearLayout>
@@ -137,7 +137,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Diagnostics"
+                            android:text="@string/diagnostics"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
                     </LinearLayout>
@@ -159,7 +159,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Wifi"
+                            android:text="@string/wifi"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
                     </LinearLayout>
@@ -180,7 +180,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Wifi AP"
+                            android:text="@string/wifi_ap"
                             android:textSize="16sp"
                             android:textColor="@android:color/black"/>
                     </LinearLayout>
@@ -206,7 +206,7 @@
                         android:id="@+id/edit_text_wifi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="EDIT"
+                        android:text="@string/edit"
                         android:textSize="18sp"
                         android:textColor="@android:color/white"
                         android:fontFamily="@font/lato_bold"
@@ -233,7 +233,7 @@
                             android:id="@+id/jobLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Job Name"
+                            android:text="@string/job_name"
                             android:textSize="18sp"
                             android:fontFamily="@font/lato_medium"
                             android:textColor="@android:color/black"
@@ -258,7 +258,7 @@
                             android:id="@+id/clientLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Client Name"
+                            android:text="@string/client_name"
                             android:layout_marginTop="10dp"
                             android:textSize="18sp"
                             android:fontFamily="@font/lato_medium"
@@ -296,7 +296,7 @@
                         android:id="@+id/edit_text_edit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="EDIT"
+                        android:text="@string/edit"
                         android:textSize="18sp"
                         android:textColor="@android:color/white"
                         android:fontFamily="@font/lato_bold"

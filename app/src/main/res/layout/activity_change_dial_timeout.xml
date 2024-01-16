@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dial Timeout"
+            android:text="@string/dial_timeout"
             android:textSize="18sp"
             android:gravity="center"
             android:fontFamily="@font/lato_bold"
@@ -83,7 +83,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Expressed in seconds"
+            android:text="@string/expressed_in_seconds"
             android:textSize="12sp"
             android:gravity="center"
             android:fontFamily="@font/lato"
@@ -96,7 +96,7 @@
             android:id="@+id/dial_timeout_confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Confirm"
+            android:text="@string/confirm"
             android:textSize="18sp"
             android:layout_marginHorizontal="60dp"
             android:layout_marginTop="60dp"

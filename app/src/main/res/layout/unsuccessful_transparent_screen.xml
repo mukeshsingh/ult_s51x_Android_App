@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="WE APOLOGIZE"
+        android:text="@string/we_apologize"
         android:textColor="#FFFFFF"
         android:textSize="36sp"/>
     <TextView
@@ -26,15 +26,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="We have been unable to add"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"/>
-    <TextView
-        android:id="@+id/textFail3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="Handicare VLinkA15E to your account."
+        android:textAlignment="center"
+        android:text="@string/we_have_been_unable_to_link_nhandicare_vlinka15e_to_your_account"
         android:textColor="#FFFFFF"
         android:textSize="18sp"/>
     <TextView
@@ -42,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Please try again."
+        android:text="@string/please_try_again"
         android:textColor="#FFFFFF"
         android:textSize="18sp"/>
 
