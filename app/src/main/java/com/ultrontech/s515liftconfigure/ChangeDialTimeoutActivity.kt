@@ -8,7 +8,7 @@ import android.widget.SeekBar
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityChangeDialTimeoutBinding
 
-class ChangeDialTimeoutActivity : AppCompatActivity() {
+class ChangeDialTimeoutActivity : LangSupportBaseActivity() {
     private lateinit var binding: ActivityChangeDialTimeoutBinding
     private var value = 5
     override fun onCreate(savedInstanceState: Bundle?) {

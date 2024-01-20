@@ -9,7 +9,7 @@ import com.ultrontech.s515liftconfigure.bluetooth.setContact
 import com.ultrontech.s515liftconfigure.databinding.ActivityChangeUserContactBinding
 import com.ultrontech.s515liftconfigure.models.PhoneContact
 
-class ChangeUserContactActivity : AppCompatActivity() {
+class ChangeUserContactActivity : LangSupportBaseActivity() {
     lateinit var binding: ActivityChangeUserContactBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

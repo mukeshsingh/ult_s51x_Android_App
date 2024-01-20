@@ -21,7 +21,7 @@ import com.ultrontech.s515liftconfigure.databinding.ActivitySplashBinding
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : LangSupportBaseActivity() {
 
     private lateinit var binding: ActivitySplashBinding
     private lateinit var f1: ImageView

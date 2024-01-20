@@ -95,7 +95,17 @@
     <string name="check_your_bluetooth_connection_is_on_and_scan_again">-Controleer of uw Bluetooth-verbinding is ingeschakeld en scan opnieuw.</string>
     <string name="send_error_report">Foutrapportage sturen</string>
     <string name="please_use_this_link_to_send_an_error_report">-Gebruik deze link om een foutrapportage te sturen</string>
-    <string name="add_lift_txt_title">U moet een nieuwe pincode invoeren voor dit apparaat om er verbinding mee te kunnen maken en het toe te voegen aan de lijst.</string>
+    <string name="add_lift_txt_title">Voer de pincode in</string>
     <string name="add_lift_txt_lift_name">Savaria VLink</string>
     <string name="enter_pin">Enter PIN</string>
+    <string name="my_products">Mijn producten</string>
+    <string name="app_name">Liften</string>
+    <string name="product_not_found">U heeft nog geen producten. Klik op “Nieuwe lift zoeken” om uw product(en) toe te voegen.</string>
+    <string name="edit_lift_details">LIFTGEGEVENS BEWERKEN</string>
+    <string name="spanish">Spaans</string>
+    <string name="french">Frans</string>
+    <string name="english">Engels</string>
+    <string name="dutch">Nederlands</string>
+    <string name="italian">Italiaans</string>
+    <string name="german">Duits</string>
 </resources>

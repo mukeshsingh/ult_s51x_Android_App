@@ -225,5 +225,13 @@
     <string name="check_your_bluetooth_connection_is_on_and_scan_again">-Check your Bluetooth connection is on, and scan again.</string>
     <string name="send_error_report">Send error report</string>
     <string name="please_use_this_link_to_send_an_error_report">-Please use this link to send an Error Report</string>
-
+    <string name="my_products">My Products</string>
+    <string name="product_not_found">You don’t have any products yet, please click <b>“Find new lift”</b> to add your product(s).</string>
+    <string name="edit_lift_details">EDIT LIFT DETAILS</string>
+    <string name="spanish">Spanish</string>
+    <string name="french">French</string>
+    <string name="english">English</string>
+    <string name="dutch">Dutch</string>
+    <string name="italian">Italian</string>
+    <string name="german">German</string>
 </resources>

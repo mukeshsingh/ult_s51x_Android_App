@@ -42,9 +42,12 @@
         android:theme="@style/Theme.s515LiftConfigure"
         tools:targetApi="31">
         <activity
+            android:name=".LangSupportBaseActivity"
+            android:exported="false" />
+        <activity
             android:name=".TroubleshootingActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".LanguageSelectorActivity"
             android:exported="false"
@@ -113,8 +116,8 @@
             android:name=".ChangeSimInformationActivity"
             android:exported="false"
             android:label="@string/title_activity_change_sim_information"
-            android:theme="@style/Theme.s515LiftConfigure.NoActionBar"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.s515LiftConfigure.NoActionBar" />
         <activity
             android:name=".ChangePinNumberActivity"
             android:exported="false"
@@ -127,8 +130,8 @@
             android:name=".UserLiftSettingsActivity"
             android:exported="false"
             android:label="@string/title_activity_user_lift_settings"
-            android:theme="@style/Theme.s515LiftConfigure.NoActionBar"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.s515LiftConfigure.NoActionBar" />
         <activity
             android:name=".AddLiftActivity"
             android:exported="false"
@@ -142,8 +145,8 @@
             android:name=".SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
-            android:theme="@style/Theme.s515LiftConfigure.Fullscreen"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.s515LiftConfigure.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -159,22 +162,27 @@
         <activity
             android:name=".UserProfileActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".FindLiftActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".EngineerDetailsActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
 
         <service
             android:name=".bluetooth.BluetoothLeService"
             android:enabled="true" />
+        <receiver android:name=".BluetoothUpdateReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_GATT_SERVICES_DISCOVERED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

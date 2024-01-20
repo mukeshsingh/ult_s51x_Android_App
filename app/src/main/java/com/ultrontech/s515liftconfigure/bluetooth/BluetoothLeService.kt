@@ -11,6 +11,7 @@ import android.content.pm.PackageManager
 import android.os.*
 import android.util.Log
 import androidx.core.app.ActivityCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ultrontech.s515liftconfigure.HomeActivity
 import com.ultrontech.s515liftconfigure.S515LiftConfigureApp
 import com.ultrontech.s515liftconfigure.models.*
@@ -208,7 +209,7 @@ class BluetoothLeService : Service() {
                  Log.d(TAG, "Create a new GATT connection.")
                 broadcastUpdate(ACTION_GATT_CONNECTING)
                 mBluetoothGatt?.close()
-                mBluetoothGatt = bluetoothDevice.peripheral!!.connectGatt(this, false, bluetoothGattCallback, BluetoothDevice.TRANSPORT_LE)
+                mBluetoothGatt = bluetoothDevice.peripheral.connectGatt(this, false, bluetoothGattCallback, BluetoothDevice.TRANSPORT_LE)
                 mAddress = address
 
                 timer = S515LiftConfigureApp.instance.startCoroutineTimer(delayMillis = 20000) {
@@ -428,7 +429,7 @@ class BluetoothLeService : Service() {
                         }
 
                         else -> {
-                            Log.d(BluetoothLeService.TAG, "unknown characteristic")
+                            Log.d(TAG, "unknown characteristic")
                         }
                     }
                 }
@@ -669,7 +670,7 @@ class BluetoothLeService : Service() {
         mBusy = false
         val intent = Intent(action)
         if (data != null) intent.putExtra(ACTION_GATT_READ_DATA, data)
-        sendBroadcast(intent)
+        LocalBroadcastManager.getInstance(this.applicationContext).sendBroadcast(intent)
     }
 
     override fun onUnbind(intent: Intent?): Boolean {

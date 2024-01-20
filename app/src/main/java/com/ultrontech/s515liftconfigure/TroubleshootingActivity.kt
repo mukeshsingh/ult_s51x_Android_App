@@ -7,7 +7,7 @@ import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import com.ultrontech.s515liftconfigure.databinding.ActivityTroubleshootingBinding
 
-class TroubleshootingActivity : AppCompatActivity() {
+class TroubleshootingActivity : LangSupportBaseActivity() {
     lateinit var binding: ActivityTroubleshootingBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

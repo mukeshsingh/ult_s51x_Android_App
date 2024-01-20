@@ -17,11 +17,12 @@ import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.fragments.*
 import com.ultrontech.s515liftconfigure.models.*
 
-class EngineerDetailsActivity : AppCompatActivity() {
+class EngineerDetailsActivity : LangSupportBaseActivity() {
     private lateinit var liftName: TextView
     private lateinit var deviceStatus: TextView
     private lateinit var btnEdit: Button
@@ -353,13 +354,13 @@ class EngineerDetailsActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        registerReceiver(deviceUpdateReceiver, updateIntentFilter())
+        LocalBroadcastManager.getInstance(applicationContext).registerReceiver(deviceUpdateReceiver, updateIntentFilter())
 
         linkDevice()
     }
 
     override fun onPause() {
-        unregisterReceiver(deviceUpdateReceiver)
+        LocalBroadcastManager.getInstance(applicationContext).unregisterReceiver(deviceUpdateReceiver)
         super.onPause()
     }
 
@@ -834,7 +835,7 @@ class EngineerDetailsActivity : AppCompatActivity() {
             }
         }
     }
-    private fun updateIntentFilter(): IntentFilter? {
+    private fun updateIntentFilter(): IntentFilter {
         return IntentFilter().apply {
             addAction(BluetoothLeService.ACTION_BLUETOOTH_ON)
             addAction(BluetoothLeService.ACTION_BLUETOOTH_OFF)

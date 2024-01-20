@@ -9,7 +9,7 @@ import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import com.ultrontech.s515liftconfigure.databinding.ActivityLoginBinding
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : LangSupportBaseActivity() {
     private lateinit var binding: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

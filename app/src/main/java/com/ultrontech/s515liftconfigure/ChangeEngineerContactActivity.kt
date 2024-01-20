@@ -9,7 +9,7 @@ import com.ultrontech.s515liftconfigure.bluetooth.setContact
 import com.ultrontech.s515liftconfigure.databinding.ActivityChangeEngineerContactBinding
 import com.ultrontech.s515liftconfigure.models.PhoneContact
 
-class ChangeEngineerContactActivity : AppCompatActivity() {
+class ChangeEngineerContactActivity : LangSupportBaseActivity() {
     lateinit var binding: ActivityChangeEngineerContactBinding
     private var liftId: String? = null
     val numberSlot = 4

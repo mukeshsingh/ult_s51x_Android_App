@@ -12,7 +12,7 @@ import com.ultrontech.s515liftconfigure.bluetooth.setAccess
 import com.ultrontech.s515liftconfigure.databinding.ActivityChangePinNumberBinding
 import com.ultrontech.s515liftconfigure.models.PINNumber
 
-class ChangePinNumberActivity : AppCompatActivity() {
+class ChangePinNumberActivity : LangSupportBaseActivity() {
     private lateinit var binding: ActivityChangePinNumberBinding
     private var liftId: String? = null
     private lateinit var newPin: EditText
@@ -52,7 +52,10 @@ class ChangePinNumberActivity : AppCompatActivity() {
             }
         }
         binding.footer.btnHome.setOnClickListener {
-            val intent = Intent(this, MyProductsActivity::class.java)
+            var intent = Intent(this, MyProductsActivity::class.java)
+            if (S515LiftConfigureApp.profileStore.hasEngineerCapability) {
+                intent = Intent(this, EngineerHomeActivity::class.java)
+            }
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }

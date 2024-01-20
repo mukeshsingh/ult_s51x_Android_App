@@ -76,16 +76,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_no_pin"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="54dp"
-                        android:layout_weight="1"
                         android:text="@string/no_pin"
                         android:textSize="16sp"
                         android:fontFamily="@font/lato_regular"
-                        android:layout_marginEnd="10dp"
                         android:textColor="@color/enableBtn"
                         app:strokeColor="@color/enableBtn"
                         app:strokeWidth="1dp"
@@ -97,9 +95,8 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_pin_required"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="54dp"
-                        android:layout_weight="1"
                         android:text="@string/pin_required"
                         android:textSize="16sp"
                         android:textColor="@color/white"
@@ -113,13 +110,11 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_no_pin_enable"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="54dp"
-                        android:layout_weight="1"
                         android:text="@string/no_pin"
                         android:textSize="16sp"
                         android:fontFamily="@font/lato_regular"
-                        android:layout_marginEnd="10dp"
                         android:textColor="@color/white"
                         app:strokeColor="@color/enableBtn"
                         app:strokeWidth="1dp"
@@ -127,14 +122,12 @@
                         app:backgroundTint="@color/enableBtn"
                         android:visibility="visible"
                         android:textAllCaps="false"
-                        app:textAllCaps="false"
-                        />
+                        app:textAllCaps="false" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_pin_required_disabled"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="54dp"
-                        android:layout_weight="1"
                         android:text="@string/pin_required"
                         android:textSize="16sp"
                         android:textColor="@color/enableBtn"

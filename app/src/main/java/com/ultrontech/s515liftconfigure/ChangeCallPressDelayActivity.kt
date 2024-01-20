@@ -8,7 +8,7 @@ import android.widget.SeekBar
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityChangeCallPressDelayBinding
 
-class ChangeCallPressDelayActivity : AppCompatActivity() {
+class ChangeCallPressDelayActivity : LangSupportBaseActivity() {
     private lateinit var binding: ActivityChangeCallPressDelayBinding
     private var value = 1
     override fun onCreate(savedInstanceState: Bundle?) {

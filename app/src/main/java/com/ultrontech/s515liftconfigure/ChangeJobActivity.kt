@@ -9,7 +9,7 @@ import android.view.View
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityChangeJobBinding
 
-class ChangeJobActivity : AppCompatActivity() {
+class ChangeJobActivity : LangSupportBaseActivity() {
     lateinit var binding: ActivityChangeJobBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +33,10 @@ class ChangeJobActivity : AppCompatActivity() {
         }
 
         binding.footer.btnHome.setOnClickListener {
-            val intent = Intent(this, MyProductsActivity::class.java)
+            var intent = Intent(this, MyProductsActivity::class.java)
+            if (S515LiftConfigureApp.profileStore.hasEngineerCapability) {
+                intent = Intent(this, EngineerHomeActivity::class.java)
+            }
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }

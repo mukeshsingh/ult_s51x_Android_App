@@ -18,7 +18,7 @@ import com.ultrontech.s515liftconfigure.models.PINNumber
 import com.ultrontech.s515liftconfigure.models.ProfileStore
 import com.ultrontech.s515liftconfigure.models.UserLift
 
-class AddLiftActivity : AppCompatActivity() {
+class AddLiftActivity : LangSupportBaseActivity() {
     lateinit var binding: ActivityAddLiftBinding
     private lateinit var p1: EditText
     private lateinit var successFragment: SuccessAddLiftFragment
@@ -135,5 +135,6 @@ class AddLiftActivity : AppCompatActivity() {
     companion object{
         var lift: ScanDisplayItem? = null
         private const val AUTO_HIDE_DELAY_MILLIS = 1000
+        const val AB = AUTO_HIDE_DELAY_MILLIS
     }
 }

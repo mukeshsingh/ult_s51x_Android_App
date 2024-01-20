@@ -10,12 +10,13 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.TextView
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ultrontech.s515liftconfigure.adapters.LiftListAdapter
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.bluetooth.ScanDisplayItem
 import com.ultrontech.s515liftconfigure.databinding.ActivityFindLiftBinding
 
-class FindLiftActivity : AppCompatActivity() {
+class FindLiftActivity : LangSupportBaseActivity() {
     private var bluetoothService : BluetoothLeService? = null
     private lateinit var liftList: ListView
     private lateinit var homeBtn: ImageButton
@@ -106,7 +107,7 @@ class FindLiftActivity : AppCompatActivity() {
         }
     }
 
-    private fun makeGattUpdateIntentFilter(): IntentFilter? {
+    private fun makeGattUpdateIntentFilter(): IntentFilter {
         return IntentFilter().apply {
             addAction(BluetoothLeService.ACTION_LIFT_LIST_UPDATED)
         }
@@ -114,11 +115,11 @@ class FindLiftActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter(), RECEIVER_NOT_EXPORTED)
+        LocalBroadcastManager.getInstance(applicationContext).registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
     }
 
     override fun onPause() {
         super.onPause()
-        unregisterReceiver(gattUpdateReceiver)
+        LocalBroadcastManager.getInstance(applicationContext).unregisterReceiver(gattUpdateReceiver)
     }
 }

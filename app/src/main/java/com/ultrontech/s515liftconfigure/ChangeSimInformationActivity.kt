@@ -25,7 +25,7 @@ import com.ultrontech.s515liftconfigure.models.Util
 import com.ultrontech.s515liftconfigure.wheelpicker.LoopView
 
 
-class ChangeSimInformationActivity : AppCompatActivity() {
+class ChangeSimInformationActivity : LangSupportBaseActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityChangeSimInformationBinding
@@ -78,7 +78,7 @@ class ChangeSimInformationActivity : AppCompatActivity() {
             when (currentView) {
                 1 -> {
                     val item = loopView.selectedItem
-                    if (BluetoothLeService?.service?.device?.simType != Util.getSimType(item)) {
+                    if (BluetoothLeService.service?.device?.simType != Util.getSimType(item)) {
                         Handler(Looper.getMainLooper()).postDelayed({
                             BluetoothLeService.service?.setSimType(Util.getSimType(item))
                         }, 1000)
@@ -145,7 +145,10 @@ class ChangeSimInformationActivity : AppCompatActivity() {
         binding.txtPinLength.text = pinLength.toString()
 
         binding.footer.btnHome.setOnClickListener {
-            val intent = Intent(this, MyProductsActivity::class.java)
+            var intent = Intent(this, MyProductsActivity::class.java)
+            if (S515LiftConfigureApp.profileStore.hasEngineerCapability) {
+                intent = Intent(this, EngineerHomeActivity::class.java)
+            }
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }

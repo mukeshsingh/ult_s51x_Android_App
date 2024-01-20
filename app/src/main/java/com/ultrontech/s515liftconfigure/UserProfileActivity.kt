@@ -11,7 +11,7 @@ import androidx.activity.addCallback
 import com.ultrontech.s515liftconfigure.databinding.ActivityUserProfileBinding
 import com.ultrontech.s515liftconfigure.models.ProfileStore
 
-class UserProfileActivity : AppCompatActivity() {
+class UserProfileActivity : LangSupportBaseActivity() {
     lateinit var binding: ActivityUserProfileBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

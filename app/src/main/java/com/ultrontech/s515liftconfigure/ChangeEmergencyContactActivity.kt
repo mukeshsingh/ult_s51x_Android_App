@@ -8,7 +8,7 @@ import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityChangeEmergencyContactBinding
 import com.ultrontech.s515liftconfigure.models.PhoneContact
 
-class ChangeEmergencyContactActivity : AppCompatActivity() {
+class ChangeEmergencyContactActivity : LangSupportBaseActivity() {
     lateinit var binding: ActivityChangeEmergencyContactBinding
     private var liftId: String? = null
     var numberSlot = 5

@@ -8,7 +8,7 @@ import androidx.core.content.res.ResourcesCompat
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityBoardDetailBinding
 
-class BoardDetailActivity : AppCompatActivity() {
+class BoardDetailActivity : LangSupportBaseActivity() {
     lateinit var binding: ActivityBoardDetailBinding
     private val bluetoothLeService: BluetoothLeService = BluetoothLeService.service!!
     override fun onCreate(savedInstanceState: Bundle?) {

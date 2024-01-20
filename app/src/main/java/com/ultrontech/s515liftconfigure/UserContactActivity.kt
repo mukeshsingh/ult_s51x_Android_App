@@ -9,7 +9,7 @@ import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityUserContactBinding
 import com.ultrontech.s515liftconfigure.models.PhoneContact
 
-class UserContactActivity : AppCompatActivity() {
+class UserContactActivity : LangSupportBaseActivity() {
     lateinit var binding: ActivityUserContactBinding
     private var liftId: String? = null
     private var phone1: PhoneContact? = null
@@ -110,7 +110,10 @@ class UserContactActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.footer.btnHome.setOnClickListener {
-            val intent = Intent(this, MyProductsActivity::class.java)
+            var intent = Intent(this, MyProductsActivity::class.java)
+            if (S515LiftConfigureApp.profileStore.hasEngineerCapability) {
+                intent = Intent(this, EngineerHomeActivity::class.java)
+            }
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }

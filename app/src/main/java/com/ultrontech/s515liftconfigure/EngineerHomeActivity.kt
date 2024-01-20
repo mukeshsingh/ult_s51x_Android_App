@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,7 +26,7 @@ import com.ultrontech.s515liftconfigure.bluetooth.BluetoothState
 import com.ultrontech.s515liftconfigure.databinding.ActivityEngineerHomeBinding
 import com.ultrontech.s515liftconfigure.models.UserLift
 
-class EngineerHomeActivity : AppCompatActivity() {
+class EngineerHomeActivity : LangSupportBaseActivity() {
     private lateinit var adapter: RecyclerViewAdapter
     private lateinit var itemTouchHelper: ItemTouchHelper
 
@@ -158,6 +159,12 @@ class EngineerHomeActivity : AppCompatActivity() {
             binding.optionMenu.version.visibility = View.VISIBLE
             binding.optionMenu.version.text = "Version ${BuildConfig.VERSION_NAME}"
             // ****************** Option Menu End ******************
+
+            LocalBroadcastManager.getInstance(applicationContext).registerReceiver(
+                gattUpdateReceiver,
+                makeGattUpdateIntentFilter(),
+            )
+            scanLifts()
         }
     }
 
@@ -362,8 +369,6 @@ class EngineerHomeActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter(), RECEIVER_NOT_EXPORTED)
-        scanLifts()
         lvUserLifts.invalidate()
         adapter.notifyDataSetChanged()
 
@@ -379,18 +384,19 @@ class EngineerHomeActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        unregisterReceiver(gattUpdateReceiver)
     }
 
     override fun onDestroy() {
         super.onDestroy()
+
+        LocalBroadcastManager.getInstance(applicationContext).unregisterReceiver(gattUpdateReceiver)
 
         try { bluetoothService!!.close() } catch (e: Exception) { }
         try { bluetoothService!!.disconnect() } catch (e: Exception) { }
         try { BluetoothLeService.service!!.unbindService(serviceConnection) } catch (e: Exception) { }
     }
 
-    private fun makeGattUpdateIntentFilter(): IntentFilter? {
+    private fun makeGattUpdateIntentFilter(): IntentFilter {
         return IntentFilter().apply {
             addAction(BluetoothLeService.ACTION_GATT_CONNECTING)
             addAction(BluetoothLeService.ACTION_GATT_CONNECTED)

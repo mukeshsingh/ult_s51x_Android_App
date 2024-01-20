@@ -7,7 +7,7 @@ import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import com.ultrontech.s515liftconfigure.databinding.ActivitySelectLiftTypeBinding
 
-class SelectLiftTypeActivity : AppCompatActivity() {
+class SelectLiftTypeActivity : LangSupportBaseActivity() {
     lateinit var binding: ActivitySelectLiftTypeBinding
     private var liftType = ""
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,7 +95,10 @@ class SelectLiftTypeActivity : AppCompatActivity() {
         }
 
         binding.footer.btnHome.setOnClickListener {
-            val intent = Intent(this, MyProductsActivity::class.java)
+            var intent = Intent(this, MyProductsActivity::class.java)
+            if (S515LiftConfigureApp.profileStore.hasEngineerCapability) {
+                intent = Intent(this, EngineerHomeActivity::class.java)
+            }
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }

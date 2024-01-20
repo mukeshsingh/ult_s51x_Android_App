@@ -60,7 +60,7 @@
         android:padding="16dp"
         android:background="@drawable/rounded_button_bg"
         app:backgroundTint="@color/grey_btn_bg"
-        android:text="EDIT LIFT DETAILS"
+        android:text="@string/edit_lift_details"
         android:textColor="@color/black"
         android:fontFamily="@font/lato_semibold"
         android:textSize="18sp"/>

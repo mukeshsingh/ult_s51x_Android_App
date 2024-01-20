@@ -9,12 +9,13 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityUserLiftSettingsBinding
 import com.ultrontech.s515liftconfigure.models.Device
 import com.ultrontech.s515liftconfigure.models.LiftConnectionState
 
-class UserLiftSettingsActivity : AppCompatActivity() {
+class UserLiftSettingsActivity : LangSupportBaseActivity() {
     private lateinit var binding: ActivityUserLiftSettingsBinding
     private var liftId: String? = null
     private val bluetoothLeService: BluetoothLeService = BluetoothLeService.service!!
@@ -187,12 +188,12 @@ class UserLiftSettingsActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        registerReceiver(deviceUpdateReceiver, updateIntentFilter(), RECEIVER_NOT_EXPORTED)
+        LocalBroadcastManager.getInstance(applicationContext).registerReceiver(deviceUpdateReceiver, updateIntentFilter())
         linkDevice()
     }
 
     override fun onPause() {
-        unregisterReceiver(deviceUpdateReceiver)
+        LocalBroadcastManager.getInstance(applicationContext).unregisterReceiver(deviceUpdateReceiver)
         super.onPause()
     }
 
@@ -308,7 +309,7 @@ class UserLiftSettingsActivity : AppCompatActivity() {
             }
         }
     }
-    private fun updateIntentFilter(): IntentFilter? {
+    private fun updateIntentFilter(): IntentFilter {
         return IntentFilter().apply {
             addAction(BluetoothLeService.ACTION_BLUETOOTH_ON)
             addAction(BluetoothLeService.ACTION_BLUETOOTH_OFF)

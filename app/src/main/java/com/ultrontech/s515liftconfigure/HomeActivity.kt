@@ -20,6 +20,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothState
 import com.ultrontech.s515liftconfigure.bluetooth.LiftBT
@@ -31,7 +32,7 @@ import com.ultrontech.s515liftconfigure.models.ProfileStore
 import com.ultrontech.s515liftconfigure.models.UserLift
 import org.w3c.dom.Text
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : LangSupportBaseActivity() {
     private lateinit var llUserLifts: LinearLayout
     private lateinit var inflater: LayoutInflater
     private lateinit var userName: TextView
@@ -108,7 +109,7 @@ class HomeActivity : AppCompatActivity() {
 
         loginChanged()
 
-        registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
+        LocalBroadcastManager.getInstance(applicationContext).registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
 
         scanLifts()
     }
@@ -282,7 +283,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
+        LocalBroadcastManager.getInstance(applicationContext).registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
         if (S515LiftConfigureApp.profileStore.userName.isNotEmpty()) {
             userName.visibility = View.VISIBLE
             userName.text = S515LiftConfigureApp.profileStore.userName
@@ -294,7 +295,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        unregisterReceiver(gattUpdateReceiver)
+        LocalBroadcastManager.getInstance(applicationContext).unregisterReceiver(gattUpdateReceiver)
     }
 
     override fun onDestroy() {
@@ -320,7 +321,7 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun makeGattUpdateIntentFilter(): IntentFilter? {
+    private fun makeGattUpdateIntentFilter(): IntentFilter {
         return IntentFilter().apply {
             addAction(BluetoothLeService.ACTION_GATT_CONNECTING)
             addAction(BluetoothLeService.ACTION_GATT_CONNECTED)

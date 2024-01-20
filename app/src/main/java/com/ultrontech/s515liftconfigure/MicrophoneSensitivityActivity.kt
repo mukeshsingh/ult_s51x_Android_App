@@ -9,7 +9,7 @@ import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityChangeVolumeBinding
 import com.ultrontech.s515liftconfigure.databinding.ActivityMicrophoneSensitivityBinding
 
-class MicrophoneSensitivityActivity : AppCompatActivity() {
+class MicrophoneSensitivityActivity : LangSupportBaseActivity() {
     private lateinit var binding: ActivityMicrophoneSensitivityBinding
     private var value = 2
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +39,10 @@ class MicrophoneSensitivityActivity : AppCompatActivity() {
         }
 
         binding.footer.btnHome.setOnClickListener {
-            val intent = Intent(this, MyProductsActivity::class.java)
+            var intent = Intent(this, MyProductsActivity::class.java)
+            if (S515LiftConfigureApp.profileStore.hasEngineerCapability) {
+                intent = Intent(this, EngineerHomeActivity::class.java)
+            }
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }

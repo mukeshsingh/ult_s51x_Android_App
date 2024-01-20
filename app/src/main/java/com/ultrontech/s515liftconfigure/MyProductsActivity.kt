@@ -19,11 +19,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothState
 import com.ultrontech.s515liftconfigure.databinding.ActivityMyProductsBinding
 
-class MyProductsActivity : AppCompatActivity() {
+class MyProductsActivity : LangSupportBaseActivity() {
     private lateinit var binding: ActivityMyProductsBinding
     private lateinit var btnFindLift: Toolbar
     private lateinit var noProduct: LinearLayout
@@ -54,20 +56,23 @@ class MyProductsActivity : AppCompatActivity() {
             }
         }
 
+        val str = resources.getString(R.string.product_not_found)
+        binding.txtNoProductFound.text = HtmlCompat.fromHtml(str, 0)
+
         binding.optionMenu.llMenuAccount.setOnClickListener {
             binding.optionMenu.llOptionMenu.visibility = View.GONE
 
-            val intent = Intent(this@MyProductsActivity, UserProfileActivity::class.java)
+            val intent = Intent(this, UserProfileActivity::class.java)
             startActivity(intent)
         }
         binding.optionMenu.llMenuLanguage.setOnClickListener {
             binding.optionMenu.llOptionMenu.visibility = View.GONE
-            val intent = Intent(this@MyProductsActivity, LanguageSelectorActivity::class.java)
+            val intent = Intent(this, LanguageSelectorActivity::class.java)
             startActivity(intent)
         }
         binding.optionMenu.llMenuTroubleshoot.setOnClickListener {
             binding.optionMenu.llOptionMenu.visibility = View.GONE
-            val intent = Intent(this@MyProductsActivity, TroubleshootingActivity::class.java)
+            val intent = Intent(this, TroubleshootingActivity::class.java)
             startActivity(intent)
 
         }
@@ -88,6 +93,10 @@ class MyProductsActivity : AppCompatActivity() {
         binding.optionMenu.version.visibility = View.VISIBLE
         binding.optionMenu.version.text = "Version ${BuildConfig.VERSION_NAME}"
         // ****************** Option Menu End ******************
+
+        LocalBroadcastManager.getInstance(applicationContext).registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
+
+        scanLifts()
     }
 
     private val serviceConnection: ServiceConnection = object : ServiceConnection {
@@ -100,7 +109,7 @@ class MyProductsActivity : AppCompatActivity() {
             Log.e(HomeActivity.TAG, ">>>>>>>> BluetoothLeService serviceConnection.")
             bluetoothService?.let { bluetooth ->
                 if (!bluetooth.initialize()) {
-                    Log.e(HomeActivity.TAG, "Unable to initialize Bluetooth")
+                    Log.e(TAG, "Unable to initialize Bluetooth")
                     finish()
                 }
 
@@ -291,25 +300,24 @@ class MyProductsActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter(), RECEIVER_NOT_EXPORTED)
-        scanLifts()
         showUserDevices()
     }
 
     override fun onPause() {
         super.onPause()
-        unregisterReceiver(gattUpdateReceiver)
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
-        try { bluetoothService!!.close() } catch (e: Exception) { }
-        try { bluetoothService!!.disconnect() } catch (e: Exception) { }
-        try { BluetoothLeService.service!!.unbindService(serviceConnection) } catch (e: Exception) { }
+        LocalBroadcastManager.getInstance(applicationContext).unregisterReceiver(gattUpdateReceiver)
+
+        try { bluetoothService!!.close() } catch (_: Exception) { }
+        try { bluetoothService!!.disconnect() } catch (_: Exception) { }
+        try { BluetoothLeService.service!!.unbindService(serviceConnection) } catch (_: Exception) { }
     }
 
-    private fun makeGattUpdateIntentFilter(): IntentFilter? {
+    private fun makeGattUpdateIntentFilter(): IntentFilter {
         return IntentFilter().apply {
             addAction(BluetoothLeService.ACTION_GATT_CONNECTING)
             addAction(BluetoothLeService.ACTION_GATT_CONNECTED)
