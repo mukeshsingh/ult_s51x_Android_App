@@ -144,7 +144,7 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
-    <string name="new_lift">"Find new lift"</string>
+    <string name="new_lift">"FIND NEW LIFT"</string>
     <string name="title_activity_user_lift_settings">UserLiftSettingsActivity</string>
     <string name="title_activity_change_sim_information">ChangeSimInformationActivity</string>
 
@@ -234,4 +234,7 @@
     <string name="dutch">Dutch</string>
     <string name="italian">Italian</string>
     <string name="german">German</string>
+    <string name="account_lifts">%s’s Lifts</string>
+    <string name="lift_not_connected_msg">The mobile application is waiting for the connected BT device to finish processing.</string>
+    <string name="ok">OK</string>
 </resources>

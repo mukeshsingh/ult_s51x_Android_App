@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.annotation.Nullable
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -19,6 +20,7 @@ import com.ultrontech.s515liftconfigure.R
 
 class SuccessAddLiftFragment : BottomSheetDialogFragment() {
     private lateinit var addLiftActivity: AddLiftActivity
+    private lateinit var txtMsg: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +29,10 @@ class SuccessAddLiftFragment : BottomSheetDialogFragment() {
         // Inflate the layout for this fragment
         addLiftActivity = (activity as AddLiftActivity)
 
-        return inflater.inflate(R.layout.successful_transparent_screen, container, false)
+        val view = inflater.inflate(R.layout.successful_transparent_screen, container, false)
+        txtMsg = view.findViewById(R.id.textSuccess2)
+        txtMsg.text = AddLiftActivity.lift?.name?: ""
+        return view
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

@@ -31,7 +31,7 @@ class UnSuccessAddLiftFragment : BottomSheetDialogFragment() {
         // Inflate the layout for this fragment
         addLiftActivity = (activity as AddLiftActivity)
 
-        var view = inflater.inflate(R.layout.unsuccessful_transparent_screen, container, false)
+        val view = inflater.inflate(R.layout.unsuccessful_transparent_screen, container, false)
         txtMsg = view.findViewById(R.id.textFail2)
         txtMsg.text = AddLiftActivity.lift?.name?: ""
         return view

@@ -20,7 +20,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/successful"
         android:textColor="#FFFFFF"
-        android:textSize="36sp"/>
+        android:textSize="36sp" />
     <TextView
         android:id="@+id/textSuccess2"
         android:layout_width="wrap_content"

@@ -31,9 +31,9 @@ class S515LiftConfigureApp: Application() {
     fun basicAlert(context: Context, message: String, callback: (() -> Unit)?){
         val builder = AlertDialog.Builder(context)
         with(builder) {
-            setTitle("Lifts")
+            setTitle(resources.getString(R.string.app_name))
             setMessage(message)
-            setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+            setPositiveButton(resources.getString(R.string.ok), DialogInterface.OnClickListener { dialog, which ->
                 dialog.dismiss()
                 callback?.invoke()
             })

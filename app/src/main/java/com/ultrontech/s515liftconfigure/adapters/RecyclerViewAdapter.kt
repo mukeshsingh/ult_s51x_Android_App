@@ -81,9 +81,9 @@ class RecyclerViewAdapter(private val context: Context, private val data: List<U
                     intent.putExtra(HomeActivity.INTENT_LIFT_ID, item.liftId)
                     context.startActivity(intent)
                 } else {
-                    context?.let { it1 ->
+                    context.let { it1 ->
                         S515LiftConfigureApp.instance.basicAlert(
-                            it1, "The mobile application is waiting for the connected BT device to finish processing."
+                            it1, context.resources.getString(R.string.lift_not_connected_msg)
                         ){}
                     }
                 }

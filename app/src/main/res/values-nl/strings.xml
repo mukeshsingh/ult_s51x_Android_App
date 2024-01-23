@@ -108,4 +108,7 @@
     <string name="dutch">Nederlands</string>
     <string name="italian">Italiaans</string>
     <string name="german">Duits</string>
+    <string name="account_lifts">Liften van %s</string>
+    <string name="lift_not_connected_msg">De mobiele applicatie wacht tot het verbonden BT-apparaat klaar is met verwerken.</string>
+    <string name="ok">OK</string>
 </resources>

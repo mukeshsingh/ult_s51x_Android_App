@@ -230,9 +230,9 @@ class MyProductsActivity : LangSupportBaseActivity() {
                     intent.putExtra(HomeActivity.INTENT_LIFT_ID, userLift.liftId)
                     startActivity(intent)
                 } else {
-                    this@MyProductsActivity?.let { it1 ->
+                    this@MyProductsActivity.let { it1 ->
                         S515LiftConfigureApp.instance.basicAlert(
-                            it1, "The mobile application is waiting for the connected BT device to finish processing."
+                            it1, resources.getString(R.string.lift_not_connected_msg)
                         ){}
                     }
                 }

@@ -375,7 +375,7 @@ class EngineerHomeActivity : LangSupportBaseActivity() {
         if (S515LiftConfigureApp.profileStore.userName.isNotEmpty()) {
             val name = S515LiftConfigureApp.profileStore.userName.replaceFirstChar { char -> char.uppercase()}
             binding.optionMenu.txtAccount.text = name
-            binding.title.text = (name + " Lifts")
+            binding.title.text = resources.getString(R.string.account_lifts, name)
         } else {
             binding.optionMenu.txtAccount.text = resources.getString(R.string.account)
             binding.title.text = resources.getString(R.string.account)

@@ -108,4 +108,7 @@
     <string name="dutch">Neerlandés</string>
     <string name="italian">Italiano</string>
     <string name="german">Alemana</string>
+    <string name="account_lifts">Salvaescaleras de %s</string>
+    <string name="lift_not_connected_msg">La aplicación móvil está esperando a que el dispositivo BT conectado termine de procesarse.</string>
+    <string name="ok">DE ACUERDO</string>
 </resources>
