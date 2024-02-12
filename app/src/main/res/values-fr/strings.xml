@@ -81,7 +81,7 @@
     <string name="are_you_sure_you_want_to_log_out_of_this_account">Souhaitez-vous vraiment déconnecter ce compte ?</string>
     <string name="account_name">Nom du compte</string>
     <string name="account">Compte</string>
-    <string name="default_language">Frans</string>
+    <string name="default_language">Français</string>
     <string name="troubleshooting">Dépannage</string>
     <string name="access_resources">Aide</string>
     <string name="engineer_logout">DÉCONNEXION</string>
@@ -99,8 +99,9 @@
     <string name="add_lift_txt_lift_name">Savaria VLink</string>
     <string name="enter_pin">Ingresar PIN</string>
     <string name="my_products">Mes produits</string>
-    <string name="app_name">Appareils</string>
-    <string name="product_not_found">Vous n’avez pas encore de produits dans votre liste. Veuillez cliquer sur « TROUVER UN NOUVEL APPAREIL » pour ajouter un ou des produits.</string>
+    <string name="app_name">Une touche</string>
+    <string name="product_not_found">Vous n’avez pas encore de produits dans votre liste. Veuillez cliquer sur <b>"TROUVER UN NOUVEL APPAREIL"</b> pour ajouter un ou des produits.</string>
+    <string name="lifts_not_found">Vous n\'avez pas encore d\'ascenseur, veuillez cliquer sur <b>"TROUVER UN NOUVEL APPAREIL"</b> pour ajouter votre(vos) ascenseur(s).</string>
     <string name="edit_lift_details">MODIFIER LES INFORMATIONS DE L’APPAREIL</string>
     <string name="spanish">Espagnol</string>
     <string name="french">Français</string>

@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 
 class S515LiftConfigureApp: Application() {
+    var showSplashAnimation = true
     override fun onCreate() {
         super.onCreate()
 
@@ -67,6 +68,7 @@ class S515LiftConfigureApp: Application() {
         const val KEY_PROFILE_USER_NAME ="profile.user.name"
         const val KEY_PROFILE_USER_LANGUAGE ="profile.user.language"
         const val KEY_PROFILE_ENGINEER_LOGGED_IN ="profile.engineer.logged.in"
+        const val KEY_PROFILE_USER_LOGGED_IN ="profile.user.logged.in"
         const val KEY_PROFILE_USER_USE_BIO ="profile.user.use_bio"
         const val KEY_EMPTY_STRING = ""
         const val KEY_TRUE = true

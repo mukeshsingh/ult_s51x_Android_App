@@ -49,8 +49,46 @@
             android:src="@drawable/f5"
             android:visibility="gone"
             />
+
         <LinearLayout
             android:id="@+id/f6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/chat"
+                android:layout_marginBottom="50dp"
+                android:layout_gravity="center_horizontal" />
+
+            <com.ultrontech.s515liftconfigure.wheelpicker.LoopView
+                android:id="@+id/loopView_language"
+                android:layout_width="200dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="30dp"
+                android:layout_gravity="center_horizontal" />
+            <LinearLayout
+                android:id="@+id/btn_confirm_language"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="60dp"
+                android:background="@drawable/rounded_button_green_bg"
+                android:layout_gravity="center"
+                android:gravity="center">
+                <ImageButton
+                    android:id="@+id/img_confirm_language"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/check" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/f7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

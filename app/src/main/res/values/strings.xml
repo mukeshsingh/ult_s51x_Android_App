@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Lifts</string>
+    <string name="app_name">One Touch</string>
     <string name="ultronHeading">ULTRON</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="edit_board_details">Edit Board Details</string>
@@ -226,7 +226,8 @@
     <string name="send_error_report">Send error report</string>
     <string name="please_use_this_link_to_send_an_error_report">-Please use this link to send an Error Report</string>
     <string name="my_products">My Products</string>
-    <string name="product_not_found">You don’t have any products yet, please click <b>“Find new lift”</b> to add your product(s).</string>
+    <string name="product_not_found">You don’t have any products yet, please click <b>“FIND NEW LIFT”</b> to add your product(s).</string>
+    <string name="lifts_not_found">You don’t have any lift yet, please click <b>“FIND NEW LIFT“</b> to add your lift(s).</string>
     <string name="edit_lift_details">EDIT LIFT DETAILS</string>
     <string name="spanish">Spanish</string>
     <string name="french">French</string>

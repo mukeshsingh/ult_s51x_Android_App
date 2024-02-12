@@ -81,7 +81,7 @@
     <string name="are_you_sure_you_want_to_log_out_of_this_account">¿Está seguro de que desea cerrar sesión de esta cuenta?</string>
     <string name="account_name">Nombre de la cuenta</string>
     <string name="account">Cuenta</string>
-    <string name="default_language">Spaans</string>
+    <string name="default_language">Español</string>
     <string name="troubleshooting">Resolución de problemas</string>
     <string name="access_resources">Acceder a recursos</string>
     <string name="engineer_logout">CERRAR SESIÓN</string>
@@ -99,8 +99,9 @@
     <string name="add_lift_txt_lift_name">Savaria VLink</string>
     <string name="enter_pin">Ingresar PIN</string>
     <string name="my_products">Mis productos</string>
-    <string name="app_name">Salvaescaleras</string>
-    <string name="product_not_found">Aún no tiene ningún producto. Haga clic en \"Buscar nuevo salvaescaleras\" para añadir su(s) producto(s).</string>
+    <string name="app_name">Un toque</string>
+    <string name="product_not_found">Aún no tiene ningún producto. Haga clic en <b>“BUSCAR NUEVO SALVAESCALERAS”</b> para añadir su(s) producto(s).</string>
+    <string name="lifts_not_found">Aún no tiene ningún ascensor, haga clic en <b>“BUSCAR NUEVO SALVAESCALERAS”</b> para agregar su(s) ascensor(es).</string>
     <string name="edit_lift_details">EDITAR DATOS DEL SALVAESCALERAS</string>
     <string name="spanish">Español</string>
     <string name="french">Francés</string>

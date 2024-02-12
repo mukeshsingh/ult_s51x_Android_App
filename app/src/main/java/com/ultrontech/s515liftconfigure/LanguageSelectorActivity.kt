@@ -47,7 +47,13 @@ class LanguageSelectorActivity : LangSupportBaseActivity() {
                 sharedPreferences.edit().putString(KEY_PROFILE_USER_LANGUAGE, languageCode).apply()
             }
 
-            val intent = Intent(this@LanguageSelectorActivity, SplashActivity::class.java)
+            var intent = Intent(this@LanguageSelectorActivity, SplashActivity::class.java)
+
+            if (S515LiftConfigureApp.profileStore.hasEngineerCapability) {
+                intent = Intent(this@LanguageSelectorActivity, EngineerHomeActivity::class.java)
+            } else if (S515LiftConfigureApp.profileStore.hasUserCapability) {
+                intent = Intent(this@LanguageSelectorActivity, MyProductsActivity::class.java)
+            }
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NO_HISTORY
             startActivity(intent)
         }
@@ -109,6 +115,6 @@ class LanguageSelectorActivity : LangSupportBaseActivity() {
     }
 
     companion object{
-        val LANGUAGES_MAP = mapOf("spanish" to "es", "french" to "fr", "english" to "en", "dutch" to "nl", "german" to "de", "italian" to "it")
+        val LANGUAGES_MAP = mapOf("dutch" to "nl", "english" to "en", "french" to "fr", "german" to "de", "italian" to "it", "spanish" to "es")
     }
 }

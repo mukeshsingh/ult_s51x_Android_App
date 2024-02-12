@@ -81,7 +81,7 @@
     <string name="are_you_sure_you_want_to_log_out_of_this_account">Sicura/o di volere uscire da questo account?</string>
     <string name="account_name">Nome account</string>
     <string name="account">Account</string>
-    <string name="default_language">Italiaans</string>
+    <string name="default_language">Italiano</string>
     <string name="troubleshooting">Ricerca guasti</string>
     <string name="access_resources">Accedi alle risorse</string>
     <string name="engineer_logout">ESCI</string>
@@ -99,8 +99,9 @@
     <string name="add_lift_txt_lift_name">Savaria VLink</string>
     <string name="enter_pin">Enter PIN</string>
     <string name="my_products">I miei prodotti</string>
-    <string name="app_name">Montascale</string>
-    <string name="product_not_found">Non hai ancora prodotti, clicca su “Trova nuovo montascale” per aggiungere i(l) tuo(i) prodotto/i.</string>
+    <string name="app_name">Un tocco</string>
+    <string name="product_not_found">Non hai ancora prodotti, clicca su <b>"TROVA NUOVO MONTASCALE"</b> per aggiungere i(l) tuo(i) prodotto/i.</string>
+    <string name="lifts_not_found">Non hai ancora alcun ascensore, fai clic su <b>"TROVA NUOVO MONTASCALE"</b> per aggiungere i tuoi ascensori.</string>
     <string name="edit_lift_details">MODIFICA I DETTAGLI DEL MONTASCALE</string>
     <string name="spanish">Spagnolo</string>
     <string name="french">Francese</string>

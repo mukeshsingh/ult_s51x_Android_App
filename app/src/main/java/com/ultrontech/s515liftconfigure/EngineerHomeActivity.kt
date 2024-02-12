@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -124,6 +125,9 @@ class EngineerHomeActivity : LangSupportBaseActivity() {
                     binding.optionMenu.llOptionMenu.visibility = View.GONE
                 }
             }
+
+            val str = resources.getString(R.string.lifts_not_found)
+            binding.txtNoLiftsFound.text = HtmlCompat.fromHtml(str, 0)
 
             binding.optionMenu.llMenuAccount.setOnClickListener {
                 binding.optionMenu.llOptionMenu.visibility = View.GONE

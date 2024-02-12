@@ -10,6 +10,7 @@ data class ProfileStore (
     var userName: String = "",
     var selectedLiftType: String = "",
     var hasEngineerCapability: Boolean = false,
+    var hasUserCapability: Boolean = false,
     var allowBiometrics: Boolean = false
 ) {
     override fun equals(other: Any?): Boolean {
@@ -21,6 +22,7 @@ data class ProfileStore (
         if (!userDevices.contentEquals(other.userDevices)) return false
         if (userName != other.userName) return false
         if (hasEngineerCapability != other.hasEngineerCapability) return false
+        if (hasUserCapability != other.hasUserCapability) return false
         if (allowBiometrics != other.allowBiometrics) return false
 
         return true
@@ -30,6 +32,7 @@ data class ProfileStore (
         var result = userDevices.contentHashCode()
         result = 31 * result + userName.hashCode()
         result = 31 * result + hasEngineerCapability.hashCode()
+        result = 31 * result + hasUserCapability.hashCode()
         result = 31 * result + allowBiometrics.hashCode()
 
         return result
@@ -40,6 +43,7 @@ data class ProfileStore (
             with(sharedPreferences) {
                 userName = getString(KEY_PROFILE_USER_NAME, KEY_EMPTY_STRING).toString()
                 hasEngineerCapability = getBoolean(KEY_PROFILE_ENGINEER_LOGGED_IN, KEY_FALSE)
+                hasUserCapability = getBoolean(KEY_PROFILE_USER_LOGGED_IN, KEY_FALSE)
                 allowBiometrics = getBoolean(KEY_PROFILE_USER_USE_BIO, KEY_FALSE)
                 val storeDevices = getString(KEY_PROFILE_USER_DEVICES, null)
 
@@ -165,6 +169,19 @@ data class ProfileStore (
 
         return result
     }
+    fun userLogin() {
+        with(S515LiftConfigureApp) {
+            with(sharedPreferences) {
+                val editor = edit()
+
+                with(editor) {
+                    hasUserCapability = true
+                    putBoolean(KEY_PROFILE_USER_LOGGED_IN, true)
+                    commit()
+                }
+            }
+        }
+    }
 
     fun update(userName: String) {
         this.userName = userName
@@ -182,12 +199,15 @@ data class ProfileStore (
 
     fun logout() {
         with(S515LiftConfigureApp) {
+            instance.showSplashAnimation = true
             with(sharedPreferences) {
                 val editor = edit()
 
                 with(editor) {
                     hasEngineerCapability = false
+                    hasUserCapability = false
                     putBoolean(KEY_PROFILE_ENGINEER_LOGGED_IN, false)
+                    putBoolean(KEY_PROFILE_USER_LOGGED_IN, false)
                     commit()
                 }
             }

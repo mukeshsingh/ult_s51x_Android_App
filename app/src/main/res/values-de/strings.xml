@@ -100,8 +100,9 @@
     <string name="send_error_report">Fehlerbericht senden</string>
     <string name="please_use_this_link_to_send_an_error_report">-Bitte verwenden Sie diesen Link, umeinen Fehlerbericht zu senden</string>
     <string name="my_products">Meine Produkte</string>
-    <string name="app_name">Lifte</string>
-    <string name="product_not_found">Sie haben noch keine Produkte. Bitte klicken Sie auf „Neuen Lift suchen“, um Ihr(e) Produkt(e) hinzuzufügen.</string>
+    <string name="app_name">Ein Hauch</string>
+    <string name="product_not_found">Sie haben noch keine Produkte. Bitte klicken Sie auf <b>„NEUEN LIFT SUCHEN“</b>, um Ihr(e) Produkt(e) hinzuzufügen.</string>
+    <string name="lifts_not_found">Sie haben noch keinen Aufzug, klicken Sie bitte auf <b>„NEUEN LIFT SUCHEN“</b>, um Ihren/Ihre(n) Aufzug(e) hinzuzufügen.</string>
     <string name="edit_lift_details">LIFTDATEN BEARBEITEN</string>
     <string name="spanish">Spanisch</string>
     <string name="french">Französisch</string>

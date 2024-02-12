@@ -99,8 +99,9 @@
     <string name="add_lift_txt_lift_name">Savaria VLink</string>
     <string name="enter_pin">Enter PIN</string>
     <string name="my_products">Mijn producten</string>
-    <string name="app_name">Liften</string>
-    <string name="product_not_found">U heeft nog geen producten. Klik op “Nieuwe lift zoeken” om uw product(en) toe te voegen.</string>
+    <string name="app_name">Een aanraking</string>
+    <string name="product_not_found">U heeft nog geen producten. Klik op <b>“NIEUWE LIFT ZOEKEN”</b> om uw product(en) toe te voegen.</string>
+    <string name="lifts_not_found">U heeft nog geen lift. Klik op <b>“NIEUWE LIFT ZOEKEN”</b> om uw lift(en) toe te voegen.</string>
     <string name="edit_lift_details">LIFTGEGEVENS BEWERKEN</string>
     <string name="spanish">Spaans</string>
     <string name="french">Frans</string>
