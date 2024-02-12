@@ -109,7 +109,9 @@
     <string name="dutch">Néerlandais</string>
     <string name="italian">Italien</string>
     <string name="german">Allemande</string>
-    <string name="account_lifts">Account LiftsAppareils de %s</string>
+    <string name="account_lifts">Appareils de %s</string>
     <string name="lift_not_connected_msg">L\'application mobile attend que l\'appareil BT connecté termine le traitement.</string>
     <string name="ok">D\'ACCORD</string>
+    <string name="wrong_pin">Mauvaise épingle</string>
+    <string name="try_again">Veuillez réessayer</string>
 </resources>

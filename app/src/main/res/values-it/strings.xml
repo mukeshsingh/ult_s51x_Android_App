@@ -112,4 +112,6 @@
     <string name="account_lifts">Montascale di %s</string>
     <string name="lift_not_connected_msg">L\'applicazione mobile è in attesa che il dispositivo BT connesso termini l\'elaborazione.</string>
     <string name="ok">OK</string>
+    <string name="wrong_pin">Perno sbagliato</string>
+    <string name="try_again">Per favore riprova</string>
 </resources>

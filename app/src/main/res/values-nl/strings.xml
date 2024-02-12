@@ -112,4 +112,6 @@
     <string name="account_lifts">Liften van %s</string>
     <string name="lift_not_connected_msg">De mobiele applicatie wacht tot het verbonden BT-apparaat klaar is met verwerken.</string>
     <string name="ok">OK</string>
+    <string name="wrong_pin">Verkeerde pincode</string>
+    <string name="try_again">Probeer het opnieuw</string>
 </resources>

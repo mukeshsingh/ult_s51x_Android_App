@@ -129,7 +129,6 @@ class AddLiftActivity : LangSupportBaseActivity() {
 
     private val hideUnSuccess = Runnable {
         supportFragmentManager.beginTransaction().remove(unSuccessFragment).commit()
-        this.finish()
     }
 
     companion object{

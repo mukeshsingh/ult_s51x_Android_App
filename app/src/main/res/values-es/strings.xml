@@ -112,4 +112,6 @@
     <string name="account_lifts">Salvaescaleras de %s</string>
     <string name="lift_not_connected_msg">La aplicación móvil está esperando a que el dispositivo BT conectado termine de procesarse.</string>
     <string name="ok">DE ACUERDO</string>
+    <string name="wrong_pin">Pin erróneo</string>
+    <string name="try_again">Inténtalo de nuevo</string>
 </resources>

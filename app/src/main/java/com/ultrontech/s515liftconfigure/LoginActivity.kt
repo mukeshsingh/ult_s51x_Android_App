@@ -3,9 +3,11 @@ package com.ultrontech.s515liftconfigure
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import com.google.android.material.snackbar.Snackbar
 import com.ultrontech.s515liftconfigure.databinding.ActivityLoginBinding
 
@@ -18,6 +20,11 @@ class LoginActivity : LangSupportBaseActivity() {
 
         setContentView(binding.root)
 
+        binding.editTextEngineerPin.doOnTextChanged { text, start, before, count ->
+            binding.txtDesc.visibility = View.VISIBLE
+            binding.llErrMsg.visibility = View.GONE
+         }
+
         binding.btnEngineerPin.setOnClickListener {
             with(S515LiftConfigureApp) {
                 val result = profileStore.login(binding.editTextEngineerPin.text.toString().trim())
@@ -28,7 +35,8 @@ class LoginActivity : LangSupportBaseActivity() {
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 } else {
-                    Toast.makeText(this@LoginActivity, "Incorrect PIN.", Toast.LENGTH_LONG)
+                    binding.txtDesc.visibility = View.GONE
+                    binding.llErrMsg.visibility = View.VISIBLE
                 }
             }
         }

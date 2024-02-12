@@ -238,4 +238,6 @@
     <string name="account_lifts">%s’s Lifts</string>
     <string name="lift_not_connected_msg">The mobile application is waiting for the connected BT device to finish processing.</string>
     <string name="ok">OK</string>
+    <string name="wrong_pin">Wrong Pin</string>
+    <string name="try_again">Please try again</string>
 </resources>
