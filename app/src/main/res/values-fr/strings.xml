@@ -112,6 +112,6 @@
     <string name="account_lifts">Appareils de %s</string>
     <string name="lift_not_connected_msg">L\'application mobile attend que l\'appareil BT connecté termine le traitement.</string>
     <string name="ok">D\'ACCORD</string>
-    <string name="wrong_pin">Mauvaise épingle</string>
+    <string name="wrong_pin">Mauvaise PIN</string>
     <string name="try_again">Veuillez réessayer</string>
 </resources>
