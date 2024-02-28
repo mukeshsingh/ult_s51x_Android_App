@@ -90,6 +90,37 @@
                     android:src="@drawable/lift_pin_number"
                     android:layout_marginLeft="10dp" />
             </LinearLayout>
+
+            <View
+                android:id="@+id/br1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#636466"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:id="@+id/engineer_board_detail"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/engineer_board_details"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/engineer_board_detail"
+                    android:layout_marginLeft="10dp" />
+            </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -144,63 +175,8 @@
                     android:src="@drawable/user_contact_detail"
                     android:layout_marginLeft="10dp" />
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#636466"/>
 
-            <LinearLayout
-                android:id="@+id/volume"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/volume"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    />
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/volume"
-                    android:layout_marginLeft="10dp" />
-            </LinearLayout>
-            <View
-                android:id="@+id/br1"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#636466"
-                android:visibility="gone"/>
-
-            <LinearLayout
-                android:id="@+id/engineer_board_detail"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/engineer_board_details"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    />
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/engineer_board_detail"
-                    android:layout_marginLeft="10dp" />
-            </LinearLayout>
             <View
                 android:id="@+id/br2"
                 android:layout_width="match_parent"
@@ -325,11 +301,41 @@
                 android:background="#636466"/>
 
             <LinearLayout
-                android:id="@+id/microphone_sensitivity"
+                android:id="@+id/volume"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/volume"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/volume"
+                    android:layout_marginLeft="10dp" />
+            </LinearLayout>
+            <View
+                android:id="@+id/br6"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#636466"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:id="@+id/microphone_sensitivity"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -347,6 +353,7 @@
                     android:layout_marginLeft="10dp" />
             </LinearLayout>
             <View
+
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#636466"/>
