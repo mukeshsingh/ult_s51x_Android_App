@@ -32,6 +32,18 @@ class ChangeCallPressDelayActivity : LangSupportBaseActivity() {
             }
         })
 
+        binding.plus.setOnClickListener {
+            if (value < 5) value += 1
+            binding.callPressSlider.progress = value
+            binding.callPressValue.text = "${value}\""
+        }
+
+        binding.minus.setOnClickListener {
+            if (value > 0) value -= 1
+            binding.callPressSlider.progress = value
+            binding.callPressValue.text = "${value}\""
+        }
+
         binding.callPressConfirm.setOnClickListener {
             BluetoothLeService.service?.setPressDelay(value)
             finish()

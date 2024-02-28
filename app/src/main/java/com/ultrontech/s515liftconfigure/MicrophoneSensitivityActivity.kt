@@ -33,6 +33,18 @@ class MicrophoneSensitivityActivity : LangSupportBaseActivity() {
             }
         })
 
+        binding.plus.setOnClickListener {
+            if (value < 5) value += 1
+            binding.microphoneSlider.progress = value
+            binding.microphoneValue.text = "$value"
+        }
+
+        binding.minus.setOnClickListener {
+            if (value > 0) value -= 1
+            binding.microphoneSlider.progress = value
+            binding.microphoneValue.text = "$value"
+        }
+
         binding.microphoneConfirm.setOnClickListener {
             BluetoothLeService.service?.setMicrophone(value)
             finish()

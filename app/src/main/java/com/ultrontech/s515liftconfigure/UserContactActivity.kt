@@ -1,10 +1,15 @@
 package com.ultrontech.s515liftconfigure
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityUserContactBinding
 import com.ultrontech.s515liftconfigure.models.PhoneContact
@@ -27,34 +32,7 @@ class UserContactActivity : LangSupportBaseActivity() {
 
         liftId = intent.extras?.getString(HomeActivity.INTENT_LIFT_ID)
 
-        phone1 = BluetoothLeService.service?.device?.number1
-        name1 = liftId?.let { it1 ->
-            S515LiftConfigureApp.profileStore.find(
-                it1
-            )?.userContact1Name
-        }
-
-        phone2 = BluetoothLeService.service?.device?.number2
-        name2 = liftId?.let { it1 ->
-            S515LiftConfigureApp.profileStore.find(
-                it1
-            )?.userContact2Name
-        }
-
-        phone3 = BluetoothLeService.service?.device?.number3
-        name3 = liftId?.let { it1 ->
-            S515LiftConfigureApp.profileStore.find(
-                it1
-            )?.userContact3Name
-        }
-
-        binding.contactName1.text = name1
-        binding.contactName2.text = name2
-        binding.contactName3.text = name3
-
-        binding.phone1.text = phone1?.number
-        binding.phone2.text = phone2?.number
-        binding.phone3.text = phone3?.number
+        updatePhoneSlots()
 
         if (phone1?.number != null && phone1?.number!!.isNotEmpty()) {
             binding.img1.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.edit_white, theme))
@@ -161,5 +139,91 @@ class UserContactActivity : LangSupportBaseActivity() {
             }
         }
         // ****************** Option Menu End ******************
+    }
+
+    private fun updatePhoneSlots() {
+        phone1 = BluetoothLeService.service?.device?.number1
+        name1 = liftId?.let { it1 ->
+            S515LiftConfigureApp.profileStore.find(
+                it1
+            )?.userContact1Name
+        }
+
+        phone2 = BluetoothLeService.service?.device?.number2
+        name2 = liftId?.let { it1 ->
+            S515LiftConfigureApp.profileStore.find(
+                it1
+            )?.userContact2Name
+        }
+
+        phone3 = BluetoothLeService.service?.device?.number3
+        name3 = liftId?.let { it1 ->
+            S515LiftConfigureApp.profileStore.find(
+                it1
+            )?.userContact3Name
+        }
+
+        binding.contactName1.text = name1
+        binding.contactName2.text = name2
+        binding.contactName3.text = name3
+
+        binding.phone1.text = phone1?.number
+        binding.phone2.text = phone2?.number
+        binding.phone3.text = phone3?.number
+    }
+
+    private val deviceUpdateReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            when (intent.action) {
+                BluetoothLeService.ACTION_UPDATE_PHONE_SLOT -> {
+                    Log.d(HomeActivity.TAG, "ACTION_UPDATE_PHONE_SLOT.")
+                    updatePhoneSlots()
+                }
+                BluetoothLeService.ACTION_CLEAR_PHONE_SLOT -> {
+                    Log.d(HomeActivity.TAG, "ACTION_CLEAR_PHONE_SLOT.")
+                    updatePhoneSlots()
+                }
+                BluetoothLeService.ACTION_BLUETOOTH_OFF -> {
+                    finish()
+                }
+                BluetoothLeService.ACTION_GATT_DISCONNECTED -> {
+                    this@UserContactActivity.let { it1 ->
+                        S515LiftConfigureApp.instance.basicAlert(
+                            it1, "Lift disconnected."
+                        ) { finish() }
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LocalBroadcastManager.getInstance(applicationContext).registerReceiver(deviceUpdateReceiver, updateIntentFilter())
+    }
+
+    override fun onPause() {
+        LocalBroadcastManager.getInstance(applicationContext).unregisterReceiver(deviceUpdateReceiver)
+        super.onPause()
+    }
+
+    private fun updateIntentFilter(): IntentFilter {
+        return IntentFilter().apply {
+            addAction(BluetoothLeService.ACTION_BLUETOOTH_ON)
+            addAction(BluetoothLeService.ACTION_BLUETOOTH_OFF)
+            addAction(BluetoothLeService.ACTION_CONNECTION_UPDATE)
+            addAction(BluetoothLeService.ACTION_UPDATE_SSID_LIST)
+            addAction(BluetoothLeService.ACTION_UPDATE_JOB)
+            addAction(BluetoothLeService.ACTION_UPDATE_PHONE_CONFIG)
+            addAction(BluetoothLeService.ACTION_UPDATE_WIFI_DETAIL)
+            addAction(BluetoothLeService.ACTION_UPDATE_AUTHENTICATION)
+            addAction(BluetoothLeService.ACTION_UPDATE_PHONE_SLOT)
+            addAction(BluetoothLeService.ACTION_UPDATE_INFO)
+            addAction(BluetoothLeService.ACTION_UPDATE_LEVEL)
+            addAction(BluetoothLeService.ACTION_CLEAR_PHONE_SLOT)
+            addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED)
+            addAction(BluetoothLeService.ACTION_SERVICES_UPDATED)
+            addAction(BluetoothLeService.ACTION_GATT_DISCONNECTED)
+        }
     }
 }

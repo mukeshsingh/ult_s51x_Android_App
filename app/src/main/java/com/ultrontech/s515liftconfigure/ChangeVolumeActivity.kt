@@ -38,6 +38,18 @@ class ChangeVolumeActivity : LangSupportBaseActivity() {
             finish()
         }
 
+        binding.plus.setOnClickListener {
+            if (value < 5) value += 1
+            binding.volumeSlider.progress = value
+            binding.volumeValue.text = value.toString()
+        }
+
+        binding.minus.setOnClickListener {
+            if (value > 0) value -= 1
+            binding.volumeSlider.progress = value
+            binding.volumeValue.text = value.toString()
+        }
+
         binding.footer.btnHome.setOnClickListener {
             var intent = Intent(this, MyProductsActivity::class.java)
             if (S515LiftConfigureApp.profileStore.hasEngineerCapability) {

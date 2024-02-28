@@ -58,7 +58,6 @@
                 android:orientation="vertical"
                 android:layout_weight="1"
                 android:padding="12dp"
-
                 >
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -129,11 +128,11 @@
             >
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_weight="1"
-                android:paddingVertical="8dp"
+                android:padding="12dp"
                 >
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -202,11 +201,8 @@
             android:layout_height="76dp"
             android:orientation="horizontal"
             >
-
             <LinearLayout
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_weight="1"

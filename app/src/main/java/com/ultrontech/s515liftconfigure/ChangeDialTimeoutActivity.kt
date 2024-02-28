@@ -45,6 +45,18 @@ class ChangeDialTimeoutActivity : LangSupportBaseActivity() {
             finish()
         }
 
+        binding.plus.setOnClickListener {
+            if (value < 50) value += 1
+            binding.dialTimeoutSlider.progress = value
+            binding.dialTimeoutValue.text = "${value}\""
+        }
+
+        binding.minus.setOnClickListener {
+            if (value > 0) value -= 1
+            binding.dialTimeoutSlider.progress = value
+            binding.dialTimeoutValue.text = "${value}\""
+        }
+
         with(BluetoothLeService.service?.device) {
             value = this?.callDialTimeout ?: 1
             binding.dialTimeoutValue.text = "${value}\""
