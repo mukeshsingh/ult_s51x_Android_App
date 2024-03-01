@@ -133,17 +133,12 @@ class UserLiftSettingsActivity : LangSupportBaseActivity() {
             binding.emergencyServiceDetails.visibility = View.VISIBLE
             binding.dialTimeout.visibility = View.VISIBLE
             binding.callPressDelay.visibility = View.VISIBLE
-            binding.microphoneSensitivity.visibility = View.VISIBLE
 
             binding.br1.visibility = View.VISIBLE
             binding.br2.visibility = View.VISIBLE
             binding.br3.visibility = View.VISIBLE
             binding.br4.visibility = View.VISIBLE
             binding.br5.visibility = View.VISIBLE
-            binding.br6.visibility = View.VISIBLE
-
-            binding.disconnectLift.visibility = View.GONE
-            binding.removeLift.visibility = View.GONE
         }
 
         // ****************** Option Menu Start ******************
