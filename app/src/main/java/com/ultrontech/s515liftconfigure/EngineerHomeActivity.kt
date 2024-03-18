@@ -13,7 +13,6 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
@@ -41,18 +40,6 @@ class EngineerHomeActivity : LangSupportBaseActivity() {
             noProduct = binding.noProduct
             lvUserLifts = binding.lvUserLifts
 
-            var userDevices = profileStore.userDevices
-            var data = userDevices.toList()
-            if (userDevices.isNotEmpty()) {
-                lvUserLifts.visibility = View.VISIBLE
-                noProduct.visibility = View.GONE
-            } else {
-                lvUserLifts.visibility = View.GONE
-                noProduct.visibility = View.VISIBLE
-            }
-
-            adapter = RecyclerViewAdapter(this@EngineerHomeActivity, data)
-            lvUserLifts.adapter = adapter
             lvUserLifts.layoutManager = LinearLayoutManager(this@EngineerHomeActivity)
 
             // Setup swipe gestures using ItemTouchHelper
@@ -100,6 +87,7 @@ class EngineerHomeActivity : LangSupportBaseActivity() {
                 startActivity(intent)
             }
 
+
             binding.confirmRemoveLift.llRemovePopup.setOnClickListener {
                 binding.confirmRemoveLift.llRemovePopup.visibility = View.GONE
             }
@@ -109,12 +97,17 @@ class EngineerHomeActivity : LangSupportBaseActivity() {
                     run {
                         profileStore.remove(it1)
                         liftToRemove = null
-                        userDevices = profileStore.userDevices
-                        data = userDevices.toList()
-                        adapter = RecyclerViewAdapter(this@EngineerHomeActivity, data)
-                        lvUserLifts.adapter = adapter
+                        updateUserDevices()
                     }
                 }
+            }
+
+            binding.confirmDisconnectLift.llDisconnectPopup.setOnClickListener {
+                binding.confirmDisconnectLift.llDisconnectPopup.visibility = View.GONE
+            }
+            binding.confirmDisconnectLift.btnYesDisconnect.setOnClickListener {
+                binding.confirmDisconnectLift.llDisconnectPopup.visibility = View.GONE
+                this@EngineerHomeActivity.recreate()
             }
 
             // ****************** Option Menu Start ******************
@@ -172,16 +165,31 @@ class EngineerHomeActivity : LangSupportBaseActivity() {
         }
     }
 
+    private fun updateUserDevices() {
+        val userDevices = S515LiftConfigureApp.profileStore.userDevices
+        val data = userDevices.toList()
+        if (userDevices.isNotEmpty()) {
+            lvUserLifts.visibility = View.VISIBLE
+            noProduct.visibility = View.GONE
+        } else {
+            lvUserLifts.visibility = View.GONE
+            noProduct.visibility = View.VISIBLE
+        }
+
+        adapter = RecyclerViewAdapter(this@EngineerHomeActivity, data)
+        lvUserLifts.adapter = adapter
+    }
+
     private var liftToRemove: UserLift? = null
-    private var liftToConnect: UserLift? = null
+    private var liftToDisConnect: UserLift? = null
     fun showRemovePopup(lift: UserLift) {
         liftToRemove = lift
         binding.confirmRemoveLift.llRemovePopup.visibility = View.VISIBLE
     }
 
-    fun showConnectPopup(lift: UserLift) {
-        liftToConnect = lift
-//        binding.askLogout.llRemovePopup.visibility = View.VISIBLE
+    fun showDisConnectPopup(lift: UserLift) {
+        liftToDisConnect = lift
+        binding.confirmDisconnectLift.llDisconnectPopup.visibility = View.VISIBLE
     }
 
     override fun onAttachedToWindow() {
@@ -373,8 +381,8 @@ class EngineerHomeActivity : LangSupportBaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        lvUserLifts.invalidate()
-        adapter.notifyDataSetChanged()
+
+        updateUserDevices()
 
         if (S515LiftConfigureApp.profileStore.userName.isNotEmpty()) {
             val name = S515LiftConfigureApp.profileStore.userName.replaceFirstChar { char -> char.uppercase()}

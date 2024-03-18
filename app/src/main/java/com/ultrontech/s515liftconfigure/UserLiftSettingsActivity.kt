@@ -8,12 +8,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.ultrontech.s515liftconfigure.adapters.RecyclerViewAdapter
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityUserLiftSettingsBinding
 import com.ultrontech.s515liftconfigure.models.Device
 import com.ultrontech.s515liftconfigure.models.LiftConnectionState
+import com.ultrontech.s515liftconfigure.models.UserLift
 
 class UserLiftSettingsActivity : LangSupportBaseActivity() {
     private lateinit var binding: ActivityUserLiftSettingsBinding
@@ -42,11 +43,11 @@ class UserLiftSettingsActivity : LangSupportBaseActivity() {
             intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
             startActivity(intent)
         }
-      binding.volume.setOnClickListener {
-          val intent = Intent(this, ChangeVolumeActivity::class.java)
-          intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
-          startActivity(intent)
-      }
+        binding.volume.setOnClickListener {
+            val intent = Intent(this, ChangeVolumeActivity::class.java)
+            intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
+            startActivity(intent)
+        }
 
         binding.microphoneSensitivity.setOnClickListener {
             val intent = Intent(this, MicrophoneSensitivityActivity::class.java)
@@ -115,16 +116,30 @@ class UserLiftSettingsActivity : LangSupportBaseActivity() {
             finish()
         }
         binding.removeLift.setOnClickListener {
+            showRemovePopup()
+        }
+
+        binding.disconnectLift.setOnClickListener {
+            showDisConnectPopup()
+        }
+
+        binding.confirmRemoveLift.llRemovePopup.setOnClickListener {
+            binding.confirmRemoveLift.llRemovePopup.visibility = View.GONE
+        }
+        binding.confirmRemoveLift.btnYesRemove.setOnClickListener {
+            binding.confirmRemoveLift.llRemovePopup.visibility = View.GONE
             bluetoothLeService.device?.lift?.let { it1 ->
                 S515LiftConfigureApp.profileStore.remove(it1)
                 finish()
             }
         }
 
-        binding.disconnectLift.setOnClickListener {
-            bluetoothLeService.device?.lift?.let {
-                linkDevice()
-            }
+        binding.confirmDisconnectLift.llDisconnectPopup.setOnClickListener {
+            binding.confirmDisconnectLift.llDisconnectPopup.visibility = View.GONE
+        }
+        binding.confirmDisconnectLift.btnYesDisconnect.setOnClickListener {
+            binding.confirmDisconnectLift.llDisconnectPopup.visibility = View.GONE
+            finish()
         }
 
         if (hasEngineerCapability) {
@@ -183,6 +198,15 @@ class UserLiftSettingsActivity : LangSupportBaseActivity() {
         // ****************** Option Menu End ******************
     }
 
+
+    private fun showRemovePopup() {
+        binding.confirmRemoveLift.llRemovePopup.visibility = View.VISIBLE
+    }
+
+    private fun showDisConnectPopup() {
+        binding.confirmDisconnectLift.llDisconnectPopup.visibility = View.VISIBLE
+    }
+
     override fun onResume() {
         super.onResume()
         LocalBroadcastManager.getInstance(applicationContext).registerReceiver(deviceUpdateReceiver, updateIntentFilter())
@@ -198,10 +222,10 @@ class UserLiftSettingsActivity : LangSupportBaseActivity() {
         if (liftId != null) {
             val lift = S515LiftConfigureApp.profileStore.find(liftId!!)
             if (lift != null) {
-                var device = Device(lift = lift)
+                val device = Device(lift = lift)
                 bluetoothLeService.link(device)
 
-                liftName.text = lift?.liftName ?: ""
+                liftName.text = lift.liftName
             }
         }
     }

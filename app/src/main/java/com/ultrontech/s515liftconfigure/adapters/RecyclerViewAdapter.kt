@@ -5,14 +5,12 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ultrontech.s515liftconfigure.*
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
-import com.ultrontech.s515liftconfigure.models.Device
 import com.ultrontech.s515liftconfigure.models.UserLift
 
 class RecyclerViewAdapter(private val context: Context, private val data: List<UserLift>) :
@@ -95,19 +93,7 @@ class RecyclerViewAdapter(private val context: Context, private val data: List<U
             }
             viewHolder.btnConnect.setOnClickListener {
                 viewHolder.btnConnect.visibility = View.GONE
-                (context as EngineerHomeActivity).showConnectPopup(item)
-            }
-        }
-    }
-
-    private fun linkDevice (item: UserLift) {
-        if (item.liftId != null) {
-            val lift = S515LiftConfigureApp.profileStore.find(item.liftId!!)
-            if (lift != null) {
-                var device = Device(lift = lift)
-                BluetoothLeService.service?.link(device)
-
-//                liftName.text = lift?.liftName ?: ""
+                (context as EngineerHomeActivity).showDisConnectPopup(item)
             }
         }
     }

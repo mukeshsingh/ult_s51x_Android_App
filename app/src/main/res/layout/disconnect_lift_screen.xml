@@ -2,15 +2,16 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/llDisconnectPopup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#80000000">
-
+    android:background="#80000000"
+    android:visibility="gone">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="50dp"
+        android:layout_marginHorizontal="30dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="8dp"
         app:cardElevation="20dp"
@@ -22,53 +23,55 @@
             android:orientation="vertical"
             android:gravity="center">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center_vertical">
-
-
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/link_broken_blue"
-                android:layout_marginLeft="10dp" />
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/disconnect_this_lift"
-                android:textColor="#24A3EB"
-                android:textSize="16sp"
-                android:textAlignment="center"
-                />
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#24A3EB"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical">
+
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/link_broken_blue"
+                    android:layout_marginLeft="10dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/disconnect_this_lift"
+                    android:fontFamily="@font/lato_semibold"
+                    android:textColor="#24A3EB"
+                    android:textSize="18sp"
+                    android:textAlignment="center"
+                    />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#24A3EB"/>
             <TextView
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:text="@string/are_you_sure_you_want_to_disconnect_your_lift"
                 android:textColor="@color/black"
+                android:fontFamily="@font/lato_regular"
                 android:layout_marginTop="25dp"
                 android:textSize="18sp"
                 android:textAlignment="center"
                 />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/btn_i_m_sure"
+                android:id="@+id/btn_yes_disconnect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 app:cardBackgroundColor="#99CC33"
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginBottom="20dp"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="8dp"
                 app:cardElevation="20dp"
                 >
 
@@ -80,21 +83,19 @@
                     android:gravity="center_vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/yes_i_m_sure"
+                        android:fontFamily="@font/lato_semibold"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
-                        android:textAlignment="center"
-                        />
+                        android:textSize="18sp"
+                        android:textAlignment="center" />
 
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
 
     <include layout="@layout/home_back_bottom_bar_wbg"

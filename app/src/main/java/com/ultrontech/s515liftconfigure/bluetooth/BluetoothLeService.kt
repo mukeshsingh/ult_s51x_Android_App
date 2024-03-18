@@ -157,19 +157,19 @@ class BluetoothLeService : Service() {
 
             with(S515LiftConfigureApp) {
                 if (waitIdle(LiftBT.GATT_TIMEOUT)) {
-                    var token =
+                    val token =
                         if (profileStore.hasEngineerCapability) ProfileStore.EngineerTokenKey else userLift.accessKey.code()
-                    var b1 = ((token shr 24) and 0xff).toByte()
-                    var b2 = ((token shr 16) and 0xff).toByte()
-                    var b3 = ((token shr 8) and 0xff).toByte()
-                    var b4 = ((token and 0xff)).toByte()
+                    val b1 = ((token shr 24) and 0xff).toByte()
+                    val b2 = ((token shr 16) and 0xff).toByte()
+                    val b3 = ((token shr 8) and 0xff).toByte()
+                    val b4 = ((token and 0xff)).toByte()
 
-                    var command: ByteArray =
+                    val command: ByteArray =
                         byteArrayOf(S515BTCommand.btCmdAuthenticate.toByte(), 0x04, b1, b2, b3, b4)
 
-                    lift?.authControl?.value = command
+                    lift.authControl?.value = command
 
-                    val success = writeCharacteristic(lift?.authControl!!, value = command)
+                    val success = writeCharacteristic(lift.authControl!!, value = command)
                     Log.d(Companion.TAG, "Characteristic written for auth: $success")
                 }
             }
@@ -191,7 +191,7 @@ class BluetoothLeService : Service() {
         val bluetoothDevice = find(address)
         if (connectionState == BluetoothProfile.STATE_DISCONNECTED && bluetoothDevice != null) {
             // Previously connected device. Try to reconnect.
-            if (mAddress != null && address == mAddress && mBluetoothGatt != null && bluetoothDevice?.connected == false) {
+            if (mAddress != null && address == mAddress && mBluetoothGatt != null && !bluetoothDevice.connected) {
                 // Log.d(TAG, "Re-use GATT connection");
                 broadcastUpdate(ACTION_GATT_CONNECTING)
 
@@ -373,9 +373,9 @@ class BluetoothLeService : Service() {
                 }
 
                 if (numberOfChunks == currentChunkNumber) {
-                    when (characteristic.uuid) {
+//                    when (characteristic.uuid) {
 //                        LiftBT.controlCharacteristic.uuid -> validateControlData(bytes)
-                    }
+//                    }
 
                     bytes = null
                 }
@@ -453,7 +453,7 @@ class BluetoothLeService : Service() {
         if (waitIdle(LiftBT.GATT_TIMEOUT)) {
             mBusy = true
             if (checkPermission()) {
-                characteristic?.let {
+                characteristic.let {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         return mBluetoothGatt?.writeCharacteristic(
                                 it,
@@ -470,6 +470,8 @@ class BluetoothLeService : Service() {
     }
 
     fun checkPermission(): Boolean {
+        if (Build.VERSION.SDK_INT < 31) return true
+
         return ActivityCompat.checkSelfPermission(
             this,
             Manifest.permission.BLUETOOTH_SCAN
@@ -511,6 +513,10 @@ class BluetoothLeService : Service() {
             if (checkPermission()) {
                 val devise = find(result.device.address)
 
+                Log.d(
+                    TAG,
+                    "========> Device: " + result.device.address + " " + result.device.name
+                )
                 if ((result.device.name ?: "").uppercase(Locale.ROOT).startsWith("SAVARIA")) {
                     if(devise != null) {
                         broadcastUpdate(ACTION_BLUETOOTH_DEVICE_FOUND)
@@ -618,15 +624,13 @@ class BluetoothLeService : Service() {
 
                     val props = characteristic.properties
                     if (props and BluetoothGattCharacteristic.PROPERTY_NOTIFY > 0) {
-                        if (waitIdle(LiftBT.GATT_TIMEOUT) != null) {
-                            if (characteristic.uuid == LiftBT.authCharUUID) {
-                                Log.d(
-                                    HomeActivity.TAG,
-                                    ">>>>>>>>> Enable notification for auth: " + characteristic.uuid
-                                )
-                            }
-                            setCharacteristicNotification(characteristic, true)
+                        if (characteristic.uuid == LiftBT.authCharUUID) {
+                            Log.d(
+                                HomeActivity.TAG,
+                                ">>>>>>>>> Enable notification for auth: " + characteristic.uuid
+                            )
                         }
+                        setCharacteristicNotification(characteristic, true)
                         Log.d(
                             HomeActivity.TAG,
                             ">>>>>>>>> Enable notification for: " + characteristic.uuid
@@ -659,8 +663,8 @@ class BluetoothLeService : Service() {
                 device?.deviceOK = true
             }
 
-            val service = mBluetoothGatt?.getService(LiftBT.deviceControlServiceUUID)
-            val char = service?.getCharacteristic(LiftBT.modelNumberCharUUID)
+            val ser = mBluetoothGatt?.getService(LiftBT.deviceControlServiceUUID)
+            val char = ser?.getCharacteristic(LiftBT.modelNumberCharUUID)
             readCharacteristic(char)
             refreshScannedList()
         }
@@ -704,7 +708,7 @@ class BluetoothLeService : Service() {
         var ok = false
         if (!isNotificationEnabled(characteristic)) {
             if (checkPermission() && waitIdle(LiftBT.GATT_TIMEOUT_FOR_NOTIFICATIONS) && mBluetoothGatt?.setCharacteristicNotification(characteristic, enable) == true) {
-                var clientConfig = characteristic.getDescriptor(LiftBT.CLIENT_CHARACTERISTIC_CONFIG)
+                val clientConfig = characteristic.getDescriptor(LiftBT.CLIENT_CHARACTERISTIC_CONFIG)
                 if (waitIdle(LiftBT.GATT_TIMEOUT_FOR_NOTIFICATIONS) && clientConfig != null) {
                     ok = if (enable) {
                         Log.i(TAG, "Enable notification: " + characteristic.uuid.toString())
@@ -745,7 +749,7 @@ class BluetoothLeService : Service() {
         if (!checkGatt()) return false
         val clientConfig = characteristic
             .getDescriptor(LiftBT.CLIENT_CHARACTERISTIC_CONFIG) ?: return false
-        return clientConfig.value == BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
+        return clientConfig.value.contentEquals(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)
     }
 
     private fun checkGatt(): Boolean {
@@ -796,8 +800,8 @@ class BluetoothLeService : Service() {
                     S515BTCommand.btCmdAuthModify.toByte(),
                     0x08,b1,b2,b3,b4,x1,x2,x3,x4
                 )
-                lift?.authControl!!.value = command
-                val success = writeCharacteristic(lift?.authControl!!, value = command)
+                lift.authControl!!.value = command
+                val success = writeCharacteristic(lift.authControl!!, value = command)
                 Log.d(TAG, "Characteristic written for auth modify: $success")
             }
         }
@@ -811,8 +815,8 @@ class BluetoothLeService : Service() {
 
         if (waitIdle(LiftBT.GATT_TIMEOUT)) {
             val command : ByteArray = byteArrayOf(S515BTCommand.btCmdDisconnect.toByte(), 0x0)
-            lift?.authControl?.value = command
-            val success = writeCharacteristic(lift?.authControl!!, value = command)
+            lift.authControl?.value = command
+            val success = writeCharacteristic(lift.authControl!!, value = command)
             Log.d(TAG, "Characteristic written for auth disconnect: $success")
         }
     }
@@ -824,8 +828,8 @@ class BluetoothLeService : Service() {
         val m = (device?.microphoneLevel ?: 0) + 3
         Log.d(TAG,"[BT::WRITE] audio level (volume=($volume), sensitivity=($m))")
         val command : ByteArray = byteArrayOf(S515BTCommand.btCmdSetVolumeAndSensitivity.toByte(), 0x02, volume.toByte() , m.toByte())
-        lift?.audioControl?.value = command
-        val success = writeCharacteristic(lift?.audioControl!!, value = command)
+        lift.audioControl?.value = command
+        val success = writeCharacteristic(lift.audioControl!!, value = command)
         Log.d(TAG, "Characteristic written for audio control volume: $success")
     }
 
@@ -836,8 +840,8 @@ class BluetoothLeService : Service() {
         val vol = device?.volumeLevel ?: 1
         Log.d(TAG,"[BT::WRITE] audio level (volume=(${vol}), sensitivity=(${ + 3}))")
         val command : ByteArray = byteArrayOf(S515BTCommand.btCmdSetVolumeAndSensitivity.toByte(), 0x02, vol.toByte() , (microphone + 3).toByte())
-        lift?.audioControl?.value = command
-        val success = writeCharacteristic(lift?.audioControl!!, value = command)
+        lift.audioControl?.value = command
+        val success = writeCharacteristic(lift.audioControl!!, value = command)
         Log.d(TAG, "Characteristic written for audio control microphone: $success")
     }
 
@@ -848,8 +852,8 @@ class BluetoothLeService : Service() {
         print("[BT::WRITE] phone slot(($phoneNumber) with number ($toNumber)")
         val numberData = toNumber.toByteArray()
         val command: ByteArray = byteArrayOf(S515BTCommand.btCmdWritePhoneNumber.toByte(), (numberData.size + 2).toByte(), phoneNumber.toByte(), (if (enabled) 0x01 else 0x00).toByte()) + numberData
-        lift?.phoneControl?.value = command
-        val success = writeCharacteristic(lift?.phoneControl!!, value = command)
+        lift.phoneControl?.value = command
+        val success = writeCharacteristic(lift.phoneControl!!, value = command)
         Log.d(TAG, "Characteristic written for phone number: $success")
     }
 
@@ -859,8 +863,8 @@ class BluetoothLeService : Service() {
 
         Log.d(TAG, "[BT::WRITE] call press delay ($pressDelay)")
         val command: ByteArray = byteArrayOf(S515BTCommand.btCmdSetCallPressDelay.toByte(), 0x01, pressDelay.toByte())
-        lift?.phoneConfigControl?.value = command
-        val success = writeCharacteristic(lift?.phoneConfigControl!!, value = command)
+        lift.phoneConfigControl?.value = command
+        val success = writeCharacteristic(lift.phoneConfigControl!!, value = command)
         Log.d(TAG, "Characteristic written for press delay: $success")
     }
 
@@ -870,8 +874,8 @@ class BluetoothLeService : Service() {
 
         Log.d(TAG, "[BT::WRITE] call press delay ($dialTimeout)")
         val command: ByteArray = byteArrayOf(S515BTCommand.btCmdSetDialTimeoutDelay.toByte(), 0x01, dialTimeout.toByte())
-        lift?.phoneConfigControl?.value = command
-        val success = writeCharacteristic(lift?.phoneConfigControl!!, value = command)
+        lift.phoneConfigControl?.value = command
+        val success = writeCharacteristic(lift.phoneConfigControl!!, value = command)
         Log.d(TAG, "Characteristic written for dial timeout: $success")
     }
 
@@ -881,8 +885,8 @@ class BluetoothLeService : Service() {
 
         Log.d(TAG, "[BT::WRITE] SIM Type ($simType)")
         val command: ByteArray = byteArrayOf(S515BTCommand.btCmdSetModemSimType.toByte(), 0x01, simType.ordinal.toByte())
-        lift?.phoneConfigControl?.value = command
-        val success = writeCharacteristic(lift?.phoneConfigControl!!, value = command)
+        lift.phoneConfigControl?.value = command
+        val success = writeCharacteristic(lift.phoneConfigControl!!, value = command)
         Log.d(TAG, "Characteristic written for sim type: $success")
     }
 
@@ -901,7 +905,7 @@ class BluetoothLeService : Service() {
         val p8 = (if (pin.length >= 8) pin.digits[8] else 0).toByte()
 
         val command: ByteArray = byteArrayOf(S515BTCommand.btCmdSetSIMPin.toByte(), (10).toByte(), 0x01, pin.length.toByte(), p1, p2, p3, p4, p5, p6, p7, p8)
-        val success = writeCharacteristic(lift?.phoneConfigControl!!, value = command)
+        val success = writeCharacteristic(lift.phoneConfigControl!!, value = command)
         Log.d(TAG, "Characteristic written for PinNumber: $success")
     }
 
@@ -910,8 +914,8 @@ class BluetoothLeService : Service() {
         if (lift?.phoneConfigControl == null) return
 
         val command: ByteArray = byteArrayOf(S515BTCommand.btCmdSetSIMPin.toByte(), (10).toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00)
-        lift?.phoneConfigControl?.value = command
-        val success = writeCharacteristic(lift?.phoneConfigControl!!, value = command)
+        lift.phoneConfigControl?.value = command
+        val success = writeCharacteristic(lift.phoneConfigControl!!, value = command)
         Log.d(TAG, "Characteristic written for PinNumber: $success")
     }
 
@@ -923,8 +927,8 @@ class BluetoothLeService : Service() {
         val passPhaseData = passPhase.toByteArray()
         print("[BT::WRITE] Wifi Detail (ssid=($ssid), pkey=($passPhase)")
         val command: ByteArray = byteArrayOf(S515BTCommand.btCmdSetSSIDAndKey.toByte(), 0x00, ssidData.size.toByte(), passPhaseData.size.toByte()) + ssidData + passPhaseData
-        lift?.wifiControl?.value = command
-        val success = writeCharacteristic(lift?.wifiControl!!, value = command)
+        lift.wifiControl?.value = command
+        val success = writeCharacteristic(lift.wifiControl!!, value = command)
         Log.d(TAG, "Characteristic written for PinNumber: $success")
     }
 
@@ -936,8 +940,8 @@ class BluetoothLeService : Service() {
         val clientData = client.toByteArray()
         print("[BT::WRITE] Wifi Detail (ssid=($job), pkey=($client)")
         val command: ByteArray = byteArrayOf(S515BTCommand.btCmdSetJobAndClient.toByte(), jobData.size.toByte(), clientData.size.toByte()) + jobData + clientData
-        lift?.jobControl?.value = command
-        val success = writeCharacteristic(lift?.jobControl!!, value = command)
+        lift.jobControl?.value = command
+        val success = writeCharacteristic(lift.jobControl!!, value = command)
         Log.d(TAG, "Characteristic written for PinNumber: $success")
     }
 
@@ -1009,7 +1013,7 @@ fun BluetoothLeService.processLevel(data : ByteArray) {
 
         /////// workarrount for auth - start //////
 //        if (!S515LiftConfigureApp.profileStore.hasEngineerCapability) {
-            var d = device?.lift?.liftId?.let { find(it) }
+            val d = device?.lift?.liftId?.let { find(it) }
             d?.authorised = true
 
             updateConnectionState(false)
@@ -1148,14 +1152,14 @@ fun BluetoothLeService.processPhone(data : ByteArray) {
     }
 }
 
-fun BluetoothLeService.processDelay(data: ByteArray, device: ScannedDevice) {
-    Log.d(BluetoothLeService.TAG, "Got data Delay: $data")
-    if (data.isNotEmpty()) {
-        Log.d(BluetoothLeService.TAG, "[Call Delays READ: $data")
-    } else {
-        Log.d(BluetoothLeService.TAG, "[Call Delays] - no data received")
-    }
-}
+//fun BluetoothLeService.processDelay(data: ByteArray, device: ScannedDevice) {
+//    Log.d(BluetoothLeService.TAG, "Got data Delay: $data")
+//    if (data.isNotEmpty()) {
+//        Log.d(BluetoothLeService.TAG, "[Call Delays READ: $data")
+//    } else {
+//        Log.d(BluetoothLeService.TAG, "[Call Delays] - no data received")
+//    }
+//}
 
 fun BluetoothLeService.processJob(data: ByteArray) {
     Log.d(BluetoothLeService.TAG, "Got data Job: $data")
@@ -1179,14 +1183,14 @@ fun BluetoothLeService.processJob(data: ByteArray) {
 fun BluetoothLeService.processWifiDetail(data: ByteArray) {
     Log.d(BluetoothLeService.TAG, "Got data Wifi Detail: $data")
     if (data.isNotEmpty()) {
-        val security = data[1]
+//        val security = data[1]
         val wifiStatus = data[2]
         val ssidLen = data[3]
         val ssid : String? = if (ssidLen > 0) String(data.copyOfRange(4, 4 + ssidLen).dropLastWhile { it == 0.toByte() }.toByteArray(), Charsets.UTF_8) else null
 
         val wifiAvailable = (wifiStatus.toInt() and 0x01) == 0x01
         val wifiConnected = (wifiStatus.toInt() and 0x02) == 0x02
-        val ssidPresent = (wifiStatus.toInt() and 0x04) == 0x04
+//        val ssidPresent = (wifiStatus.toInt() and 0x04) == 0x04
 
         val obj = JSONObject()
         obj.put("wifiAvailable", wifiAvailable)

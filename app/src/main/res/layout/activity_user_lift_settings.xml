@@ -429,6 +429,12 @@
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentBottom="true"/>
     <include
+        android:id="@+id/confirmRemoveLift"
+        layout="@layout/remove_lift_screen" />
+    <include
+        android:id="@+id/confirmDisconnectLift"
+        layout="@layout/disconnect_lift_screen" />
+    <include
         android:id="@+id/option_menu"
         layout="@layout/option_menu" />
 </RelativeLayout>
