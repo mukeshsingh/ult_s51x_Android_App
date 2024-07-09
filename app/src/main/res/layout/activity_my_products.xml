@@ -29,15 +29,23 @@
                 android:textSize="20sp"
                 android:gravity="center"
                 android:textColor="@color/black" />
-            <LinearLayout
-                android:id="@+id/llUserLifts"
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipe_to_refresh"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="20dp"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-            </LinearLayout>
+                android:layout_height="match_parent">
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:id="@+id/llUserLifts"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="20dp"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+                    </LinearLayout>
+                </ScrollView>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -84,4 +92,6 @@
     <include
         android:id="@+id/option_menu"
         layout="@layout/option_menu" />
+    <include android:id="@+id/loader"
+        layout="@layout/loader_view" />
 </RelativeLayout>

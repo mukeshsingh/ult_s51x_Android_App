@@ -65,6 +65,9 @@
     <string name="successful">GELUKT</string>
     <string name="lift_connected">%s</string>
     <string name="has_been_added_to_your_account">s nu verbonden</string>
+    <string name="has_been_disconnected">is losgekoppeld</string>
+    <string name="status_available">Verbinding verbroken, beschikbaar</string>
+    <string name="status_not_available">Niet beschikbaar</string>
     <string name="we_apologize">SORRY</string>
     <string name="we_have_been_unable_to_link_nhandicare_vlinka15e_to_your_account">Kon geen verbinding maken me %s</string>
     <string name="please_try_again">Probeer het opnieuw.</string>

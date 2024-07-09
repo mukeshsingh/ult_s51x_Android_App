@@ -19,19 +19,24 @@ import com.ultrontech.s515liftconfigure.AddLiftActivity
 import com.ultrontech.s515liftconfigure.R
 
 class SuccessAddLiftFragment : BottomSheetDialogFragment() {
-    private lateinit var addLiftActivity: AddLiftActivity
+    private lateinit var txtLiftName: TextView
     private lateinit var txtMsg: TextView
+    private var liftName: String = ""
+    private var msg: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        addLiftActivity = (activity as AddLiftActivity)
-
         val view = inflater.inflate(R.layout.successful_transparent_screen, container, false)
-        txtMsg = view.findViewById(R.id.textSuccess2)
-        txtMsg.text = AddLiftActivity.lift?.name?: ""
+        txtLiftName = view.findViewById(R.id.textSuccess2)
+        txtMsg = view.findViewById(R.id.textSuccess3)
+
+        txtLiftName.text = AddLiftActivity.lift?.name?: ""
+
+        if (liftName.isNotEmpty()) txtLiftName.text = liftName
+        if (msg.isNotEmpty()) txtMsg.text = msg
+
         return view
     }
 
@@ -66,6 +71,11 @@ class SuccessAddLiftFragment : BottomSheetDialogFragment() {
 
     override fun onActivityCreated(@Nullable savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        (view!!.parent as View).setBackgroundColor(Color.TRANSPARENT)
+        (requireView().parent as View).setBackgroundColor(Color.TRANSPARENT)
+    }
+
+    fun updateMsg(liftName: String, msg: String) {
+        this.liftName = liftName
+        this.msg = msg
     }
 }

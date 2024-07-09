@@ -109,7 +109,7 @@ data class ProfileStore (
     fun update(pin: PINNumber, lift: UserLift): UserLift {
         val pos = userDevices.indexOf(lift)
         if (pos > -1) {
-            var item = userDevices[pos]
+            val item = userDevices[pos]
             item.accessKey = pin
             userDevices[pos] = item
             saveDevices()

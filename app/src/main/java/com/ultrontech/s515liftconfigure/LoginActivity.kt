@@ -41,6 +41,10 @@ class LoginActivity : LangSupportBaseActivity() {
             }
         }
 
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
+
         binding.toolbar.optionBtn.visibility = View.GONE
     }
 }

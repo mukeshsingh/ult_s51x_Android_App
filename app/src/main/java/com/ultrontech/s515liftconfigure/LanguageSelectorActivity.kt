@@ -54,7 +54,7 @@ class LanguageSelectorActivity : LangSupportBaseActivity() {
             } else if (S515LiftConfigureApp.profileStore.hasUserCapability) {
                 intent = Intent(this@LanguageSelectorActivity, MyProductsActivity::class.java)
             }
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NO_HISTORY
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
         }
 

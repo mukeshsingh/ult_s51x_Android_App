@@ -1,7 +1,6 @@
 package com.ultrontech.s515liftconfigure
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
@@ -18,28 +17,23 @@ class ChangeUserContactActivity : LangSupportBaseActivity() {
         binding = ActivityChangeUserContactBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.editTextUserName.setText(name)
+        binding.editTextUserName.setText(phone?.contactName)
         binding.editTextUserPhone.setText(phone?.number)
 
         binding.btnConfirmUserDetail.setOnClickListener {
             with(BluetoothLeService.service) {
                 this?.setContact(numberSlot, binding.editTextUserName.text.toString())
                 val phone = binding.editTextUserPhone.text.toString().trim()
-                if (phone.length >= 3) {
-                    this?.setPhoneNumber(
-                        numberSlot,
-                        true,
-                        phone
-                    )
+                val contactName = binding.editTextUserName.text.toString()
 
-                    finish()
-                } else {
-                    this@ChangeUserContactActivity?.let { it1 ->
-                        S515LiftConfigureApp.instance.basicAlert(
-                            it1, "Please enter at least 3 digit phone number."
-                        ){}
-                    }
-                }
+                this?.setPhoneNumber(
+                    numberSlot,
+                    true,
+                    phone,
+                    contactName
+                )
+
+                finish()
             }
         }
         binding.footer.btnHome.setOnClickListener {
@@ -96,7 +90,7 @@ class ChangeUserContactActivity : LangSupportBaseActivity() {
     override fun onResume() {
         super.onResume()
 
-        binding.editTextUserName.setText(name)
+        binding.editTextUserName.setText(phone?.contactName)
         binding.editTextUserPhone.setText(phone?.number)
 //        swtEnabled.isChecked = phone?.enabled == true
     }

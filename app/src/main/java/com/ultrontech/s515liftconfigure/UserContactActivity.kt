@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -33,30 +32,6 @@ class UserContactActivity : LangSupportBaseActivity() {
         liftId = intent.extras?.getString(HomeActivity.INTENT_LIFT_ID)
 
         updatePhoneSlots()
-
-        if (phone1?.number != null && phone1?.number!!.isNotEmpty()) {
-            binding.img1.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.edit_white, theme))
-            binding.editContactDetail1.setBackgroundColor(resources.getColor(R.color.blue, theme))
-        } else {
-            binding.img1.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.plus_sign_white, theme))
-            binding.editContactDetail1.setBackgroundColor(resources.getColor(R.color.grey, theme))
-        }
-
-        if (phone2?.number != null && phone2?.number!!.isNotEmpty()) {
-            binding.img2.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.edit_white, theme))
-            binding.editContactDetail2.setBackgroundColor(resources.getColor(R.color.blue, theme))
-        } else {
-            binding.img2.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.plus_sign_white, theme))
-            binding.editContactDetail2.setBackgroundColor(resources.getColor(R.color.grey, theme))
-        }
-
-        if (phone3?.number != null && phone3?.number!!.isNotEmpty()) {
-            binding.editContactDetail3.setBackgroundColor(resources.getColor(R.color.blue, theme))
-            binding.img3.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.edit_white, theme))
-        } else {
-            binding.img3.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.plus_sign_white, theme))
-            binding.editContactDetail3.setBackgroundColor(resources.getColor(R.color.grey, theme))
-        }
 
         binding.editContactDetail1.setOnClickListener {
             ChangeUserContactActivity.phone = phone1
@@ -143,33 +118,40 @@ class UserContactActivity : LangSupportBaseActivity() {
 
     private fun updatePhoneSlots() {
         phone1 = BluetoothLeService.service?.device?.number1
-        name1 = liftId?.let { it1 ->
-            S515LiftConfigureApp.profileStore.find(
-                it1
-            )?.userContact1Name
-        }
-
         phone2 = BluetoothLeService.service?.device?.number2
-        name2 = liftId?.let { it1 ->
-            S515LiftConfigureApp.profileStore.find(
-                it1
-            )?.userContact2Name
-        }
-
         phone3 = BluetoothLeService.service?.device?.number3
-        name3 = liftId?.let { it1 ->
-            S515LiftConfigureApp.profileStore.find(
-                it1
-            )?.userContact3Name
-        }
 
-        binding.contactName1.text = name1
-        binding.contactName2.text = name2
-        binding.contactName3.text = name3
+        binding.contactName1.text = phone1?.contactName
+        binding.contactName2.text = phone2?.contactName
+        binding.contactName3.text = phone3?.contactName
 
         binding.phone1.text = phone1?.number
         binding.phone2.text = phone2?.number
         binding.phone3.text = phone3?.number
+
+        if (phone1?.number != null && phone1?.number!!.isNotEmpty()) {
+            binding.img1.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.edit_white, theme))
+            binding.editContactDetail1.setBackgroundColor(resources.getColor(R.color.blue, theme))
+        } else {
+            binding.img1.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.plus_sign_white, theme))
+            binding.editContactDetail1.setBackgroundColor(resources.getColor(R.color.grey, theme))
+        }
+
+        if (phone2?.number != null && phone2?.number!!.isNotEmpty()) {
+            binding.img2.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.edit_white, theme))
+            binding.editContactDetail2.setBackgroundColor(resources.getColor(R.color.blue, theme))
+        } else {
+            binding.img2.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.plus_sign_white, theme))
+            binding.editContactDetail2.setBackgroundColor(resources.getColor(R.color.grey, theme))
+        }
+
+        if (phone3?.number != null && phone3?.number!!.isNotEmpty()) {
+            binding.editContactDetail3.setBackgroundColor(resources.getColor(R.color.blue, theme))
+            binding.img3.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.edit_white, theme))
+        } else {
+            binding.img3.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.plus_sign_white, theme))
+            binding.editContactDetail3.setBackgroundColor(resources.getColor(R.color.grey, theme))
+        }
     }
 
     private val deviceUpdateReceiver: BroadcastReceiver = object : BroadcastReceiver() {

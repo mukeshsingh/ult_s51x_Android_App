@@ -3,10 +3,10 @@ package com.ultrontech.s515liftconfigure
 import android.app.Activity
 import android.app.Application
 import android.content.Context
-import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.WorkerThread
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.ultrontech.s515liftconfigure.models.ProfileStore
@@ -28,17 +28,22 @@ class S515LiftConfigureApp: Application() {
 
         profileStore = ProfileStore()
     }
+    @WorkerThread
+    fun basicAlert(context: Activity, message: String, callback: (() -> Unit)?){
+        context.runOnUiThread() {
+            val builder = AlertDialog.Builder(context)
+            with(builder) {
+                setTitle(resources.getString(R.string.app_name))
+                setMessage(message)
+                setPositiveButton(
+                    resources.getString(R.string.ok)
+                ) { dialog, _ ->
+                    dialog.dismiss()
+                    callback?.invoke()
+                }
 
-    fun basicAlert(context: Context, message: String, callback: (() -> Unit)?){
-        val builder = AlertDialog.Builder(context)
-        with(builder) {
-            setTitle(resources.getString(R.string.app_name))
-            setMessage(message)
-            setPositiveButton(resources.getString(R.string.ok), DialogInterface.OnClickListener { dialog, which ->
-                dialog.dismiss()
-                callback?.invoke()
-            })
-            show()
+                show()
+            }
         }
     }
 

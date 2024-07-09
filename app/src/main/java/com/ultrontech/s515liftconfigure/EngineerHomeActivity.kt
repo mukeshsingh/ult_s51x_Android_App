@@ -1,7 +1,12 @@
 package com.ultrontech.s515liftconfigure
 
 import android.Manifest
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -33,12 +38,21 @@ class EngineerHomeActivity : LangSupportBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         binding = ActivityEngineerHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         with(S515LiftConfigureApp) {
             noProduct = binding.noProduct
             lvUserLifts = binding.lvUserLifts
+            binding.swipeToRefresh.setOnRefreshListener {
+                binding.swipeToRefresh.isRefreshing = false;
+                scanLifts()
+            }
+            binding.swipeToRefresh.setColorSchemeResources(R.color.lightGreen,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_orange_dark,
+                android.R.color.holo_blue_dark);
 
             lvUserLifts.layoutManager = LinearLayoutManager(this@EngineerHomeActivity)
 
@@ -164,7 +178,7 @@ class EngineerHomeActivity : LangSupportBaseActivity() {
             scanLifts()
         }
     }
-
+    fun preventClicks(view: View?) {}
     private fun updateUserDevices() {
         val userDevices = S515LiftConfigureApp.profileStore.userDevices
         val data = userDevices.toList()
@@ -207,12 +221,14 @@ class EngineerHomeActivity : LangSupportBaseActivity() {
             bluetoothService?.let { bluetooth ->
                 if (!bluetooth.initialize()) {
                     Log.e(HomeActivity.TAG, "Unable to initialize Bluetooth")
-                    finish()
+                    S515LiftConfigureApp.instance.basicAlert(
+                        this@EngineerHomeActivity, "Bluetooth service is mot available."
+                    ) { finish() }
+                } else {
+                    Log.e(HomeActivity.TAG, ">>>>>>>> Device connected initialized.")
+
+                    bluetooth.scanLeDevice()
                 }
-
-                Log.e(HomeActivity.TAG, ">>>>>>>> Device connected initialized.")
-
-                bluetooth.scanLeDevice()
             }
         }
 
@@ -312,50 +328,52 @@ class EngineerHomeActivity : LangSupportBaseActivity() {
                 }
 
                 BluetoothLeService.ACTION_GATT_CONNECTED -> {
-                    stopLoader()
+                    hideLoader()
                     updateConnectionState(BluetoothState.Connected)
                 }
 
                 BluetoothLeService.ACTION_GATT_CONNECTION_FAILURE -> {
-                    stopLoader()
+                    hideLoader()
                     updateConnectionState(BluetoothState.ConnectionFailure)
                 }
 
                 BluetoothLeService.ACTION_GATT_DISCONNECTED -> {
-                    stopLoader()
+                    hideLoader()
                     updateConnectionState(BluetoothState.NotConnected)
                 }
 
-                BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED -> {
-                    bluetoothService?.updateServices()
+                BluetoothLeService.ACTION_BLUETOOTH_DEVICE_SCANNING -> {
+                    showLoader()
+                }
+
+                BluetoothLeService.ACTION_BLUETOOTH_DEVICE_SCANNING_STOPPED -> {
+                    hideLoader()
                 }
 
                 BluetoothLeService.ACTION_GATT_SERVICES_AUTHENTICATED -> {
-                    stopLoader()
+                    hideLoader()
                     // Show all the supported services and characteristics on the user interface.
                     updateConnectionState(BluetoothState.Connected)
                 }
 
                 BluetoothLeService.ACTION_BLUETOOTH_DEVICE_FOUND -> {
-                    Log.d(HomeActivity.TAG, "Device found.")
-                    stopLoader()
+                    Log.d(TAG, "Device found.")
                     lvUserLifts.invalidate()
                     adapter.notifyDataSetChanged()
                 }
 
                 BluetoothLeService.ACTION_LIFT_LIST_UPDATED -> {
-                    stopLoader()
                 }
             }
         }
     }
 
-    private fun stopLoader() {
-
+    private fun hideLoader() {
+        binding.loader.loaderView.visibility = View.GONE
     }
 
     private fun showLoader() {
-
+        binding.loader.loaderView.visibility = View.VISIBLE
     }
 
     fun updateConnectionState(state: BluetoothState) {
@@ -414,10 +432,11 @@ class EngineerHomeActivity : LangSupportBaseActivity() {
             addAction(BluetoothLeService.ACTION_GATT_CONNECTED)
             addAction(BluetoothLeService.ACTION_GATT_CONNECTION_FAILURE)
             addAction(BluetoothLeService.ACTION_GATT_DISCONNECTED)
-            addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED)
             addAction(BluetoothLeService.ACTION_GATT_SERVICES_AUTHENTICATED)
             addAction(BluetoothLeService.ACTION_BLUETOOTH_DEVICE_FOUND)
             addAction(BluetoothLeService.ACTION_LIFT_LIST_UPDATED)
+            addAction(BluetoothLeService.ACTION_BLUETOOTH_DEVICE_SCANNING)
+            addAction(BluetoothLeService.ACTION_BLUETOOTH_DEVICE_SCANNING_STOPPED)
         }
     }
 

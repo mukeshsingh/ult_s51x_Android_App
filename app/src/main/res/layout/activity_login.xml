@@ -82,5 +82,16 @@
         android:textColor="@android:color/white"
         android:background="@drawable/rounded_button_green_bg"
         app:backgroundTint="#99CC33"/>
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_back"
+            android:textSize="18sp"
+            android:layout_marginHorizontal="60dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/rounded_button_green_bg"
+            app:backgroundTint="#B70101"/>
     </LinearLayout>
 </LinearLayout>

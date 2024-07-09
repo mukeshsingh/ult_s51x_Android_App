@@ -14,23 +14,17 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothState
-import com.ultrontech.s515liftconfigure.bluetooth.LiftBT
 import com.ultrontech.s515liftconfigure.fragments.EditSimFragment
 import com.ultrontech.s515liftconfigure.fragments.LoginPinFragment
 import com.ultrontech.s515liftconfigure.fragments.LogoutFragment
 import com.ultrontech.s515liftconfigure.models.LiftDevice
-import com.ultrontech.s515liftconfigure.models.ProfileStore
-import com.ultrontech.s515liftconfigure.models.UserLift
-import org.w3c.dom.Text
 
 class HomeActivity : LangSupportBaseActivity() {
     private lateinit var llUserLifts: LinearLayout
@@ -245,7 +239,7 @@ class HomeActivity : LangSupportBaseActivity() {
                 }
 
                 BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED -> {
-                    bluetoothService?.updateServices()
+//                    bluetoothService?.updateServices(true)
                 }
 
                 BluetoothLeService.ACTION_GATT_SERVICES_AUTHENTICATED -> {

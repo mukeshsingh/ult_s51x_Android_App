@@ -2,8 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="51dp"
-    android:layout_margin="20dp">
+    android:layout_height="51dp">
     <LinearLayout
         android:id="@+id/row"
         android:layout_width="match_parent"
@@ -21,7 +20,7 @@
             android:id="@+id/img_elevator"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:src="@drawable/elevator"
             android:visibility="gone" />
         <ImageView
@@ -30,22 +29,22 @@
             android:layout_height="30dp"
             android:visibility="gone"
             android:src="@drawable/vertical_lift"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginStart="10dp" />
         <ImageView
             android:id="@+id/img_inclined_lift"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:visibility="gone"
             android:src="@drawable/inclined_lift"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginStart="10dp" />
 
         <TextView
             android:id="@+id/txt_lift_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Lift Name"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:textColor="@color/black"
             android:textSize="16sp"
             />
@@ -53,14 +52,16 @@
             android:id="@+id/img_online_icon"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:src="@drawable/linked"
-            android:visibility="gone"/>
+            android:visibility="gone" />
         <ImageView
             android:id="@+id/img_offline_icon"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:src="@drawable/out_of_signal"
             android:visibility="visible" />
     </LinearLayout>

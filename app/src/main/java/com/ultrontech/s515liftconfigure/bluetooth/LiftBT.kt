@@ -76,6 +76,7 @@ data class ScannedDevice(
     var modelNumber : String? = null
     var manufacturerName : String? = null
     var firmwareRevision : String? = null
+    var isServicesDiscovered: Boolean = false
 }
 
 enum class BluetoothState {

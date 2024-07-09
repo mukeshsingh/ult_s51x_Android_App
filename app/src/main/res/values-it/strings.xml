@@ -65,6 +65,9 @@
     <string name="successful">OPERAZIONE ESEGUITA CON SUCCESSO</string>
     <string name="lift_connected">%s</string>
     <string name="has_been_added_to_your_account">ora è connesso</string>
+    <string name="has_been_disconnected">è stato disconnesso</string>
+    <string name="status_available">Disconnesso, Disponibile</string>
+    <string name="status_not_available">Non disponibile</string>
     <string name="we_apologize">CI SCUSIAMO</string>
     <string name="we_have_been_unable_to_link_nhandicare_vlinka15e_to_your_account">Non siamo stati in grado di collegare il %s</string>
     <string name="please_try_again">Riprova.</string>

@@ -200,6 +200,9 @@
     <string name="choose_sim_style">Choose SIM Style</string>
     <string name="lift_connected">%s</string>
     <string name="has_been_added_to_your_account">has been added to your account</string>
+    <string name="has_been_disconnected">has been disconnected</string>
+    <string name="status_available">Disconnected, Available</string>
+    <string name="status_not_available">Not available</string>
     <string name="successful">SUCCESSFUL</string>
     <string name="we_apologize">WE APOLOGIZE</string>
     <string name="please_try_again">Please try again.</string>

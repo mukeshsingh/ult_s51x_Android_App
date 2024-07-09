@@ -1,7 +1,6 @@
 package com.ultrontech.s515liftconfigure
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
@@ -38,7 +37,8 @@ class ChangeEmergencyContactActivity : LangSupportBaseActivity() {
                     this?.setPhoneNumber(
                         numberSlot,
                         true,
-                        phone
+                        phone,
+                        ""
                     )
 
                     finish()

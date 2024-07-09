@@ -14,7 +14,7 @@ class ChangeEngineerContactActivity : LangSupportBaseActivity() {
     private var liftId: String? = null
     val numberSlot = 4
     var phone: PhoneContact? = null
-    var name: String? = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -24,34 +24,24 @@ class ChangeEngineerContactActivity : LangSupportBaseActivity() {
         liftId = intent.extras?.getString(HomeActivity.INTENT_LIFT_ID)
 
         phone = BluetoothLeService.service?.device?.number4
-        name = liftId?.let { it1 ->
-            S515LiftConfigureApp.profileStore.find(
-                it1
-            )?.installerName
-        }
 
-        binding.edtEngineerName.setText(name)
+        binding.edtEngineerName.setText(phone?.contactName)
         binding.edtEngineerPhone.setText(phone?.number)
 
         binding.btnConfirmEngineerContact.setOnClickListener {
             with(BluetoothLeService.service) {
                 this?.setContact(numberSlot, binding.edtEngineerName.text.toString())
                 val phone = binding.edtEngineerPhone.text.toString().trim()
-                if (phone.length >= 3) {
-                    this?.setPhoneNumber(
-                        numberSlot,
-                        true,
-                        phone
-                    )
+                val name = binding.edtEngineerName.text.toString().trim()
 
-                    finish()
-                } else {
-                    this@ChangeEngineerContactActivity?.let { it1 ->
-                        S515LiftConfigureApp.instance.basicAlert(
-                            it1, "Please enter at least 3 digit phone number."
-                        ){}
-                    }
-                }
+                this?.setPhoneNumber(
+                    numberSlot,
+                    true,
+                    phone,
+                    name
+                )
+
+                finish()
             }
         }
         binding.footer.btnHome.setOnClickListener {

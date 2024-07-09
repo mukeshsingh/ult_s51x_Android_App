@@ -81,7 +81,7 @@
                         android:textSize="16sp"
                         android:fontFamily="@font/lato_bold"
                         android:textColor="@android:color/black"
-                        android:layout_marginBottom="5dp" />
+                        android:layout_marginBottom="0dp" />
 
                 </LinearLayout>
 
@@ -156,7 +156,7 @@
                         android:textSize="16sp"
                         android:fontFamily="@font/lato_bold"
                         android:textColor="@android:color/black"
-                        android:layout_marginBottom="5dp" />
+                        android:layout_marginBottom="0dp" />
 
                 </LinearLayout>
 
@@ -232,7 +232,7 @@
                         android:textSize="16sp"
                         android:fontFamily="@font/lato_bold"
                         android:textColor="@android:color/black"
-                        android:layout_marginBottom="5dp" />
+                        android:layout_marginBottom="0dp" />
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -267,7 +267,8 @@
             android:layout_marginTop="50dp"
             android:textColor="@android:color/white"
             android:background="@drawable/rounded_button_green_bg"
-            app:backgroundTint="#99CC33"/>
+            app:backgroundTint="#99CC33"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <include android:id="@+id/footer"

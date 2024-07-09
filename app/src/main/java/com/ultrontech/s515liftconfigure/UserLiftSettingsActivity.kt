@@ -5,23 +5,27 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.ultrontech.s515liftconfigure.adapters.RecyclerViewAdapter
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
+import com.ultrontech.s515liftconfigure.bluetooth.ScanDisplayItem
 import com.ultrontech.s515liftconfigure.databinding.ActivityUserLiftSettingsBinding
-import com.ultrontech.s515liftconfigure.models.Device
+import com.ultrontech.s515liftconfigure.fragments.SuccessAddLiftFragment
 import com.ultrontech.s515liftconfigure.models.LiftConnectionState
-import com.ultrontech.s515liftconfigure.models.UserLift
+import kotlinx.coroutines.Job
 
 class UserLiftSettingsActivity : LangSupportBaseActivity() {
     private lateinit var binding: ActivityUserLiftSettingsBinding
     private var liftId: String? = null
     private val bluetoothLeService: BluetoothLeService = BluetoothLeService.service!!
     private lateinit var liftName: TextView
+    private lateinit var successFragment: SuccessAddLiftFragment
     private var hasEngineerCapability: Boolean = false
+    private val hideHandler = Handler(Looper.myLooper()!!)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +41,8 @@ class UserLiftSettingsActivity : LangSupportBaseActivity() {
             intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
             startActivity(intent)
         }
+
+        successFragment = SuccessAddLiftFragment()
 
         binding.liftPinNumber.setOnClickListener {
             val intent = Intent(this, ChangePinNumberActivity::class.java)
@@ -73,6 +79,12 @@ class UserLiftSettingsActivity : LangSupportBaseActivity() {
             startActivity(intent)
         }
 
+        binding.userContactDetail.setOnClickListener {
+            val intent = Intent(this, UserContactActivity::class.java)
+            intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
+            startActivity(intent)
+        }
+
         binding.engineerContactDetail.setOnClickListener {
             val intent = Intent(this, ChangeEngineerContactActivity::class.java)
             intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
@@ -85,12 +97,6 @@ class UserLiftSettingsActivity : LangSupportBaseActivity() {
             startActivity(intent)
         }
 
-        binding.userContactDetail.setOnClickListener {
-            val intent = Intent(this, ChangeUserContactActivity::class.java)
-            intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
-            startActivity(intent)
-        }
-
         binding.callPressDelay.setOnClickListener {
             val intent = Intent(this, ChangeCallPressDelayActivity::class.java)
             intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
@@ -99,12 +105,6 @@ class UserLiftSettingsActivity : LangSupportBaseActivity() {
 
         binding.dialTimeout.setOnClickListener {
             val intent = Intent(this, ChangeDialTimeoutActivity::class.java)
-            intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
-            startActivity(intent)
-        }
-
-        binding.userContactDetail.setOnClickListener {
-            val intent = Intent(this, UserContactActivity::class.java)
             intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
             startActivity(intent)
         }
@@ -139,7 +139,9 @@ class UserLiftSettingsActivity : LangSupportBaseActivity() {
         }
         binding.confirmDisconnectLift.btnYesDisconnect.setOnClickListener {
             binding.confirmDisconnectLift.llDisconnectPopup.visibility = View.GONE
-            finish()
+
+            successFragment.show(supportFragmentManager, "SuccessAddLiftFragment")
+            hideHandler.postDelayed(hideSuccess, AUTO_HIDE_DELAY_MILLIS.toLong())
         }
 
         if (hasEngineerCapability) {
@@ -180,7 +182,6 @@ class UserLiftSettingsActivity : LangSupportBaseActivity() {
             binding.optionMenu.llOptionMenu.visibility = View.GONE
             val intent = Intent(this@UserLiftSettingsActivity, TroubleshootingActivity::class.java)
             startActivity(intent)
-
         }
         binding.optionMenu.llOptionMenu.setOnClickListener {
             binding.optionMenu.llOptionMenu.visibility = View.GONE
@@ -196,117 +197,146 @@ class UserLiftSettingsActivity : LangSupportBaseActivity() {
             }
         }
         // ****************** Option Menu End ******************
+
+        if (liftId != null) {
+            val lift = S515LiftConfigureApp.profileStore.find(liftId!!)
+            if (lift != null) {
+                liftName.text = lift.liftName
+                successFragment.updateMsg(lift.liftName, resources.getString(R.string.has_been_disconnected))
+            }
+        }
+
+        LocalBroadcastManager.getInstance(applicationContext).registerReceiver(deviceUpdateReceiver, updateIntentFilter())
+        startTimerToCheckUpdate(10000)
     }
 
+    fun preventClicks(view: View?) {}
+
+    private fun hideLoader() {
+        runOnUiThread {
+            binding.loader.loaderView.visibility = View.GONE
+        }
+    }
+
+    private fun showLoader() {
+        runOnUiThread {
+            binding.loader.loaderView.visibility = View.VISIBLE
+        }
+    }
 
     private fun showRemovePopup() {
-        binding.confirmRemoveLift.llRemovePopup.visibility = View.VISIBLE
+        runOnUiThread {
+            binding.confirmRemoveLift.llRemovePopup.visibility = View.VISIBLE
+        }
     }
 
     private fun showDisConnectPopup() {
-        binding.confirmDisconnectLift.llDisconnectPopup.visibility = View.VISIBLE
+        runOnUiThread {
+            binding.confirmDisconnectLift.llDisconnectPopup.visibility = View.VISIBLE
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        LocalBroadcastManager.getInstance(applicationContext).registerReceiver(deviceUpdateReceiver, updateIntentFilter())
-        linkDevice()
     }
 
     override fun onPause() {
-        LocalBroadcastManager.getInstance(applicationContext).unregisterReceiver(deviceUpdateReceiver)
         super.onPause()
     }
 
-    private fun linkDevice () {
-        if (liftId != null) {
-            val lift = S515LiftConfigureApp.profileStore.find(liftId!!)
-            if (lift != null) {
-                val device = Device(lift = lift)
-                bluetoothLeService.link(device)
-
-                liftName.text = lift.liftName
-            }
-        }
+    override fun onDestroy() {
+        LocalBroadcastManager.getInstance(applicationContext).unregisterReceiver(deviceUpdateReceiver)
+        BluetoothLeService.service?.disconnect()
+        super.onDestroy()
     }
 
     private fun updateConnectState() {
         with(bluetoothLeService) {
             when(device?.connectionState) {
                 LiftConnectionState.connected_noauth -> {
-//                    deviceStatus.text = resources.getString(R.string.device_connected_no_auth)
-//                    btnConnect.visibility = View.VISIBLE
-//                    btnEdit.visibility = View.GONE
-//                    showHideCards(View.GONE)
                     device?.lift?.let { bluetoothLeService.authorise(it) }
                 }
                 LiftConnectionState.connected_auth -> {
-//                    deviceStatus.text = resources.getString(R.string.device_connected)
-//                    btnConnect.visibility = View.GONE
-//                    btnEdit.visibility = View.VISIBLE
-//                    showHideCards(View.VISIBLE)
                 }
                 LiftConnectionState.not_connected -> {
-//                    deviceStatus.text = resources.getString(R.string.device_not_connected)
-//                    btnConnect.visibility = View.VISIBLE
-//                    btnEdit.visibility = View.GONE
-//                    showHideCards(View.GONE)
                 }
                 LiftConnectionState.connect_error -> {
-//                    deviceStatus.text = resources.getString(R.string.device_connect_error)
-//                    btnConnect.visibility = View.VISIBLE
-//                    btnEdit.visibility = View.GONE
-//                    showHideCards(View.GONE)
                 }
                 else -> {}
             }
         }
     }
 
+    private var updateCountNeeded = 0
 
+    fun checkUpdatedCount() {
+        if (BluetoothLeService.service?.updateCount!! >= updateCountNeeded) {
+            hideLoader()
+            BluetoothLeService.service?.updateCount = 0
+            timer.cancel()
+        }
+    }
+
+    private lateinit var timer: Job
+    fun startTimerToCheckUpdate(time: Long) {
+        timer = S515LiftConfigureApp.instance.startCoroutineTimer(delayMillis = time) {
+            Log.d(BluetoothLeService.TAG, "User Lift settings timer called")
+            BluetoothLeService.service?.updateCount = 0
+
+            hideLoader()
+
+            if (!isMsgDialogVisible) {
+                isMsgDialogVisible = true
+                this@UserLiftSettingsActivity.let { it1 ->
+                    S515LiftConfigureApp.instance.basicAlert(
+                        it1, "Unable to connect to Lift. Please try again."
+                    ) { finish() }
+                }
+            }
+        }
+    }
+
+    var isMsgDialogVisible = false
     private val deviceUpdateReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
                 BluetoothLeService.ACTION_CONNECTION_UPDATE -> {
                     Log.d(HomeActivity.TAG, "Device connecting.")
-
-                    updateConnectState()
                 }
-                BluetoothLeService.ACTION_UPDATE_INFO -> {
-                    Log.d(HomeActivity.TAG, "ACTION_UPDATE_INFO.")
-
-//                    updateInfo()
-                }
-                BluetoothLeService.ACTION_UPDATE_LEVEL -> {
-                    Log.d(HomeActivity.TAG, "ACTION_UPDATE_LEVEL.")
-
-//                    updateVolume()
+                BluetoothLeService.ACTION_CLEAR_PHONE_SLOT -> {
+                    Log.d(HomeActivity.TAG, "ACTION_``CLEAR_PHONE_SLOT.")
                 }
                 BluetoothLeService.ACTION_UPDATE_AUTHENTICATION -> {
                     Log.d(HomeActivity.TAG, "ACTION_UPDATE_AUTHENTICATION.")
+                    checkUpdatedCount()
+                }
+                BluetoothLeService.ACTION_UPDATE_INFO -> {
+                    Log.d(HomeActivity.TAG, "ACTION_UPDATE_INFO.")
+                    checkUpdatedCount()
+                }
+                BluetoothLeService.ACTION_UPDATE_LEVEL -> {
+                    Log.d(HomeActivity.TAG, "ACTION_UPDATE_LEVEL.")
+                    checkUpdatedCount()
                 }
                 BluetoothLeService.ACTION_UPDATE_PHONE_SLOT -> {
                     Log.d(HomeActivity.TAG, "ACTION_UPDATE_PHONE_SLOT.")
-//                    updatePhoneSlots()
-                }
-                BluetoothLeService.ACTION_CLEAR_PHONE_SLOT -> {
-                    Log.d(HomeActivity.TAG, "ACTION_CLEAR_PHONE_SLOT.")
-//                    updatePhoneSlots()
+                    checkUpdatedCount()
                 }
                 BluetoothLeService.ACTION_UPDATE_PHONE_CONFIG -> {
                     Log.d(HomeActivity.TAG, "ACTION_UPDATE_PHONE_CONFIG.")
-//                    updatePhoneConfig()
+                    checkUpdatedCount()
                 }
                 BluetoothLeService.ACTION_UPDATE_JOB -> {
                     Log.d(HomeActivity.TAG, "ACTION_UPDATE_JOB.")
-//                    updateJob()
+                    checkUpdatedCount()
                 }
                 BluetoothLeService.ACTION_UPDATE_WIFI_DETAIL -> {
                     Log.d(HomeActivity.TAG, "ACTION_UPDATE_WIFI_DETAIL.")
-//                    updateWifiDetail()
+                    checkUpdatedCount()
                 }
                 BluetoothLeService.ACTION_UPDATE_SSID_LIST -> {
                     Log.d(HomeActivity.TAG, "ACTION_UPDATE_SSID_LIST.")
+                    checkUpdatedCount()
                 }
                 BluetoothLeService.ACTION_BLUETOOTH_ON -> {
                     Log.d(HomeActivity.TAG, "ACTION_BLUETOOTH_ON.")
@@ -315,17 +345,29 @@ class UserLiftSettingsActivity : LangSupportBaseActivity() {
                     finish()
                 }
                 BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED -> {
-                    bluetoothLeService?.updateServices()
+                    bluetoothLeService.updateServices(true)
                 }
                 BluetoothLeService.ACTION_SERVICES_UPDATED -> {
-                    linkDevice()
+                    updateConnectState()
                 }
                 BluetoothLeService.ACTION_GATT_DISCONNECTED -> {
-                    this@UserLiftSettingsActivity?.let { it1 ->
-                        S515LiftConfigureApp.instance.basicAlert(
-                            it1, "Lift disconnected."
-                        ) { finish() }
+                    if (!isMsgDialogVisible) {
+                        isMsgDialogVisible = true
+                        try {timer.cancel()} catch (_: Exception){}
+
+                        this@UserLiftSettingsActivity.let { it1 ->
+                            S515LiftConfigureApp.instance.basicAlert(
+                                it1, "Lift disconnected."
+                            ) { finish() }
+                        }
                     }
+                }
+                BluetoothLeService.ACTION_UPDATING_LIFT_SETTING -> {
+                    showLoader()
+
+                    BluetoothLeService.service?.updateCount = 0
+                    updateCountNeeded = 1
+                    startTimerToCheckUpdate(2000)
                 }
             }
         }
@@ -347,6 +389,17 @@ class UserLiftSettingsActivity : LangSupportBaseActivity() {
             addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED)
             addAction(BluetoothLeService.ACTION_SERVICES_UPDATED)
             addAction(BluetoothLeService.ACTION_GATT_DISCONNECTED)
+            addAction(BluetoothLeService.ACTION_UPDATING_LIFT_SETTING)
         }
+    }
+
+    private val hideSuccess = Runnable {
+        supportFragmentManager.beginTransaction().remove(successFragment).commit()
+        finish()
+    }
+
+    companion object{
+        var lift: ScanDisplayItem? = null
+        private const val AUTO_HIDE_DELAY_MILLIS = 2000
     }
 }

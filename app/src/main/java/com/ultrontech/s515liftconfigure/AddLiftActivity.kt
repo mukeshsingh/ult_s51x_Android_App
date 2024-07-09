@@ -67,6 +67,7 @@ class AddLiftActivity : LangSupportBaseActivity() {
                         profileStore.add(userLift)
                     }
 
+                    lift?.let { it1 -> successFragment.updateMsg(it1.name, "")}
                     successFragment.show(supportFragmentManager, "SuccessAddLiftFragment")
                     hideHandler.postDelayed(hideSuccess, AUTO_HIDE_DELAY_MILLIS.toLong())
                 } else {
@@ -133,7 +134,7 @@ class AddLiftActivity : LangSupportBaseActivity() {
 
     companion object{
         var lift: ScanDisplayItem? = null
-        private const val AUTO_HIDE_DELAY_MILLIS = 1000
+        private const val AUTO_HIDE_DELAY_MILLIS = 2000
         const val AB = AUTO_HIDE_DELAY_MILLIS
     }
 }

@@ -1,17 +1,11 @@
 package com.ultrontech.s515liftconfigure.fragments
 
-import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Switch
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.ultrontech.s515liftconfigure.EngineerDetailsActivity
@@ -50,23 +44,25 @@ class EditContactFragment : BottomSheetDialogFragment() {
 
         btnUpdate.setOnClickListener {
             with(BluetoothLeService.service) {
-                this?.setContact(numberSlot, contactName.text.toString())
+                this?.setContact(numberSlot, contactName.text.toString().trim())
                 val phone = phoneNumber.text.toString().trim()
+                val name = contactName.text.toString().trim()
                 if (phone.length >= 3) {
                     this?.setPhoneNumber(
                         numberSlot,
                         swtEnabled.isChecked,
-                        phone
+                        phone,
+                        name
                     )
 
                     (activity as EngineerDetailsActivity).supportFragmentManager.beginTransaction()
                         .remove(this@EditContactFragment).commit()
                 } else {
-                    this@EditContactFragment.context?.let { it1 ->
-                        S515LiftConfigureApp.instance.basicAlert(
-                            it1, "Please enter at least 3 digit phone number."
-                        ){}
-                    }
+//                    this@EditContactFragment.context?.let { it1 ->
+//                        S515LiftConfigureApp.instance.basicAlert(
+//                            it1, "Please enter at least 3 digit phone number."
+//                        ){}
+//                    }
                 }
             }
         }
@@ -77,7 +73,7 @@ class EditContactFragment : BottomSheetDialogFragment() {
     override fun onResume() {
         super.onResume()
 
-        contactName.setText(name)
+        contactName.setText(phone?.contactName)
         phoneNumber.setText(phone?.number)
         swtEnabled.isChecked = phone?.enabled == true
     }

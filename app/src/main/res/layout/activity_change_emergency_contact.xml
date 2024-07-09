@@ -30,7 +30,6 @@
             android:text="@string/change_emergency_services_details"
             android:textSize="18sp"
             android:gravity="center"
-            android:layout_marginHorizontal="80dp"
             android:fontFamily="@font/lato_bold"
             android:textColor="@android:color/black"
             android:layout_gravity="center_horizontal"

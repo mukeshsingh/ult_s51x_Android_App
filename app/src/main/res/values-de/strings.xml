@@ -68,6 +68,9 @@
     <string name="lift_connected">%s</string>
     <string name="successful">ERFOLGREICH</string>
     <string name="has_been_added_to_your_account">wurde Ihrem Konto hinzugefügt</string>
+    <string name="has_been_disconnected">wurde getrennt</string>
+    <string name="status_available">Getrennt, Verfügbar</string>
+    <string name="status_not_available">Nicht verfügbar</string>
     <string name="we_apologize">ES TUT UNS LEID</string>
     <string name="please_try_again">Bitte versuchen Sie es erneut.</string>
     <string name="we_have_been_unable_to_link_nhandicare_vlinka15e_to_your_account">%s konnte nicht verknüpft werden</string>

@@ -12,11 +12,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
@@ -24,6 +24,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothState
 import com.ultrontech.s515liftconfigure.databinding.ActivityMyProductsBinding
+import com.ultrontech.s515liftconfigure.models.Device
 
 class MyProductsActivity : LangSupportBaseActivity() {
     private lateinit var binding: ActivityMyProductsBinding
@@ -35,6 +36,15 @@ class MyProductsActivity : LangSupportBaseActivity() {
 
         binding = ActivityMyProductsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.swipeToRefresh.setOnRefreshListener {
+            binding.swipeToRefresh.isRefreshing = false;
+            scanLifts()
+        }
+        binding.swipeToRefresh.setColorSchemeResources(R.color.lightGreen,
+            android.R.color.holo_green_dark,
+            android.R.color.holo_orange_dark,
+            android.R.color.holo_blue_dark);
 
         btnFindLift = binding.footer
         noProduct = binding.noProduct
@@ -95,9 +105,10 @@ class MyProductsActivity : LangSupportBaseActivity() {
         // ****************** Option Menu End ******************
 
         LocalBroadcastManager.getInstance(applicationContext).registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
-
         scanLifts()
     }
+
+    fun preventClicks(view: View?) {}
 
     private val serviceConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(
@@ -110,12 +121,15 @@ class MyProductsActivity : LangSupportBaseActivity() {
             bluetoothService?.let { bluetooth ->
                 if (!bluetooth.initialize()) {
                     Log.e(TAG, "Unable to initialize Bluetooth")
-                    finish()
+
+                    S515LiftConfigureApp.instance.basicAlert(
+                        this@MyProductsActivity, "Bluetooth service is mot available."
+                    ) { finish() }
+                } else {
+                    Log.e(HomeActivity.TAG, ">>>>>>>> Device connected initialized.")
+
+                    bluetooth.scanLeDevice()
                 }
-
-                Log.e(HomeActivity.TAG, ">>>>>>>> Device connected initialized.")
-
-                bluetooth.scanLeDevice()
             }
         }
 
@@ -221,20 +235,30 @@ class MyProductsActivity : LangSupportBaseActivity() {
             val cardView = inflater.inflate(R.layout.card_component, null, false)
             val liftName = cardView.findViewById<TextView>(R.id.txt_lift_name)
             val btnEditLiftDetail = cardView.findViewById<Button>(R.id.btnEditLiftDetail)
+            val onlineIcon = cardView.findViewById<ImageView>(R.id.img_online_icon)
+            val offlineIcon = cardView.findViewById<ImageView>(R.id.img_offline_icon)
+            val status = cardView.findViewById<TextView>(R.id.txt_status)
+            val device = BluetoothLeService.service?.find(userLift.liftId)
+            if (device != null) {
+                offlineIcon.visibility = View.GONE
+                onlineIcon.visibility = View.VISIBLE
+                status.text = resources.getText(R.string.status_available)
+            } else {
+                offlineIcon.visibility = View.VISIBLE
+                onlineIcon.visibility = View.GONE
+                status.text = resources.getText(R.string.status_not_available)
+            }
             liftName.text = userLift.liftName
 
             btnEditLiftDetail.setOnClickListener {
-                val lift = BluetoothLeService.service?.find(userLift.liftId)
-                if (lift?.modelNumber != null && lift.modelNumber!!.isNotEmpty()) {
+                if (device != null) {
                     val intent = Intent(this, UserLiftSettingsActivity::class.java)
                     intent.putExtra(HomeActivity.INTENT_LIFT_ID, userLift.liftId)
                     startActivity(intent)
-                } else {
-                    this@MyProductsActivity.let { it1 ->
-                        S515LiftConfigureApp.instance.basicAlert(
-                            it1, resources.getString(R.string.lift_not_connected_msg)
-                        ){}
-                    }
+
+                    BluetoothLeService.service?.updateCount = 0
+                    linkDevice(userLift.liftId)
+                    BluetoothLeService.service?.connect(userLift.liftId, userLift.liftName)
                 }
             }
 
@@ -242,29 +266,45 @@ class MyProductsActivity : LangSupportBaseActivity() {
         }
     }
 
+    private fun linkDevice (liftId: String) {
+        val lift = S515LiftConfigureApp.profileStore.find(liftId)
+        if (lift != null) {
+            val device = Device(lift = lift)
+            BluetoothLeService.service?.link(device)
+        }
+    }
+
     private val gattUpdateReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
                 BluetoothLeService.ACTION_GATT_CONNECTING -> {
+                    showLoader()
                     updateConnectionState(BluetoothState.Connecting)
                 }
 
                 BluetoothLeService.ACTION_GATT_CONNECTED -> {
+                    hideLoader()
                     updateConnectionState(BluetoothState.Connected)
                 }
 
                 BluetoothLeService.ACTION_GATT_CONNECTION_FAILURE -> {
+                    hideLoader()
                     updateConnectionState(BluetoothState.ConnectionFailure)
                 }
 
                 BluetoothLeService.ACTION_GATT_DISCONNECTED -> {
+                    hideLoader()
                     updateConnectionState(BluetoothState.NotConnected)
                 }
 
-                BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED -> {
-                    bluetoothService?.updateServices()
+                BluetoothLeService.ACTION_BLUETOOTH_DEVICE_SCANNING -> {
+                    showLoader()
                 }
 
+                BluetoothLeService.ACTION_BLUETOOTH_DEVICE_SCANNING_STOPPED -> {
+                    hideLoader()
+                    showUserDevices()
+                }
                 BluetoothLeService.ACTION_GATT_SERVICES_AUTHENTICATED -> {
                     // Show all the supported services and characteristics on the user interface.
                     updateConnectionState(BluetoothState.Connected)
@@ -272,9 +312,18 @@ class MyProductsActivity : LangSupportBaseActivity() {
 
                 BluetoothLeService.ACTION_BLUETOOTH_DEVICE_FOUND -> {
                     Log.d(HomeActivity.TAG, "Device found.")
+                    showUserDevices()
                 }
             }
         }
+    }
+
+    private fun hideLoader() {
+        binding.loader.loaderView.visibility = View.GONE
+    }
+
+    private fun showLoader() {
+        binding.loader.loaderView.visibility = View.VISIBLE
     }
 
     fun updateConnectionState(state: BluetoothState) {
@@ -301,6 +350,13 @@ class MyProductsActivity : LangSupportBaseActivity() {
     override fun onResume() {
         super.onResume()
         showUserDevices()
+
+        if (S515LiftConfigureApp.profileStore.userName.isNotEmpty()) {
+            val name = S515LiftConfigureApp.profileStore.userName.replaceFirstChar { char -> char.uppercase()}
+            binding.optionMenu.txtAccount.text = name
+        } else {
+            binding.optionMenu.txtAccount.text = resources.getString(R.string.account)
+        }
     }
 
     override fun onPause() {
@@ -326,6 +382,9 @@ class MyProductsActivity : LangSupportBaseActivity() {
             addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED)
             addAction(BluetoothLeService.ACTION_GATT_SERVICES_AUTHENTICATED)
             addAction(BluetoothLeService.ACTION_BLUETOOTH_DEVICE_FOUND)
+            addAction(BluetoothLeService.ACTION_LIFT_LIST_UPDATED)
+            addAction(BluetoothLeService.ACTION_BLUETOOTH_DEVICE_SCANNING)
+            addAction(BluetoothLeService.ACTION_BLUETOOTH_DEVICE_SCANNING_STOPPED)
         }
     }
 

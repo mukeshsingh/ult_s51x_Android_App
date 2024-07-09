@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ultrontech.s515liftconfigure.*
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
+import com.ultrontech.s515liftconfigure.models.Device
 import com.ultrontech.s515liftconfigure.models.UserLift
 
 class RecyclerViewAdapter(private val context: Context, private val data: List<UserLift>) :
@@ -73,17 +74,14 @@ class RecyclerViewAdapter(private val context: Context, private val data: List<U
             }
 
             viewHolder.view.setOnClickListener {
-                val lift = BluetoothLeService.service?.find(item.liftId)
-                if (lift?.modelNumber != null && lift.modelNumber!!.isNotEmpty()) {
+                if (device != null) {
                     val intent = Intent(context, UserLiftSettingsActivity::class.java)
                     intent.putExtra(HomeActivity.INTENT_LIFT_ID, item.liftId)
                     context.startActivity(intent)
-                } else {
-                    context.let { it1 ->
-                        S515LiftConfigureApp.instance.basicAlert(
-                            it1, context.resources.getString(R.string.lift_not_connected_msg)
-                        ){}
-                    }
+
+                    BluetoothLeService.service?.updateCount = 0
+                    linkDevice(item.liftId)
+                    BluetoothLeService.service?.connect(item.liftId, item.liftName)
                 }
             }
 
@@ -95,6 +93,14 @@ class RecyclerViewAdapter(private val context: Context, private val data: List<U
                 viewHolder.btnConnect.visibility = View.GONE
                 (context as EngineerHomeActivity).showDisConnectPopup(item)
             }
+        }
+    }
+
+    private fun linkDevice (liftId: String) {
+        val lift = S515LiftConfigureApp.profileStore.find(liftId)
+        if (lift != null) {
+            val device = Device(lift = lift)
+            BluetoothLeService.service?.link(device)
         }
     }
 

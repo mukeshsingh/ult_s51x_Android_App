@@ -65,6 +65,9 @@
     <string name="successful">EXITOSO</string>
     <string name="lift_connected">%s</string>
     <string name="has_been_added_to_your_account">se ha añadido a su cuenta</string>
+    <string name="has_been_disconnected">Ha sido desconectada</string>
+    <string name="status_available">Desconectado, Disponible</string>
+    <string name="status_not_available">No disponible</string>
     <string name="we_apologize">LE PEDIMOS DISCULPAS</string>
     <string name="we_have_been_unable_to_link_nhandicare_vlinka15e_to_your_account">No hemos podido conectar %s</string>
     <string name="please_try_again">Por favor, inténtelo de nuevo..</string>

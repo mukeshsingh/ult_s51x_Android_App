@@ -437,4 +437,6 @@
     <include
         android:id="@+id/option_menu"
         layout="@layout/option_menu" />
+    <include android:id="@+id/loader"
+        layout="@layout/loader_view" />
 </RelativeLayout>

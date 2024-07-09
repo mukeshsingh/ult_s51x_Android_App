@@ -4,64 +4,94 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/card_background"
-    android:layout_margin="8dp">
+    android:paddingBottom="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp">
-
-        <ImageView
-            android:id="@+id/image1"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/stair_lift_dark"/>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@android:color/darker_gray"/>
+        android:orientation="vertical"
+        android:background="@drawable/card_background">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <ImageView
-                android:id="@+id/image2"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:id="@+id/image1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:scaleType="centerCrop"
-                android:layout_margin="5dp"
-                android:src="@drawable/linked"/>
+                android:src="@drawable/stair_lift_dark"/>
 
-            <TextView
-                android:id="@+id/txt_lift_name"
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray"/>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="Savaria VLinkA15E"
-                android:textColor="@android:color/black"
-                android:fontFamily="@font/lato_regular"
-                android:textSize="16sp"/>
-        </LinearLayout>
-    </LinearLayout>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnEditLiftDetail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="1dp"
-        android:layout_marginBottom="1dp"
-        android:gravity="center_horizontal"
-        android:padding="16dp"
-        android:background="@drawable/rounded_button_bg"
-        app:backgroundTint="@color/grey_btn_bg"
-        android:text="@string/edit_lift_details"
-        android:textColor="@color/black"
-        android:fontFamily="@font/lato_semibold"
-        android:textSize="18sp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+                    <ImageView
+                        android:id="@+id/img_online_icon"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:scaleType="centerCrop"
+                        android:layout_margin="5dp"
+                        android:src="@drawable/linked"
+                        android:visibility="gone"/>
+                    <ImageView
+                        android:id="@+id/img_offline_icon"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:scaleType="centerCrop"
+                        android:layout_margin="5dp"
+                        android:src="@drawable/out_of_signal"
+                        android:visibility="visible"/>
+                    <TextView
+                        android:id="@+id/txt_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="@string/status_not_available"
+                        android:textColor="@android:color/black"
+                        android:fontFamily="@font/lato_regular"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txt_lift_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="Savaria VLinkA15E"
+                    android:textColor="@android:color/black"
+                    android:fontFamily="@font/lato_regular"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnEditLiftDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="1dp"
+            android:layout_marginBottom="1dp"
+            android:gravity="center_horizontal"
+            android:padding="16dp"
+            android:background="@drawable/rounded_button_bg"
+            app:backgroundTint="@color/grey_btn_bg"
+            android:text="@string/edit_lift_details"
+            android:textColor="@color/black"
+            android:fontFamily="@font/lato_semibold"
+            android:textSize="18sp"/>
+    </LinearLayout>
 </LinearLayout>
