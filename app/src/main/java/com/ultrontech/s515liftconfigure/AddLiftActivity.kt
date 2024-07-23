@@ -58,10 +58,11 @@ class AddLiftActivity : LangSupportBaseActivity() {
             with(S515LiftConfigureApp) {
                 val pinStr = "${p1.text}".trim()
 
-                if (pinStr.length == 6 && ProfileStore.AddLiftPin == pinStr) {
-                    val accessKey = pinStr.map { it.digitToInt() }.toIntArray()
-                    val userLift = lift?.let { lft -> UserLift(liftId = lft.id, liftName = lft.name, accessKey = PINNumber(6, accessKey)) }
+                val accessKey = pinStr.map { it.digitToInt() }.toIntArray()
+                val userLift = lift?.let { lft -> UserLift(liftId = lft.id, liftName = lft.name, accessKey = PINNumber(6, accessKey)) }
+                val isMatched = userLift?.let { it1 -> profileStore.isPinMatched(it1, pinStr) }
 
+                if (pinStr.length == 6 && (ProfileStore.AddLiftPin == pinStr || isMatched == true)) {
                     if (userLift != null) {
                         if (profileStore.hasEngineerCapability) userLift.liftType = profileStore.selectedLiftType
                         profileStore.add(userLift)

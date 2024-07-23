@@ -70,6 +70,7 @@ class S515LiftConfigureApp: Application() {
         lateinit var profileStore: ProfileStore
         const val TAG = "S515LiftConfigureApp"
         const val KEY_PROFILE_USER_DEVICES = "profile.user.devices"
+        const val KEY_PROFILE_USER_DEVICES_PIN = "profile.user.devices.pin"
         const val KEY_PROFILE_USER_NAME ="profile.user.name"
         const val KEY_PROFILE_USER_LANGUAGE ="profile.user.language"
         const val KEY_PROFILE_ENGINEER_LOGGED_IN ="profile.engineer.logged.in"

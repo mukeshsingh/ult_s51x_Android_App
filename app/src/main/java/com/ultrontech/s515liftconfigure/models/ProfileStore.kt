@@ -7,6 +7,7 @@ import java.util.UUID
 @Serializable
 data class ProfileStore (
     var userDevices : Array<UserLift> = emptyArray(),
+    var userDevicesPin : Array<UserLift> = emptyArray(),
     var userName: String = "",
     var selectedLiftType: String = "",
     var hasEngineerCapability: Boolean = false,
@@ -20,6 +21,7 @@ data class ProfileStore (
         other as ProfileStore
 
         if (!userDevices.contentEquals(other.userDevices)) return false
+        if (!userDevicesPin.contentEquals(other.userDevicesPin)) return false
         if (userName != other.userName) return false
         if (hasEngineerCapability != other.hasEngineerCapability) return false
         if (hasUserCapability != other.hasUserCapability) return false
@@ -30,6 +32,7 @@ data class ProfileStore (
 
     override fun hashCode(): Int {
         var result = userDevices.contentHashCode()
+        result = 31 * result + userDevicesPin.contentHashCode()
         result = 31 * result + userName.hashCode()
         result = 31 * result + hasEngineerCapability.hashCode()
         result = 31 * result + hasUserCapability.hashCode()
@@ -46,9 +49,13 @@ data class ProfileStore (
                 hasUserCapability = getBoolean(KEY_PROFILE_USER_LOGGED_IN, KEY_FALSE)
                 allowBiometrics = getBoolean(KEY_PROFILE_USER_USE_BIO, KEY_FALSE)
                 val storeDevices = getString(KEY_PROFILE_USER_DEVICES, null)
+                val storeDevicesPin = getString(KEY_PROFILE_USER_DEVICES_PIN, null)
 
                 if (storeDevices != null) {
                     userDevices = json.decodeFromString(storeDevices)
+                }
+                if (storeDevicesPin != null) {
+                    userDevicesPin = json.decodeFromString(storeDevicesPin)
                 }
             }
         }
@@ -60,17 +67,45 @@ data class ProfileStore (
         }
     }
 
+    fun findDevicePin(existingWithId : String): UserLift? {
+        return userDevicesPin.find {
+            it.liftId == existingWithId
+        }
+    }
+
     fun remove(lift : UserLift): Boolean {
-        val idx = userDevices.indexOf (lift)
+        val idx = userDevices.indexOfFirst {
+            it.liftId == lift.liftId
+        }
 
         val l = userDevices.toMutableList()
-        l.removeAt(idx)
-        if (idx > -1) userDevices = l.toTypedArray()
+        if (idx > -1) {
+            l.removeAt(idx)
+            userDevices = l.toTypedArray()
+        }
+
+        return saveDevices()
+    }
+
+    private fun removeDevicePin(lift : UserLift): Boolean {
+        val idx = userDevicesPin.indexOfFirst {
+            it.liftId == lift.liftId
+        }
+
+        val l = userDevicesPin.toMutableList()
+        if (idx > -1) {
+            l.removeAt(idx)
+            userDevicesPin = l.toTypedArray()
+        }
 
         return saveDevices()
     }
 
     fun add(lift: UserLift): Boolean {
+        removeDevicePin(lift)
+        userDevicesPin = userDevicesPin.plus(lift)
+        saveDevices()
+
         val l = userDevices.find {
             it.liftId === lift.liftId
         }
@@ -105,9 +140,24 @@ data class ProfileStore (
         return lift
     }
 
+    fun isPinMatched(lift: UserLift, pin: String): Boolean {
+        val pos = userDevicesPin.indexOfFirst {
+            it.liftId == lift.liftId
+        }
+        if (pos > -1) {
+            val item = userDevicesPin[pos]
+            if (item.accessKey.display() == pin) {
+                return true
+            }
+        }
+
+        return false
+    }
 
     fun update(pin: PINNumber, lift: UserLift): UserLift {
-        val pos = userDevices.indexOf(lift)
+        val pos = userDevices.indexOfFirst {
+            it.liftId == lift.liftId
+        }
         if (pos > -1) {
             val item = userDevices[pos]
             item.accessKey = pin
@@ -122,7 +172,7 @@ data class ProfileStore (
     fun update(name: String, lift: UserLift): UserLift {
         val pos = userDevices.indexOf(lift)
         if (pos > -1) {
-            var item = userDevices[pos]
+            val item = userDevices[pos]
             item.liftName = name
             userDevices[pos] = item
             saveDevices()
@@ -140,6 +190,7 @@ data class ProfileStore (
                 val editor = edit()
                 with(editor) {
                     putString(KEY_PROFILE_USER_DEVICES, json.encodeToString(userDevices))
+                    putString(KEY_PROFILE_USER_DEVICES_PIN, json.encodeToString(userDevicesPin))
                     commit()
                 }
             }

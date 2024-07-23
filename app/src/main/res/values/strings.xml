@@ -176,7 +176,7 @@
     <string name="confirm">Confirm</string>
     <string name="change_lift_name">Change Lift Name</string>
     <string name="new_name">New Name</string>
-    <string name="change_lift_pin_number">Change Lift Pin Number</string>
+    <string name="change_lift_pin_number">Change Lift PIN Number</string>
     <string name="select_new_pin">Select New Pin</string>
     <string name="confirm_new_pin">Confirm New Pin</string>
     <string name="dial_timeout">Dial Timeout</string>
