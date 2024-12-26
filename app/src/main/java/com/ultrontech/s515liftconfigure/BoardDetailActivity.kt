@@ -22,11 +22,6 @@ class BoardDetailActivity : LangSupportBaseActivity() {
             startActivity(intent)
         }
 
-        binding.llBtnEditWifi.setOnClickListener {
-            val intent = Intent(this, ChangeWifiActivity::class.java)
-            startActivity(intent)
-        }
-
         binding.footer.btnHome.setOnClickListener {
             finish()
         }
@@ -37,6 +32,10 @@ class BoardDetailActivity : LangSupportBaseActivity() {
         updateWifiDetail()
         updateInfo()
         updateJob()
+
+        with(bluetoothLeService) {
+            binding.firmwareRevision.text = device?.lift?.liftId?.let { find(it)?.firmwareRevision }
+        }
 
         binding.toolbar.optionBtn.setOnClickListener {
             if (binding.optionMenu.llOptionMenu.visibility == View.GONE) {
@@ -81,26 +80,26 @@ class BoardDetailActivity : LangSupportBaseActivity() {
     private fun updateWifiDetail() {
         with(bluetoothLeService) {
             if (device?.connectedSSID != null) {
-                binding.ssidConfiguredLabel.text = resources.getString(R.string.ssid_configured)
+                binding.ssidConfiguredLabel.text = this@BoardDetailActivity.resources.getString(R.string.ssid_configured)
                 binding.ssidConfiguredLabel.setTextColor(resources.getColor(R.color.text_color_title, theme))
             } else {
-                binding.ssidConfiguredLabel.text = resources.getString(R.string.ssid_not_configured)
+                binding.ssidConfiguredLabel.text = this@BoardDetailActivity.resources.getString(R.string.no_ssid_configured)
                 binding.ssidConfiguredLabel.setTextColor(resources.getColor(R.color.dark_red, theme))
             }
 
             if (device?.wifiAvailable == true) {
-                binding.wifiAvailableStatus.text = resources.getString(R.string.wifi_available_status)
+                binding.wifiAvailableStatus.text = this@BoardDetailActivity.resources.getString(R.string.wifi_is_available_on_device)
                 binding.wifiAvailableStatus.setTextColor(resources.getColor(R.color.text_color_title, theme))
             } else {
-                binding.wifiAvailableStatus.text = resources.getString(R.string.wifi_not_available_status)
+                binding.wifiAvailableStatus.text = this@BoardDetailActivity.resources.getString(R.string.wifi_not_available_status)
                 binding.wifiAvailableStatus.setTextColor(resources.getColor(R.color.red, theme))
             }
 
             if (device?.wifiConnected == true) {
-                binding.wifiConnectedStatus.text = resources.getString(R.string.wifi_connected)
+                binding.wifiConnectedStatus.text = this@BoardDetailActivity.resources.getString(R.string.wifi_connected)
                 binding.wifiConnectedStatus.setTextColor(resources.getColor(R.color.text_color_title, theme))
             } else {
-                binding.wifiConnectedStatus.text = resources.getString(R.string.wifi_not_connected)
+                binding.wifiConnectedStatus.text = this@BoardDetailActivity.resources.getString(R.string.wifi_is_not_connected)
                 binding.wifiConnectedStatus.setTextColor(resources.getColor(R.color.red, theme))
             }
         }

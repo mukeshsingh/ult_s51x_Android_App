@@ -408,7 +408,7 @@ class EngineerDetailsActivity : LangSupportBaseActivity() {
                 wifiSsid.visibility = View.VISIBLE
                 wifiSsid.text = device?.connectedSSID
             } else {
-                ssidConfiguredLabel.text = resources.getString(R.string.ssid_not_configured)
+                ssidConfiguredLabel.text = resources.getString(R.string.no_ssid_configured)
                 wifiSsid.visibility = View.GONE
             }
 
@@ -424,7 +424,7 @@ class EngineerDetailsActivity : LangSupportBaseActivity() {
                 wifiConnectedStatus.text = resources.getString(R.string.wifi_connected)
                 wifiConnectedStatus.setTextColor(resources.getColor(R.color.white, theme))
             } else {
-                wifiConnectedStatus.text = resources.getString(R.string.wifi_not_connected)
+                wifiConnectedStatus.text = resources.getString(R.string.wifi_is_not_connected)
                 wifiConnectedStatus.setTextColor(resources.getColor(R.color.red, theme))
             }
         }

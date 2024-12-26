@@ -411,7 +411,8 @@ class BluetoothLeService : Service() {
                             refreshScannedList()
                             val service = mBluetoothGatt?.getService(LiftBT.deviceControlServiceUUID)
                             val char = service?.getCharacteristic(LiftBT.manufacturerNameCharUUID)
-                            if (waitIdle(LiftBT.GATT_TIMEOUT)) readCharacteristic(char)
+                            readCharacteristic(char)
+                            waitIdle(LiftBT.GATT_TIMEOUT)
                         }
 
                         LiftBT.manufacturerNameCharUUID -> {
@@ -423,12 +424,13 @@ class BluetoothLeService : Service() {
                             val service =
                                 mBluetoothGatt?.getService(LiftBT.deviceControlServiceUUID)
                             val char = service?.getCharacteristic(LiftBT.firmwareRevisionCharUUID)
-                            if (waitIdle(LiftBT.GATT_TIMEOUT)) readCharacteristic(char)
+                            readCharacteristic(char)
+                            waitIdle(LiftBT.GATT_TIMEOUT)
                         }
 
                         LiftBT.firmwareRevisionCharUUID -> {
                             val cx = data.decodeToString()
-                            print("[BT($mAddress)::Char($uuid))] : value updated -> [$cx)]")
+                            print("[BT($mAddress)::Char($uuid))] : value updated for firmwareRevision -> [$cx)]")
                             devices[mAddress]?.firmwareRevision = cx
                             mBusy = false
                             refreshScannedList()

@@ -19,6 +19,7 @@
     <string name="wifi_is_available_on_device">Wifi disponibile sul dispositivo</string>
     <string name="wifi_is_not_connected">Wifi non connessa</string>
     <string name="board_capabilities">Capacità della scheda</string>
+    <string name="firmware_revision">Revisione del firmware</string>
     <string name="gsm">GSM</string>
     <string name="diagnostics">Diagnostica</string>
     <string name="wifi">Wifi</string>
@@ -117,4 +118,20 @@
     <string name="ok">OK</string>
     <string name="wrong_pin">Perno sbagliato</string>
     <string name="try_again">Per favore riprova</string>
+
+    <string name="wifi_name">Nome Wi-Fi</string>
+    <string name="wifi_ssid">SSID Wi-Fi</string>
+    <string name="wifi_ssid2">SSID Wi-Fi</string>
+    <string name="wifi_pkey">Password Wi-Fi</string>
+    <string name="password">Password</string>
+    <string name="security">Sicurezza</string>
+    <string name="no_security">No\nSicurezza</string>
+    <string name="wep_wpa">WPA o WPA2 e password</string>
+    <string name="ip_address">Indirizzo IP:</string>
+    <string name="blank_ip_address">0.0.0.0</string>
+    <string name="wifi_connection">Connessione Wi-Fi</string>
+    <string name="ssid_configured">Configurato per SSID di rete Wi-Fi</string>
+    <string name="wifi_available_status">Il Wi-Fi è disponibile sul dispositivo</string>
+    <string name="wifi_not_available_status">Il Wi-Fi non è disponibile sul dispositivo</string>
+    <string name="wifi_connected">Il Wi-Fi è connesso</string>
 </resources>

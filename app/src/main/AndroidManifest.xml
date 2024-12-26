@@ -42,6 +42,10 @@
         android:theme="@style/Theme.s515LiftConfigure"
         tools:targetApi="31">
         <activity
+            android:name=".ChangeWifiPasswordActivity"
+            android:exported="false"
+            android:theme="@style/Theme.s515LiftConfigure" />
+        <activity
             android:name=".LangSupportBaseActivity"
             android:exported="false" />
         <activity
@@ -178,7 +182,10 @@
         <service
             android:name=".bluetooth.BluetoothLeService"
             android:enabled="true" />
-        <receiver android:name=".BluetoothUpdateReceiver" android:exported="false">
+
+        <receiver
+            android:name=".BluetoothUpdateReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_GATT_SERVICES_DISCOVERED" />
             </intent-filter>

@@ -1,7 +1,6 @@
 package com.ultrontech.s515liftconfigure
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
@@ -9,6 +8,7 @@ import com.ultrontech.s515liftconfigure.databinding.ActivityChangeWifiBinding
 
 class ChangeWifiActivity : LangSupportBaseActivity() {
     lateinit var binding: ActivityChangeWifiBinding
+    private val bluetoothLeService: BluetoothLeService = BluetoothLeService.service!!
     var security: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,9 +25,6 @@ class ChangeWifiActivity : LangSupportBaseActivity() {
 
             binding.btnWepWpa.visibility = View.GONE
             binding.btnWepWpaDisabled.visibility = View.VISIBLE
-
-            binding.edtWifiPassword.visibility = View.GONE
-            binding.edtWifiPassword.setText("")
         }
         binding.btnWepWpaDisabled.setOnClickListener {
             security = true
@@ -36,14 +33,18 @@ class ChangeWifiActivity : LangSupportBaseActivity() {
 
             binding.btnNoSecurity.visibility = View.VISIBLE
             binding.btnNoSecurityEnable.visibility = View.GONE
-
-            binding.edtWifiPassword.visibility = View.VISIBLE
+            val intent = Intent(this@ChangeWifiActivity, ChangeWifiPasswordActivity::class.java)
+            startActivity(intent)
+        }
+        binding.btnWepWpa.setOnClickListener {
+            val intent = Intent(this@ChangeWifiActivity, ChangeWifiPasswordActivity::class.java)
+            startActivity(intent)
         }
 
         binding.btnConfirmWifi.setOnClickListener {
             BluetoothLeService.service?.setSSID(
                 binding.edtWifiSsid.text.toString(),
-                if (security) binding.edtWifiPassword.text.toString() else ""
+                if (security) wifiPassword else ""
             )
 
             finish()
@@ -102,5 +103,23 @@ class ChangeWifiActivity : LangSupportBaseActivity() {
             }
         }
         // ****************** Option Menu End ******************
+
+        updateWifiDetail()
+    }
+
+    private fun updateWifiDetail() {
+        with(bluetoothLeService) {
+            if (device?.wifiConnected == true) {
+                binding.wifiConnectedStatus.text = this@ChangeWifiActivity.resources.getString(R.string.wifi_connected)
+                binding.wifiConnectedStatus.setTextColor(resources.getColor(R.color.lightGreen, theme))
+            } else {
+                binding.wifiConnectedStatus.text = this@ChangeWifiActivity.resources.getString(R.string.wifi_is_not_connected)
+                binding.wifiConnectedStatus.setTextColor(resources.getColor(R.color.red, theme))
+            }
+        }
+    }
+
+    companion object{
+        var wifiPassword = ""
     }
 }

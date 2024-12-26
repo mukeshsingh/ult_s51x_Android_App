@@ -19,6 +19,7 @@
     <string name="wifi_is_available_on_device">PAS DE SSID CONFIGURÉ</string>
     <string name="wifi_is_not_connected">La connexion Wi-Fi n’est pas activée</string>
     <string name="board_capabilities">Fonctionnalités de la carte</string>
+    <string name="firmware_revision">Révision du micrologiciel</string>
     <string name="diagnostics">Diagnostics</string>
     <string name="wifi_ap">Point d’accès Wi-Fi</string>
     <string name="gsm">Téléphone mobile</string>
@@ -117,4 +118,20 @@
     <string name="ok">D\'ACCORD</string>
     <string name="wrong_pin">Mauvaise PIN</string>
     <string name="try_again">Veuillez réessayer</string>
+
+    <string name="wifi_name">Nom du Wi-Fi</string>
+    <string name="wifi_ssid">SSID du Wi-Fi</string>
+    <string name="wifi_ssid2">SSID du Wi-Fi</string>
+    <string name="wifi_pkey">Mot de passe du Wi-Fi</string>
+    <string name="password">Mot de passe</string>
+    <string name="security">Sécurité</string>
+    <string name="no_security">Non\nSécurité</string>
+    <string name="wep_wpa">WPA ou WPA2 et mot de passe</string>
+    <string name="ip_address">Adresse IP :</string>
+    <string name="blank_ip_address">0.0.0.0</string>
+    <string name="wifi_connection">Connexion Wi-Fi</string>
+    <string name="ssid_configured">Configuré pour le SSID du réseau Wi-Fi</string>
+    <string name="wifi_available_status">Le Wi-Fi est disponible sur l\'appareil</string>
+    <string name="wifi_not_available_status">Le Wi-Fi n\'est pas disponible sur l\'appareil</string>
+    <string name="wifi_connected">Le Wi-Fi est connecté</string>
 </resources>

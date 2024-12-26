@@ -19,6 +19,7 @@
     <string name="wifi_is_available_on_device">Wifi is beschikbaar op apparaat</string>
     <string name="wifi_is_not_connected">Wifi is niet verbonden</string>
     <string name="board_capabilities">Functionaliteiten printplaat</string>
+    <string name="firmware_revision">Firmware-revisie</string>
     <string name="gsm">Gsm</string>
     <string name="diagnostics">Diagnose</string>
     <string name="wifi">Wifi</string>
@@ -117,4 +118,20 @@
     <string name="ok">OK</string>
     <string name="wrong_pin">Verkeerde pincode</string>
     <string name="try_again">Probeer het opnieuw</string>
+
+    <string name="wifi_name">Wifi-naam</string>
+    <string name="wifi_ssid">Wifi SSID</string>
+    <string name="wifi_ssid2">Wifi SSID</string>
+    <string name="wifi_pkey">Wifi-wachtwoord</string>
+    <string name="password">Wachtwoord</string>
+    <string name="security">Beveiliging</string>
+    <string name="no_security">Geen\nbeveiliging</string>
+    <string name="wep_wpa">WPA of WPA2 &amp; wachtwoord</string>
+    <string name="ip_address">IP-adres:</string>
+    <string name="blank_ip_address">0.0.0.0</string>
+    <string name="wifi_connection">Wifi-verbinding</string>
+    <string name="ssid_configured">Geconfigureerd voor wifi-netwerk-SSID</string>
+    <string name="wifi_available_status">Wifi is beschikbaar op apparaat</string>
+    <string name="wifi_not_available_status">Wifi is niet beschikbaar op apparaat</string>
+    <string name="wifi_connected">Wifi is verbonden</string>
 </resources>

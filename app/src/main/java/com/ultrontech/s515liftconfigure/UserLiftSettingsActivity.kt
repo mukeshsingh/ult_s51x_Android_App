@@ -49,6 +49,11 @@ class UserLiftSettingsActivity : LangSupportBaseActivity() {
             intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
             startActivity(intent)
         }
+        binding.wifi.setOnClickListener {
+            val intent = Intent(this, ChangeWifiActivity::class.java)
+            intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
+            startActivity(intent)
+        }
         binding.volume.setOnClickListener {
             val intent = Intent(this, ChangeVolumeActivity::class.java)
             intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
@@ -150,12 +155,14 @@ class UserLiftSettingsActivity : LangSupportBaseActivity() {
             binding.emergencyServiceDetails.visibility = View.VISIBLE
             binding.dialTimeout.visibility = View.VISIBLE
             binding.callPressDelay.visibility = View.VISIBLE
+            binding.wifi.visibility = View.VISIBLE
 
             binding.br1.visibility = View.VISIBLE
             binding.br2.visibility = View.VISIBLE
             binding.br3.visibility = View.VISIBLE
             binding.br4.visibility = View.VISIBLE
             binding.br5.visibility = View.VISIBLE
+            binding.br6.visibility = View.VISIBLE
         }
 
         // ****************** Option Menu Start ******************

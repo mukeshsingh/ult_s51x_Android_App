@@ -24,13 +24,11 @@ data class BoardCapabilitySet(
     var rawValue: UInt
 ) {
     fun getAll(): Array<BoardCapabilitySet> {
+        val gsm = BoardCapabilitySet(1u shl 0)
+        val diagnostics: BoardCapabilitySet = BoardCapabilitySet(1u shl 1)
+        val wifi: BoardCapabilitySet = BoardCapabilitySet(1u shl 2)
+        val wifi_softap: BoardCapabilitySet = BoardCapabilitySet(1u shl 3)
         return arrayOf(gsm, diagnostics, wifi, wifi_softap)
-    }
-    companion object {
-        var gsm: BoardCapabilitySet = BoardCapabilitySet(1u shl 0)
-        var diagnostics: BoardCapabilitySet = BoardCapabilitySet(1u shl 1)
-        var wifi: BoardCapabilitySet = BoardCapabilitySet(1u shl 2)
-        var wifi_softap: BoardCapabilitySet = BoardCapabilitySet(1u shl 3)
     }
 }
 

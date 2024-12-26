@@ -10,136 +10,222 @@
     <include
         android:id="@+id/toolbar"
         layout="@layout/user_header"/>
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        android:padding="20dp"
-        android:layout_below="@+id/toolbar">
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/engineer_board_detail"
-            android:layout_marginBottom="20dp"
-            android:layout_gravity="center_horizontal" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="WIFI Details"
-            android:textSize="18sp"
-            android:gravity="center"
-            android:fontFamily="@font/lato_bold"
-            android:textColor="@android:color/black"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp" />
-
-        <EditText
-            android:id="@+id/edt_wifi_ssid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="WIFI SSID"
-            android:textColorHint="@color/lightGrey"
-            android:textColor="@color/black"
-            android:fontFamily="@font/lato_regular"
-            android:textSize="16sp"
-            android:padding="12dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/edittext_outline" />
-
+        android:padding="16dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_above="@+id/footer">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="20dp">
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_no_security"
-                android:layout_width="0dp"
-                android:layout_height="54dp"
-                android:layout_weight="1"
-                android:text="NO SECURITY"
-                android:textSize="16sp"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/toolbar">
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/wifi"
+                android:layout_marginBottom="20dp"
+                android:contentDescription="@string/wifi"
+                android:layout_gravity="center_horizontal" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wifi"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:fontFamily="@font/lato_bold"
+                android:textColor="@android:color/black"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/border_background"
+                android:padding="1dp"
+                android:layout_marginBottom="20dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingVertical="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/wifi_connection"
+                        android:textSize="18sp"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/lato_bold"
+                        android:textColor="@android:color/black"
+                        android:layout_marginBottom="5dp" />
+
+                    <TextView
+                        android:id="@+id/wifiConnectedStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/wifi_is_not_connected"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:fontFamily="@font/lato_bold"
+                        android:textColor="@android:color/holo_red_dark"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="5dp" />
+                </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    android:background="@drawable/single_line_border">
+                    <TextView
+                        android:id="@+id/ip_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ip_address"
+                        android:textSize="18sp"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/lato_bold"
+                        android:textColor="@android:color/black" />
+                    <TextView
+                        android:id="@+id/firmwareRevision"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/ip_label"
+                        android:text="@string/blank_ip_address"
+                        android:textSize="16sp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="15dp"
+                        android:fontFamily="@font/lato_bold"
+                        android:textColor="@android:color/darker_gray"
+                        android:layout_gravity="center_horizontal" />
+                </RelativeLayout>
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wifi_name"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:fontFamily="@font/lato_bold"
+                android:textColor="@android:color/black"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp" />
+
+            <EditText
+                android:id="@+id/edt_wifi_ssid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="@string/name"
+                android:textColorHint="@color/lightGrey"
+                android:textColor="@color/black"
                 android:fontFamily="@font/lato_regular"
-                android:layout_marginEnd="10dp"
-                android:textColor="@color/enableBtn"
-                app:strokeColor="@color/enableBtn"
-                app:strokeWidth="1dp"
-                app:cornerRadius="8dp"
-                app:backgroundTint="@color/disableBtn"
-                android:visibility="gone"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_wep_wpa"
-                android:layout_width="0dp"
-                android:layout_height="54dp"
-                android:layout_weight="1"
-                android:text="WEP/WPA"
                 android:textSize="16sp"
-                android:textColor="@color/white"
-                app:strokeColor="@color/enableBtn"
-                app:strokeWidth="1dp"
-                app:cornerRadius="8dp"
-                app:backgroundTint="@color/enableBtn"
-                android:visibility="gone"/>
+                android:padding="12dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/edittext_outline"
+                />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_no_security_enable"
-                android:layout_width="0dp"
-                android:layout_height="54dp"
-                android:layout_weight="1"
-                android:text="NO SECURITY"
-                android:textSize="16sp"
-                android:fontFamily="@font/lato_regular"
-                android:layout_marginEnd="10dp"
-                android:textColor="@color/white"
-                app:strokeColor="@color/enableBtn"
-                app:strokeWidth="1dp"
-                app:cornerRadius="8dp"
-                app:backgroundTint="@color/enableBtn"
-                android:visibility="visible"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/security"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:fontFamily="@font/lato_bold"
+                android:textColor="@android:color/black"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_wep_wpa_disabled"
-                android:layout_width="0dp"
-                android:layout_height="54dp"
-                android:layout_weight="1"
-                android:text="WEP/WPA"
-                android:textSize="16sp"
-                android:textColor="@color/enableBtn"
-                app:strokeColor="@color/enableBtn"
-                app:strokeWidth="1dp"
-                app:cornerRadius="8dp"
-                app:backgroundTint="@color/disableBtn"
-                android:visibility="visible"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="top"
+                android:layout_marginBottom="20dp"
+                android:padding="0dp">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_no_security"
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:text="@string/no_security"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/lato_regular"
+                    android:layout_marginEnd="10dp"
+                    android:textColor="@color/enableBtn"
+                    app:strokeColor="@color/enableBtn"
+                    app:strokeWidth="1dp"
+                    app:cornerRadius="8dp"
+                    android:textAllCaps="false"
+                    app:backgroundTint="@color/disableBtn"
+                    android:visibility="gone"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_wep_wpa"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:text="@string/wep_wpa"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    app:strokeColor="@color/enableBtn"
+                    app:strokeWidth="1dp"
+                    app:cornerRadius="8dp"
+                    android:textAllCaps="false"
+                    app:backgroundTint="@color/enableBtn"
+                    android:visibility="gone"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_no_security_enable"
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:text="@string/no_security"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/lato_regular"
+                    android:layout_marginEnd="5dp"
+                    android:textColor="@color/white"
+                    app:strokeColor="@color/enableBtn"
+                    app:strokeWidth="1dp"
+                    app:cornerRadius="8dp"
+                    android:textAllCaps="false"
+                    app:backgroundTint="@color/enableBtn"
+                    android:visibility="visible"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_wep_wpa_disabled"
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:text="@string/wep_wpa"
+                    android:textSize="16sp"
+                    android:layout_marginStart="5dp"
+                    android:textColor="@color/enableBtn"
+                    app:strokeColor="@color/enableBtn"
+                    app:strokeWidth="1dp"
+                    app:cornerRadius="8dp"
+                    android:textAllCaps="false"
+                    app:backgroundTint="@color/disableBtn"
+                    android:visibility="visible"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_confirm_wifi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/confirm"
+                android:textSize="18sp"
+                android:layout_marginHorizontal="60dp"
+                android:layout_marginTop="20dp"
+                android:textColor="@android:color/white"
+                android:background="@drawable/rounded_button_green_bg"
+                app:backgroundTint="#99CC33"/>
         </LinearLayout>
-
-        <EditText
-            android:id="@+id/edt_wifi_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="WIFI Password"
-            android:textColorHint="@color/lightGrey"
-            android:textColor="@color/black"
-            android:fontFamily="@font/lato_regular"
-            android:textSize="16sp"
-            android:padding="12dp"
-            android:background="@drawable/edittext_outline"
-            android:visibility="gone"/>
-
-        <Button
-            android:id="@+id/btn_confirm_wifi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Confirm"
-            android:textSize="18sp"
-            android:layout_marginHorizontal="60dp"
-            android:layout_marginTop="60dp"
-            android:textColor="@android:color/white"
-            android:background="@drawable/rounded_button_green_bg"
-            app:backgroundTint="#99CC33"/>
-    </LinearLayout>
+    </ScrollView>
     <include android:id="@+id/footer"
         layout="@layout/home_back_bottom_bar"
         android:layout_width="match_parent"
