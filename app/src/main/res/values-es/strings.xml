@@ -17,7 +17,8 @@
     <string name="confirm">CONFIRMAR</string>
     <string name="no_ssid_configured">NO SE CONFIGURÓ SSID</string>
     <string name="wifi_is_available_on_device">El dispositivo tiene wifi</string>
-    <string name="wifi_is_not_connected">El wifi no está conectado</string>
+    <string name="wifi_connected">Conectado</string>
+    <string name="wifi_is_not_connected">No conectado</string>
     <string name="board_capabilities">Capacidades de la tarjeta</string>
     <string name="firmware_revision">Revisión del firmware</string>
     <string name="gsm">GSM</string>
@@ -133,5 +134,4 @@
     <string name="ssid_configured">Configurada para SSID de red Wifi</string>
     <string name="wifi_available_status">El Wifi está disponible en el dispositivo</string>
     <string name="wifi_not_available_status">El Wifi no está disponible en el dispositivo</string>
-    <string name="wifi_connected">El Wifi está conectado</string>
 </resources>

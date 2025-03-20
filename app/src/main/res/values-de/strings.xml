@@ -15,7 +15,8 @@
     <string name="client_name">Name des Kunden</string>
     <string name="no_ssid_configured">KEINE SSID KONFIGURIERT</string>
     <string name="wifi_is_available_on_device">WLAN am Gerät verfügbar</string>
-    <string name="wifi_is_not_connected">WLAN nicht verbunden</string>
+    <string name="wifi_connected">Verbunden</string>
+    <string name="wifi_is_not_connected">Nicht verbunden</string>
     <string name="board_capabilities">Funktionen der Platine</string>
     <string name="firmware_revision">Firmware-Revision</string>
     <string name="diagnostics">Diagnose</string>
@@ -134,5 +135,4 @@
     <string name="ssid_configured">Konfiguriert für WLAN-Netzwerk-SSID</string>
     <string name="wifi_available_status">WLAN ist auf dem Gerät verfügbar</string>
     <string name="wifi_not_available_status">WLAN ist auf dem Gerät nicht verfügbar</string>
-    <string name="wifi_connected">WLAN ist verbunden</string>
 </resources>

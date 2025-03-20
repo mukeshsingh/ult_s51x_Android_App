@@ -156,7 +156,8 @@
     <string name="engineer_board_details">Engineer/Board Details</string>
     <string name="no_ssid_configured">No SSID configured</string>
     <string name="wifi_is_available_on_device">Wifi is available on device</string>
-    <string name="wifi_is_not_connected">Wifi is not Connected</string>
+    <string name="wifi_connected">Connected</string>
+    <string name="wifi_is_not_connected">Not Connected</string>
     <string name="board_capabilities">Board Capabilities</string>
     <string name="firmware_revision">Firmware Revision</string>
     <string name="diagnostics">Diagnostics</string>
@@ -248,7 +249,6 @@
     <string name="ssid_configured">Configured for Wifi Network SSID</string>
     <string name="wifi_available_status">Wifi is available on device</string>
     <string name="wifi_not_available_status">Wifi is not available on device</string>
-    <string name="wifi_connected">Wifi is connected</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris

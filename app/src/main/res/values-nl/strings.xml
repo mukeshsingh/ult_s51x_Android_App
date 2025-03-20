@@ -17,7 +17,8 @@
     <string name="confirm">BEVESTIGEN</string>
     <string name="no_ssid_configured">GEEN SSID GECONFIGUREERD</string>
     <string name="wifi_is_available_on_device">Wifi is beschikbaar op apparaat</string>
-    <string name="wifi_is_not_connected">Wifi is niet verbonden</string>
+    <string name="wifi_connected">Verbonden</string>
+    <string name="wifi_is_not_connected">Niet verbonden</string>
     <string name="board_capabilities">Functionaliteiten printplaat</string>
     <string name="firmware_revision">Firmware-revisie</string>
     <string name="gsm">Gsm</string>
@@ -133,5 +134,4 @@
     <string name="ssid_configured">Geconfigureerd voor wifi-netwerk-SSID</string>
     <string name="wifi_available_status">Wifi is beschikbaar op apparaat</string>
     <string name="wifi_not_available_status">Wifi is niet beschikbaar op apparaat</string>
-    <string name="wifi_connected">Wifi is verbonden</string>
 </resources>
