@@ -975,13 +975,13 @@ class BluetoothLeService : Service() {
         val lift = device?.lift?.let { find(it.liftId) }
         if (lift?.jobControl == null) return
 
-        val jobData = job.toByteArray()
-        val clientData = client.toByteArray()
-        print("[BT::WRITE] Wifi Detail (ssid=($job), pkey=($client)")
+        val jobData = job.toByteArray(Charsets.UTF_8)
+        val clientData = client.toByteArray(Charsets.UTF_8)
+        Log.d(TAG, "[BT::WRITE] Job Detail (Job=($job), Client=($client)")
         val command: ByteArray = byteArrayOf(S515BTCommand.btCmdSetJobAndClient.toByte(), jobData.size.toByte(), clientData.size.toByte()) + jobData + clientData
-        lift.jobControl?.value = command
+//        lift.jobControl?.value = command
         val success = writeCharacteristic(lift.jobControl!!, value = command)
-        Log.d(TAG, "Characteristic written for PinNumber: $success")
+        Log.d(TAG, "Characteristic written for JobAndClient: $success, $command")
     }
 
     companion object {
@@ -1206,7 +1206,7 @@ fun BluetoothLeService.processPhone(data : ByteArray) {
 //}
 
 fun BluetoothLeService.processJob(data: ByteArray) {
-    Log.d(BluetoothLeService.TAG, "Got data Job: $data")
+    Log.d(BluetoothLeService.TAG, "Got data Job: ${String(data, Charsets.UTF_8)}")
     if (data.isNotEmpty()) {
         Log.d(BluetoothLeService.TAG, "[JOB/CLIENT] Job/Client READ: data")
 
