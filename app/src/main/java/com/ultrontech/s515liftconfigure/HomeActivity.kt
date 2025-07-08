@@ -25,6 +25,7 @@ import com.ultrontech.s515liftconfigure.fragments.EditSimFragment
 import com.ultrontech.s515liftconfigure.fragments.LoginPinFragment
 import com.ultrontech.s515liftconfigure.fragments.LogoutFragment
 import com.ultrontech.s515liftconfigure.models.LiftDevice
+import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 
 class HomeActivity : LangSupportBaseActivity() {
     private lateinit var llUserLifts: LinearLayout
@@ -59,6 +60,8 @@ class HomeActivity : LangSupportBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        
+        EdgeToEdgeUtils.handleRootWindowInsets(findViewById(android.R.id.content))
         val logoutFragmentSheet = LogoutFragment()
         val editSimFragment = EditSimFragment()
         val loginPinFragment = LoginPinFragment()

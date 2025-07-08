@@ -4,11 +4,13 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import changeLang
+import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 
 
 open class LangSupportBaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        EdgeToEdgeUtils.enableEdgeToEdge(this)
     }
 
     override fun attachBaseContext(newBase: Context) {

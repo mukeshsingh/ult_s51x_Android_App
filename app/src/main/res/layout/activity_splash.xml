@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:theme="@style/ThemeOverlay.Coms515liftconfigure.FullscreenContainer"
     android:background="@color/white"
+    android:fitsSystemWindows="false"
     tools:context=".SplashActivity"
     android:orientation="vertical">
 

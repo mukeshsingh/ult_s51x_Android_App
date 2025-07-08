@@ -10,12 +10,16 @@ import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowInsets
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.ultrontech.s515liftconfigure.databinding.ActivitySplashBinding
+import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -43,10 +47,12 @@ class SplashActivity : LangSupportBaseActivity() {
         var pV = if (viewIndex > 0) itemList[viewIndex - 1] else null
 
         var cV = itemList[viewIndex]
-        if (Build.VERSION.SDK_INT >= 30 && isFullscreen) {
-            cV.windowInsetsController?.hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
-        } else if (Build.VERSION.SDK_INT >= 30) {
-            cV.windowInsetsController?.show(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
+        val windowInsetsController = WindowCompat.getInsetsController(window, cV)
+        if (isFullscreen) {
+            windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
+            windowInsetsController.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        } else {
+            windowInsetsController.show(WindowInsetsCompat.Type.systemBars())
         }
 
         if (viewIndex == 5) {
@@ -94,6 +100,8 @@ class SplashActivity : LangSupportBaseActivity() {
         }
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        
+        EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

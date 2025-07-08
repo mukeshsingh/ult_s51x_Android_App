@@ -30,6 +30,7 @@ import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothState
 import com.ultrontech.s515liftconfigure.databinding.ActivityEngineerHomeBinding
 import com.ultrontech.s515liftconfigure.models.UserLift
+import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 
 class EngineerHomeActivity : LangSupportBaseActivity() {
     private lateinit var adapter: RecyclerViewAdapter
@@ -41,6 +42,8 @@ class EngineerHomeActivity : LangSupportBaseActivity() {
 
         binding = ActivityEngineerHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        
+        EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
 
         with(S515LiftConfigureApp) {
             noProduct = binding.noProduct

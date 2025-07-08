@@ -25,6 +25,7 @@ import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothState
 import com.ultrontech.s515liftconfigure.databinding.ActivityMyProductsBinding
 import com.ultrontech.s515liftconfigure.models.Device
+import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 
 class MyProductsActivity : LangSupportBaseActivity() {
     private lateinit var binding: ActivityMyProductsBinding
@@ -36,6 +37,9 @@ class MyProductsActivity : LangSupportBaseActivity() {
 
         binding = ActivityMyProductsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        
+        EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
+        EdgeToEdgeUtils.handleToolbarInsets(binding.footer)
 
         binding.swipeToRefresh.setOnRefreshListener {
             binding.swipeToRefresh.isRefreshing = false;

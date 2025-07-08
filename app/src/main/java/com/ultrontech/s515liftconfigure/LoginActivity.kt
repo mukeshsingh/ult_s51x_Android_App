@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.snackbar.Snackbar
 import com.ultrontech.s515liftconfigure.databinding.ActivityLoginBinding
+import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 
 class LoginActivity : LangSupportBaseActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -19,6 +20,8 @@ class LoginActivity : LangSupportBaseActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+        
+        EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
 
         binding.editTextEngineerPin.doOnTextChanged { text, start, before, count ->
             binding.txtDesc.visibility = View.VISIBLE

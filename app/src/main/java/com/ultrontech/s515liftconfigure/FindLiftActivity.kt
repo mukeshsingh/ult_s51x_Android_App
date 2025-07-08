@@ -15,6 +15,7 @@ import com.ultrontech.s515liftconfigure.adapters.LiftListAdapter
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.bluetooth.ScanDisplayItem
 import com.ultrontech.s515liftconfigure.databinding.ActivityFindLiftBinding
+import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 
 class FindLiftActivity : LangSupportBaseActivity() {
     private var bluetoothService : BluetoothLeService? = null
@@ -27,6 +28,8 @@ class FindLiftActivity : LangSupportBaseActivity() {
 
         binding = ActivityFindLiftBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        
+        EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
 
         bluetoothService = BluetoothLeService.service
 
