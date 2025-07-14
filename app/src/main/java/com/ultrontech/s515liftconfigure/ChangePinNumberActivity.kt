@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowInsetsController
 import android.widget.EditText
 import com.google.android.material.snackbar.Snackbar
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.bluetooth.setAccess
 import com.ultrontech.s515liftconfigure.databinding.ActivityChangePinNumberBinding
 import com.ultrontech.s515liftconfigure.models.PINNumber
+import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 
 class ChangePinNumberActivity : LangSupportBaseActivity() {
     private lateinit var binding: ActivityChangePinNumberBinding
@@ -22,6 +24,12 @@ class ChangePinNumberActivity : LangSupportBaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityChangePinNumberBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
+        window.insetsController?.setSystemBarsAppearance(
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+        )
 
         liftId = intent.extras?.getString(HomeActivity.INTENT_LIFT_ID)
         newPin = binding.editTextNewPin

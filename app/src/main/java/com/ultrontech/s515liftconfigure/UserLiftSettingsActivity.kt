@@ -9,6 +9,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.view.WindowInsetsController
 import android.widget.TextView
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
@@ -16,6 +17,7 @@ import com.ultrontech.s515liftconfigure.bluetooth.ScanDisplayItem
 import com.ultrontech.s515liftconfigure.databinding.ActivityUserLiftSettingsBinding
 import com.ultrontech.s515liftconfigure.fragments.SuccessAddLiftFragment
 import com.ultrontech.s515liftconfigure.models.LiftConnectionState
+import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 import kotlinx.coroutines.Job
 
 class UserLiftSettingsActivity : LangSupportBaseActivity() {
@@ -32,6 +34,12 @@ class UserLiftSettingsActivity : LangSupportBaseActivity() {
 
         binding = ActivityUserLiftSettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
+        window.insetsController?.setSystemBarsAppearance(
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+        )
 
         hasEngineerCapability = S515LiftConfigureApp.profileStore.hasEngineerCapability
         liftId = intent.extras?.getString(HomeActivity.INTENT_LIFT_ID)

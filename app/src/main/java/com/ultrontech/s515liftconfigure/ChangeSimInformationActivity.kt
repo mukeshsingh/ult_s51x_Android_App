@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.view.WindowInsetsController
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.SeekBar
@@ -22,6 +23,7 @@ import com.ultrontech.s515liftconfigure.databinding.ActivityChangeSimInformation
 import com.ultrontech.s515liftconfigure.models.PINNumber
 import com.ultrontech.s515liftconfigure.models.SimType
 import com.ultrontech.s515liftconfigure.models.Util
+import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 import com.ultrontech.s515liftconfigure.wheelpicker.LoopView
 
 
@@ -47,6 +49,13 @@ class ChangeSimInformationActivity : LangSupportBaseActivity() {
 
         binding = ActivityChangeSimInformationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
+        window.insetsController?.setSystemBarsAppearance(
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+        )
+
         loopView = binding.loopView
         btnNoPin = binding.btnNoPin
         btnPinRequired = binding.btnPinRequired

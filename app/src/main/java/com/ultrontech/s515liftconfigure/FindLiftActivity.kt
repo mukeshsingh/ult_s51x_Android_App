@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsetsController
 import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.TextView
@@ -28,8 +29,12 @@ class FindLiftActivity : LangSupportBaseActivity() {
 
         binding = ActivityFindLiftBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        
+
         EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
+        window.insetsController?.setSystemBarsAppearance(
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+        )
 
         bluetoothService = BluetoothLeService.service
 

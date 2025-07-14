@@ -48,6 +48,7 @@ class SplashActivity : LangSupportBaseActivity() {
 
         var cV = itemList[viewIndex]
         val windowInsetsController = WindowCompat.getInsetsController(window, cV)
+
         if (isFullscreen) {
             windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
             windowInsetsController.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE

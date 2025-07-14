@@ -6,10 +6,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.view.WindowInsetsController
 import android.widget.EditText
 import androidx.activity.addCallback
 import com.ultrontech.s515liftconfigure.databinding.ActivityUserProfileBinding
 import com.ultrontech.s515liftconfigure.models.ProfileStore
+import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 
 class UserProfileActivity : LangSupportBaseActivity() {
     lateinit var binding: ActivityUserProfileBinding
@@ -18,6 +20,12 @@ class UserProfileActivity : LangSupportBaseActivity() {
 
         binding = ActivityUserProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
+        window.insetsController?.setSystemBarsAppearance(
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+        )
 
         binding.edtProfileName.setText(S515LiftConfigureApp.profileStore.userName)
 

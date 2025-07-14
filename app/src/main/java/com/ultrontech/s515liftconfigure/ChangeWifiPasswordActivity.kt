@@ -3,7 +3,9 @@ package com.ultrontech.s515liftconfigure
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsetsController
 import com.ultrontech.s515liftconfigure.databinding.ActivityChangeWifiPasswordBinding
+import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 
 class ChangeWifiPasswordActivity : LangSupportBaseActivity() {
     lateinit var binding: ActivityChangeWifiPasswordBinding
@@ -12,6 +14,12 @@ class ChangeWifiPasswordActivity : LangSupportBaseActivity() {
 
         binding = ActivityChangeWifiPasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
+        window.insetsController?.setSystemBarsAppearance(
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+        )
 
         binding.btnConfirmWifi.setOnClickListener {
             ChangeWifiActivity.wifiPassword = binding.edtWifiPassword.text.toString()

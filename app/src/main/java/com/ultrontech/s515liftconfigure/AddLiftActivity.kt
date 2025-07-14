@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.view.WindowInsetsController
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -17,6 +18,7 @@ import com.ultrontech.s515liftconfigure.fragments.UnSuccessAddLiftFragment
 import com.ultrontech.s515liftconfigure.models.PINNumber
 import com.ultrontech.s515liftconfigure.models.ProfileStore
 import com.ultrontech.s515liftconfigure.models.UserLift
+import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 
 class AddLiftActivity : LangSupportBaseActivity() {
     lateinit var binding: ActivityAddLiftBinding
@@ -32,6 +34,12 @@ class AddLiftActivity : LangSupportBaseActivity() {
 
         binding = ActivityAddLiftBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
+        window.insetsController?.setSystemBarsAppearance(
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+        )
 
         val connectButton = findViewById<Button>(R.id.btnConnect)
 

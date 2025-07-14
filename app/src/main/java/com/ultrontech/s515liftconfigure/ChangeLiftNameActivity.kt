@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowInsetsController
 import android.widget.EditText
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.bluetooth.setName
 import com.ultrontech.s515liftconfigure.databinding.ActivityChangeLiftNameBinding
+import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 
 class ChangeLiftNameActivity : LangSupportBaseActivity() {
     private lateinit var binding: ActivityChangeLiftNameBinding
@@ -20,6 +22,12 @@ class ChangeLiftNameActivity : LangSupportBaseActivity() {
 
         binding = ActivityChangeLiftNameBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
+        window.insetsController?.setSystemBarsAppearance(
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+        )
 
         liftId = intent.extras?.getString(HomeActivity.INTENT_LIFT_ID)
         edtName = binding.editTextLiftName

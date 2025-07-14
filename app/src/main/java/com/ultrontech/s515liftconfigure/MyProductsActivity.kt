@@ -11,6 +11,7 @@ import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowInsetsController
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -37,9 +38,12 @@ class MyProductsActivity : LangSupportBaseActivity() {
 
         binding = ActivityMyProductsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        
+
         EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
-        EdgeToEdgeUtils.handleToolbarInsets(binding.footer)
+        window.insetsController?.setSystemBarsAppearance(
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+        )
 
         binding.swipeToRefresh.setOnRefreshListener {
             binding.swipeToRefresh.isRefreshing = false;

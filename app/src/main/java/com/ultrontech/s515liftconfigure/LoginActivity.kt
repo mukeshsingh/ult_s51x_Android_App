@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.WindowInsetsController
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.snackbar.Snackbar
@@ -20,8 +21,12 @@ class LoginActivity : LangSupportBaseActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
-        
+
         EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
+        window.insetsController?.setSystemBarsAppearance(
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+        )
 
         binding.editTextEngineerPin.doOnTextChanged { text, start, before, count ->
             binding.txtDesc.visibility = View.VISIBLE

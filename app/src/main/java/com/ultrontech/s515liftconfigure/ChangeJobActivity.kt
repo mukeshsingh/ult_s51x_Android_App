@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.view.WindowInsetsController
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityChangeJobBinding
+import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 
 class ChangeJobActivity : LangSupportBaseActivity() {
     lateinit var binding: ActivityChangeJobBinding
@@ -16,6 +18,12 @@ class ChangeJobActivity : LangSupportBaseActivity() {
 
         binding = ActivityChangeJobBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
+        window.insetsController?.setSystemBarsAppearance(
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+        )
 
         val lift = BluetoothLeService.service?.device
         if (lift != null) {

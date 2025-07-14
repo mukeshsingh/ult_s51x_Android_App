@@ -5,8 +5,10 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.View
+import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
 import com.ultrontech.s515liftconfigure.databinding.ActivityLanguageSelectorBinding
+import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 import java.util.Locale
 
 
@@ -20,6 +22,12 @@ class LanguageSelectorActivity : LangSupportBaseActivity() {
 
         binding = ActivityLanguageSelectorBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
+        window.insetsController?.setSystemBarsAppearance(
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+        )
 
         arrLanguages = LANGUAGES_MAP.keys.map {
             val id = when(it) {

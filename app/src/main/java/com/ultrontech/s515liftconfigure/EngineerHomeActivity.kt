@@ -15,6 +15,7 @@ import android.os.IBinder
 import android.provider.Settings
 import android.util.Log
 import android.view.View
+import android.view.WindowInsetsController
 import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -44,6 +45,10 @@ class EngineerHomeActivity : LangSupportBaseActivity() {
         setContentView(binding.root)
         
         EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
+        window.insetsController?.setSystemBarsAppearance(
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+        )
 
         with(S515LiftConfigureApp) {
             noProduct = binding.noProduct

@@ -3,10 +3,12 @@ package com.ultrontech.s515liftconfigure
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsetsController
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.bluetooth.setContact
 import com.ultrontech.s515liftconfigure.databinding.ActivityChangeUserContactBinding
 import com.ultrontech.s515liftconfigure.models.PhoneContact
+import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 
 class ChangeUserContactActivity : LangSupportBaseActivity() {
     lateinit var binding: ActivityChangeUserContactBinding
@@ -16,6 +18,12 @@ class ChangeUserContactActivity : LangSupportBaseActivity() {
 
         binding = ActivityChangeUserContactBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
+        window.insetsController?.setSystemBarsAppearance(
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+        )
 
         binding.editTextUserName.setText(phone?.contactName)
         binding.editTextUserPhone.setText(phone?.number)

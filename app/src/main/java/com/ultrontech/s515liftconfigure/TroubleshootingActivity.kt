@@ -4,8 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsetsController
 import androidx.core.content.res.ResourcesCompat
 import com.ultrontech.s515liftconfigure.databinding.ActivityTroubleshootingBinding
+import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 
 class TroubleshootingActivity : LangSupportBaseActivity() {
     lateinit var binding: ActivityTroubleshootingBinding
@@ -14,6 +16,12 @@ class TroubleshootingActivity : LangSupportBaseActivity() {
 
         binding = ActivityTroubleshootingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
+        window.insetsController?.setSystemBarsAppearance(
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+        )
 
         binding.t1.setOnClickListener {
             if (binding.listDetail1.visibility == View.GONE) {

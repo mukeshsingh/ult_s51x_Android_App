@@ -4,8 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsetsController
 import androidx.core.content.res.ResourcesCompat
 import com.ultrontech.s515liftconfigure.databinding.ActivitySelectLiftTypeBinding
+import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 
 class SelectLiftTypeActivity : LangSupportBaseActivity() {
     lateinit var binding: ActivitySelectLiftTypeBinding
@@ -15,6 +17,12 @@ class SelectLiftTypeActivity : LangSupportBaseActivity() {
 
         binding = ActivitySelectLiftTypeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
+        window.insetsController?.setSystemBarsAppearance(
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+        )
 
         binding.stairLift.setOnClickListener {
             liftType = "stairLift"

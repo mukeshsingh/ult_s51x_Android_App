@@ -4,9 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsetsController
 import android.widget.SeekBar
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityChangeDialTimeoutBinding
+import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 
 class ChangeDialTimeoutActivity : LangSupportBaseActivity() {
     private lateinit var binding: ActivityChangeDialTimeoutBinding
@@ -16,6 +18,12 @@ class ChangeDialTimeoutActivity : LangSupportBaseActivity() {
 
         binding = ActivityChangeDialTimeoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
+        window.insetsController?.setSystemBarsAppearance(
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+        )
 
         binding.dialTimeoutSlider.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onStopTrackingTouch(seekBar: SeekBar) {

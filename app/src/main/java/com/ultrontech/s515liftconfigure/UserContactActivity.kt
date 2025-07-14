@@ -7,11 +7,13 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowInsetsController
 import androidx.core.content.res.ResourcesCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityUserContactBinding
 import com.ultrontech.s515liftconfigure.models.PhoneContact
+import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 
 class UserContactActivity : LangSupportBaseActivity() {
     lateinit var binding: ActivityUserContactBinding
@@ -28,6 +30,12 @@ class UserContactActivity : LangSupportBaseActivity() {
 
         binding = ActivityUserContactBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
+        window.insetsController?.setSystemBarsAppearance(
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+        )
 
         liftId = intent.extras?.getString(HomeActivity.INTENT_LIFT_ID)
 

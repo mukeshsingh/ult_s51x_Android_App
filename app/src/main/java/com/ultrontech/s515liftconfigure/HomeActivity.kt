@@ -11,6 +11,7 @@ import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowInsetsController
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -62,6 +63,11 @@ class HomeActivity : LangSupportBaseActivity() {
         setContentView(R.layout.activity_home)
         
         EdgeToEdgeUtils.handleRootWindowInsets(findViewById(android.R.id.content))
+        window.insetsController?.setSystemBarsAppearance(
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+        )
+
         val logoutFragmentSheet = LogoutFragment()
         val editSimFragment = EditSimFragment()
         val loginPinFragment = LoginPinFragment()

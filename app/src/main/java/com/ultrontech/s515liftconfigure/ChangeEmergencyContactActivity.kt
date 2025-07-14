@@ -3,9 +3,11 @@ package com.ultrontech.s515liftconfigure
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsetsController
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityChangeEmergencyContactBinding
 import com.ultrontech.s515liftconfigure.models.PhoneContact
+import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 
 class ChangeEmergencyContactActivity : LangSupportBaseActivity() {
     lateinit var binding: ActivityChangeEmergencyContactBinding
@@ -19,6 +21,12 @@ class ChangeEmergencyContactActivity : LangSupportBaseActivity() {
 
         binding = ActivityChangeEmergencyContactBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        EdgeToEdgeUtils.handleRootWindowInsets(binding.root)
+        window.insetsController?.setSystemBarsAppearance(
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+        )
 
         phone = BluetoothLeService.service?.device?.number5
         liftId = intent.extras?.getString(HomeActivity.INTENT_LIFT_ID)
