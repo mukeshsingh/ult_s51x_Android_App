@@ -47,7 +47,7 @@ class ChangeCallPressDelayActivity : LangSupportBaseActivity() {
         }
 
         binding.minus.setOnClickListener {
-            if (value > 0) value -= 1
+            if (value > 1) value -= 1
             binding.callPressSlider.progress = value
             binding.callPressValue.text = "${value}\""
         }

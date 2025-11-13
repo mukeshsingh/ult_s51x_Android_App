@@ -67,6 +67,7 @@
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:max="5"
+            android:min="1"
             android:progress="1"
             android:progressDrawable="@drawable/progress"
             android:thumb="@drawable/thumb"/>

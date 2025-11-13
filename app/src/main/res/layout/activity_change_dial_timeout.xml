@@ -68,7 +68,8 @@
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:max="50"
-            android:progress="1"
+            android:min="5"
+            android:progress="5"
             android:progressDrawable="@drawable/progress"
             android:thumb="@drawable/thumb"/>
         <ImageView

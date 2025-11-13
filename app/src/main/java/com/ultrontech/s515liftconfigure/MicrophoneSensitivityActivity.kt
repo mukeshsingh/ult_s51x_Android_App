@@ -48,7 +48,7 @@ class MicrophoneSensitivityActivity : LangSupportBaseActivity() {
         }
 
         binding.minus.setOnClickListener {
-            if (value > 0) value -= 1
+            if (value > 1) value -= 1
             binding.microphoneSlider.progress = value
             binding.microphoneValue.text = "$value"
         }

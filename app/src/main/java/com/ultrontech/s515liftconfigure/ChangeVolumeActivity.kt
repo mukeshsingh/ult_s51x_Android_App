@@ -53,7 +53,7 @@ class ChangeVolumeActivity : LangSupportBaseActivity() {
         }
 
         binding.minus.setOnClickListener {
-            if (value > 0) value -= 1
+            if (value > 1) value -= 1
             binding.volumeSlider.progress = value
             binding.volumeValue.text = value.toString()
         }

@@ -60,7 +60,7 @@ class ChangeDialTimeoutActivity : LangSupportBaseActivity() {
         }
 
         binding.minus.setOnClickListener {
-            if (value > 0) value -= 1
+            if (value > 5) value -= 1
             binding.dialTimeoutSlider.progress = value
             binding.dialTimeoutValue.text = "${value}\""
         }
