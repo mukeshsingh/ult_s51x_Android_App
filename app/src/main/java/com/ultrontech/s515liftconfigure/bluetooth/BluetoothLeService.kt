@@ -956,18 +956,19 @@ class BluetoothLeService : Service() {
         Log.d(TAG, "Characteristic written for PinNumber: $success")
     }
 
-    fun setSSID(ssid: String, passPhase: String) {
+    fun setSSID(ssid: String, passPhase: String, securityType: Int) {
         broadcastUpdate(ACTION_UPDATING_LIFT_SETTING)
         val lift = device?.lift?.let { find(it.liftId) }
         if (lift?.wifiControl == null) return
 
         val ssidData = ssid.toByteArray()
         val passPhaseData = passPhase.toByteArray()
-        print("[BT::WRITE] Wifi Detail (ssid=($ssid), pkey=($passPhase)")
-        val command: ByteArray = byteArrayOf(S515BTCommand.btCmdSetSSIDAndKey.toByte(), 0x00, ssidData.size.toByte(), passPhaseData.size.toByte()) + ssidData + passPhaseData
+        val securityTypeData = securityType.toString().toByteArray()
+        print("[BT::WRITE] Wifi Detail (ssid=($ssid), pkey=($passPhase), security=($securityType))")
+        val command: ByteArray = byteArrayOf(S515BTCommand.btCmdSetSSIDAndKey.toByte(), 0x00, ssidData.size.toByte(), passPhaseData.size.toByte(), securityTypeData.size.toByte()) + ssidData + passPhaseData + securityTypeData
         lift.wifiControl?.value = command
         val success = writeCharacteristic(lift.wifiControl!!, value = command)
-        Log.d(TAG, "Characteristic written for PinNumber: $success")
+        Log.d(TAG, "Characteristic written for SSID: $success")
     }
 
     fun setJob(job : String, client : String) {
@@ -1230,12 +1231,12 @@ fun BluetoothLeService.processWifiDetail(data: ByteArray) {
     if (data.isNotEmpty()) {
 //        val security = data[1]
         val wifiStatus = data[2]
-        val ssidLen = data[3]
-        val ssid : String? = if (ssidLen > 0) String(data.copyOfRange(4, 4 + ssidLen).dropLastWhile { it == 0.toByte() }.toByteArray(), Charsets.UTF_8) else null
+        val ssidLen = data[3].toInt() and 0xFF
+        val ssid : String? = if (ssidLen > 0 && data.size >= 4 + ssidLen) String(data.copyOfRange(4, 4 + ssidLen), Charsets.UTF_8) else null
 
         val wifiAvailable = (wifiStatus.toInt() and 0x01) == 0x01
         val wifiConnected = (wifiStatus.toInt() and 0x02) == 0x02
-//        val ssidPresent = (wifiStatus.toInt() and 0x04) == 0x04
+        val ssidPresent = (wifiStatus.toInt() and 0x04) == 0x04
 
         val obj = JSONObject()
         obj.put("wifiAvailable", wifiAvailable)

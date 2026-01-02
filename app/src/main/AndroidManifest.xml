@@ -22,6 +22,12 @@
         android:usesPermissionFlags="neverForLocation"
         tools:targetApi="s" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission
+        android:name="android.permission.NEARBY_WIFI_DEVICES"
+        android:usesPermissionFlags="neverForLocation"
+        tools:targetApi="tiramisu" />
 
     <uses-feature
         android:name="android.hardware.bluetooth"
@@ -41,10 +47,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.s515LiftConfigure"
         tools:targetApi="31">
-        <activity
-            android:name=".ChangeWifiPasswordActivity"
-            android:exported="false"
-            android:theme="@style/Theme.s515LiftConfigure" />
         <activity
             android:name=".LangSupportBaseActivity"
             android:exported="false" />

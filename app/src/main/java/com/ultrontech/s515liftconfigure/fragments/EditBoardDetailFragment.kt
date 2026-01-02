@@ -60,7 +60,9 @@ class EditBoardDetailFragment : BottomSheetDialogFragment() {
         }
 
         btnUpdate.setOnClickListener {
-            BluetoothLeService.service?.setSSID(edtWifi.text.toString(), if (security) edtPKey.text.toString() else "")
+            // Security type: 1=No Security, 2=WPA, 3=WPA2, 4=WPA3
+            val securityType = if (security) 3 else 1 // Default to WPA2 if passphrase provided
+            BluetoothLeService.service?.setSSID(edtWifi.text.toString(), if (security) edtPKey.text.toString() else "", securityType)
             Handler(Looper.getMainLooper()).postDelayed({
                 BluetoothLeService.service?.setJob(
                     edtJob.text.toString(),

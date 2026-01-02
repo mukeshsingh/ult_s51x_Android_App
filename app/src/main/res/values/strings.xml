@@ -249,6 +249,16 @@
     <string name="ssid_configured">Configured for Wifi Network SSID</string>
     <string name="wifi_available_status">Wifi is available on device</string>
     <string name="wifi_not_available_status">Wifi is not available on device</string>
+    <string name="scan_wifi">SCAN Wifi</string>
+    <string name="choose_wifi_network">Choose Wifi Network</string>
+    <string name="connect_btn">CONNECT</string>
+    <string name="enter_manually">Enter Manually</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="choose_security">Choose Security</string>
+    <string name="no_security_option">No Security</string>
+    <string name="wpa">WPA</string>
+    <string name="wpa2">WPA2</string>
+    <string name="wpa3">WPA3</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
