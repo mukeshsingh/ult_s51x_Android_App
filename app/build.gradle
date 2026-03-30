@@ -6,8 +6,25 @@ plugins {
     id 'com.google.firebase.crashlytics'
 }
 
+// Load keystore properties from local.properties
+def keystorePropertiesFile = rootProject.file("local.properties")
+def keystoreProperties = new Properties()
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
     compileSdk 35
+
+    signingConfigs {
+        release {
+            storeFile file(keystoreProperties['KEYSTORE_FILE'] ?: '')
+            storePassword keystoreProperties['KEYSTORE_PASSWORD'] ?: ''
+            keyAlias keystoreProperties['KEY_ALIAS'] ?: ''
+            keyPassword keystoreProperties['KEY_PASSWORD'] ?: ''
+            storeType "PKCS12"
+        }
+    }
 
     defaultConfig {
         applicationId "com.ultrontech.s515liftconfigure"
@@ -24,7 +41,11 @@ android {
         }
     }
     buildTypes {
+        debug {
+            signingConfig signingConfigs.release
+        }
         release {
+            signingConfig signingConfigs.release
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -40,6 +61,32 @@ android {
         viewBinding true
     }
     namespace 'com.ultrontech.s515liftconfigure'
+
+    // Rename APK output
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def versionName = variant.versionName
+            if (variant.buildType.name == "release") {
+                outputFileName = "OneTouch-${versionName}.apk"
+            }
+        }
+    }
+}
+
+// Rename AAB output after bundle task completes
+tasks.whenTaskAdded { task ->
+    if (task.name == "signReleaseBundle") {
+        task.doLast {
+            def aabDir = file("${buildDir}/outputs/bundle/release")
+            aabDir.listFiles()?.each { file ->
+                if (file.name.endsWith(".aab")) {
+                    def versionName = android.defaultConfig.versionName
+                    def newName = "OneTouch-${versionName}.aab"
+                    file.renameTo(new File(aabDir, newName))
+                }
+            }
+        }
+    }
 }
 
 dependencies {

@@ -16,6 +16,7 @@ import android.view.WindowInsetsController
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityChangeWifiBinding
 import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
@@ -45,6 +46,25 @@ class ChangeWifiActivity : LangSupportBaseActivity() {
     private var currentState: ScreenState = ScreenState.SCAN
 
     private val securityTypes = arrayListOf("No Security", "WPA", "WPA2", "WPA3")
+
+    // BroadcastReceiver for WiFi status updates from the lift
+    private val bluetoothReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            when (intent?.action) {
+                BluetoothLeService.ACTION_UPDATE_WIFI_DETAIL -> {
+                    Log.d(TAG, "ACTION_UPDATE_WIFI_DETAIL received from lift")
+                    updateWifiDetail()
+                    // Update connected state UI if we're on the connected screen
+                    if (currentState == ScreenState.CONNECTED) {
+                        val isActuallyConnected = bluetoothLeService?.device?.wifiConnected == true
+                        if (isActuallyConnected) {
+                            binding.txtConnectedWifiName.text = bluetoothLeService?.device?.connectedSSID ?: selectedSsid
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     private val wifiScanReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -359,12 +379,13 @@ class ChangeWifiActivity : LangSupportBaseActivity() {
         selectedSsid = ssid
         showState(ScreenState.CONNECTED)
 
-        Toast.makeText(this, "WiFi credentials saved", Toast.LENGTH_SHORT).show()
+        // Credentials sent to lift - actual connection status will be updated via ACTION_UPDATE_WIFI_DETAIL
+        Toast.makeText(this, "WiFi credentials sent to lift", Toast.LENGTH_SHORT).show()
     }
 
     private fun updateWifiDetail() {
-        val isConnected = bluetoothLeService?.device?.wifiConnected == true ||
-                currentState == ScreenState.CONNECTED
+        // Only use actual wifiConnected status from lift, not local screen state
+        val isConnected = bluetoothLeService?.device?.wifiConnected == true
 
         if (isConnected) {
             binding.wifiConnectedStatus.text = resources.getString(R.string.wifi_connected)
@@ -372,6 +393,24 @@ class ChangeWifiActivity : LangSupportBaseActivity() {
         } else {
             binding.wifiConnectedStatus.text = resources.getString(R.string.wifi_is_not_connected)
             binding.wifiConnectedStatus.setTextColor(resources.getColor(R.color.red, theme))
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Register receiver for WiFi status updates from lift using LocalBroadcastManager
+        val filter = IntentFilter(BluetoothLeService.ACTION_UPDATE_WIFI_DETAIL)
+        LocalBroadcastManager.getInstance(applicationContext).registerReceiver(bluetoothReceiver, filter)
+        // Update WiFi status when resuming
+        updateWifiDetail()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        try {
+            LocalBroadcastManager.getInstance(applicationContext).unregisterReceiver(bluetoothReceiver)
+        } catch (e: Exception) {
+            Log.e(TAG, "Bluetooth receiver not registered: ${e.message}")
         }
     }
 
