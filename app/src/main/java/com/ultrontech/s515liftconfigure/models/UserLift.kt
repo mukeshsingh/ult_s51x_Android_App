@@ -23,12 +23,24 @@ enum class CommsBoardType {
 data class BoardCapabilitySet(
     var rawValue: UInt
 ) {
-    fun getAll(): Array<BoardCapabilitySet> {
-        val gsm = BoardCapabilitySet(1u shl 0)
-        val diagnostics: BoardCapabilitySet = BoardCapabilitySet(1u shl 1)
-        val wifi: BoardCapabilitySet = BoardCapabilitySet(1u shl 2)
-        val wifi_softap: BoardCapabilitySet = BoardCapabilitySet(1u shl 3)
-        return arrayOf(gsm, diagnostics, wifi, wifi_softap)
+    // Mirrors the iOS OptionSet: rawValue is the capability bitmask reported by the board.
+    fun contains(capability: BoardCapabilitySet): Boolean =
+        (rawValue and capability.rawValue) == capability.rawValue
+
+    fun names(): List<String> {
+        val names = mutableListOf<String>()
+        if (contains(gsm)) names.add("gsm")
+        if (contains(diagnostics)) names.add("diagnostics")
+        if (contains(wifi)) names.add("wifi")
+        if (contains(wifi_softap)) names.add("wifi_softap")
+        return names
+    }
+
+    companion object {
+        val gsm         = BoardCapabilitySet(1u shl 0)
+        val diagnostics = BoardCapabilitySet(1u shl 1)
+        val wifi        = BoardCapabilitySet(1u shl 2)
+        val wifi_softap = BoardCapabilitySet(1u shl 3)
     }
 }
 
@@ -39,7 +51,7 @@ data class BoardInfo (
     var capabilities : BoardCapabilitySet
 ) {
     override fun toString(): String {
-        return "board_type: ${getBoardType()}, dip: $dip, capebilities: ${capabilities.getAll().joinToString { it.toString() }}"
+        return "board_type: ${getBoardType()}, dip: $dip, capabilities: ${capabilities.names().joinToString()}"
     }
 
     fun getBoardType(): String {
@@ -78,7 +90,7 @@ object Util {
     fun getSimTypeName(simType: SimType): String {
         return when(simType) {
             SimType.ModemSimTypeInstallerProvided -> "Installer"
-            SimType.ModemSimTypeUserContract -> "User Contact"
+            SimType.ModemSimTypeUserContract -> "User Contract"
             SimType.ModemSimTypeUserPAYG -> "PAYG"
             SimType.ModemSimTypeUnknown -> "Unknown"
         }

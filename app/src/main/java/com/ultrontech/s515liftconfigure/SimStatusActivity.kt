@@ -25,6 +25,11 @@ class SimStatusActivity : LangSupportBaseActivity() {
                     Log.d(TAG, "ACTION_UPDATE_GSM_DETAIL received from lift")
                     updateGsmDetail()
                 }
+                BluetoothLeService.ACTION_GATT_DISCONNECTED -> {
+                    // Without this, the screen keeps showing the last GSM snapshot as
+                    // live after the BLE link drops.
+                    finish()
+                }
             }
         }
     }
@@ -139,7 +144,10 @@ class SimStatusActivity : LangSupportBaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        val filter = IntentFilter(BluetoothLeService.ACTION_UPDATE_GSM_DETAIL)
+        val filter = IntentFilter().apply {
+            addAction(BluetoothLeService.ACTION_UPDATE_GSM_DETAIL)
+            addAction(BluetoothLeService.ACTION_GATT_DISCONNECTED)
+        }
         LocalBroadcastManager.getInstance(applicationContext).registerReceiver(bluetoothReceiver, filter)
         // Request the current GSM state from the lift; further changes arrive via notify.
         bluetoothLeService?.requestGsmStatus()

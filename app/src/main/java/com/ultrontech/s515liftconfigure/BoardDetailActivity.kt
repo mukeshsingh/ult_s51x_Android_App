@@ -1,20 +1,46 @@
 package com.ultrontech.s515liftconfigure
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsetsController
 import androidx.core.content.res.ResourcesCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityBoardDetailBinding
+import com.ultrontech.s515liftconfigure.models.BoardCapabilitySet
 import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 
 class BoardDetailActivity : LangSupportBaseActivity() {
     lateinit var binding: ActivityBoardDetailBinding
-    private val bluetoothLeService: BluetoothLeService = BluetoothLeService.service!!
+    // Resolved lazily: the singleton is null when the activity is restored after process death.
+    private val bluetoothLeService: BluetoothLeService? get() = BluetoothLeService.service
+
+    // The board details (firmware revision in particular) often arrive after this screen is
+    // already open - re-render when the service broadcasts an update instead of showing the
+    // one-shot snapshot taken in onCreate.
+    private val deviceUpdateReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            when (intent?.action) {
+                BluetoothLeService.ACTION_LIFT_LIST_UPDATED -> updateFirmwareRevision()
+                BluetoothLeService.ACTION_UPDATE_WIFI_DETAIL -> updateWifiDetail()
+                BluetoothLeService.ACTION_UPDATE_INFO -> updateInfo()
+                BluetoothLeService.ACTION_UPDATE_JOB -> updateJob()
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (BluetoothLeService.service == null) {
+            // Restored after process death: no BLE session to show details for.
+            finish()
+            return
+        }
 
         binding = ActivityBoardDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -40,10 +66,7 @@ class BoardDetailActivity : LangSupportBaseActivity() {
         updateWifiDetail()
         updateInfo()
         updateJob()
-
-        with(bluetoothLeService) {
-            binding.firmwareRevision.text = device?.lift?.liftId?.let { find(it)?.firmwareRevision }
-        }
+        updateFirmwareRevision()
 
         binding.toolbar.optionBtn.setOnClickListener {
             if (binding.optionMenu.llOptionMenu.visibility == View.GONE) {
@@ -85,8 +108,35 @@ class BoardDetailActivity : LangSupportBaseActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        val filter = IntentFilter().apply {
+            addAction(BluetoothLeService.ACTION_LIFT_LIST_UPDATED)
+            addAction(BluetoothLeService.ACTION_UPDATE_WIFI_DETAIL)
+            addAction(BluetoothLeService.ACTION_UPDATE_INFO)
+            addAction(BluetoothLeService.ACTION_UPDATE_JOB)
+        }
+        LocalBroadcastManager.getInstance(applicationContext).registerReceiver(deviceUpdateReceiver, filter)
+
+        updateWifiDetail()
+        updateInfo()
+        updateJob()
+        updateFirmwareRevision()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LocalBroadcastManager.getInstance(applicationContext).unregisterReceiver(deviceUpdateReceiver)
+    }
+
+    private fun updateFirmwareRevision() {
+        with(bluetoothLeService ?: return) {
+            binding.firmwareRevision.text = device?.lift?.liftId?.let { find(it)?.firmwareRevision }
+        }
+    }
+
     private fun updateWifiDetail() {
-        with(bluetoothLeService) {
+        with(bluetoothLeService ?: return) {
             if (device?.connectedSSID != null) {
                 binding.ssidConfiguredLabel.text = this@BoardDetailActivity.resources.getString(R.string.ssid_configured)
                 binding.ssidConfiguredLabel.setTextColor(resources.getColor(R.color.text_color_title, theme))
@@ -114,35 +164,24 @@ class BoardDetailActivity : LangSupportBaseActivity() {
     }
 
     private fun updateInfo() {
-        with(bluetoothLeService) {
-            if (device?.commsBoard != null) {
-                if (device?.commsBoard!!.capabilities.getAll()[0].rawValue == 1u) {
-                    binding.capGSM.background = ResourcesCompat.getDrawable(resources, R.drawable.circle_bullet_green, theme)
-                } else {
-                    binding.capGSM.background = ResourcesCompat.getDrawable(resources, R.drawable.circle_bullet_red, theme)
-                }
-                if (device?.commsBoard!!.capabilities.getAll()[0].rawValue == 2u) {
-                    binding.capDiagnostics.background = ResourcesCompat.getDrawable(resources, R.drawable.circle_bullet_green, theme)
-                } else {
-                    binding.capDiagnostics.background = ResourcesCompat.getDrawable(resources, R.drawable.circle_bullet_red, theme)
-                }
-                if (device?.commsBoard!!.capabilities.getAll()[0].rawValue == 4u) {
-                    binding.capWifi.background = ResourcesCompat.getDrawable(resources, R.drawable.circle_bullet_green, theme)
-                } else {
-                    binding.capWifi.background = ResourcesCompat.getDrawable(resources, R.drawable.circle_bullet_red, theme)
-                }
+        with(bluetoothLeService ?: return) {
+            val capabilities = device?.commsBoard?.capabilities ?: return
 
-                if (device?.commsBoard!!.capabilities.getAll()[0].rawValue == 8u) {
-                    binding.capWifiAP.background = ResourcesCompat.getDrawable(resources, R.drawable.circle_bullet_green, theme)
-                } else {
-                    binding.capWifiAP.background = ResourcesCompat.getDrawable(resources, R.drawable.circle_bullet_red, theme)
-                }
-            }
+            fun bullet(enabled: Boolean) = ResourcesCompat.getDrawable(
+                resources,
+                if (enabled) R.drawable.circle_bullet_green else R.drawable.circle_bullet_red,
+                theme
+            )
+
+            binding.capGSM.background = bullet(capabilities.contains(BoardCapabilitySet.gsm))
+            binding.capDiagnostics.background = bullet(capabilities.contains(BoardCapabilitySet.diagnostics))
+            binding.capWifi.background = bullet(capabilities.contains(BoardCapabilitySet.wifi))
+            binding.capWifiAP.background = bullet(capabilities.contains(BoardCapabilitySet.wifi_softap))
         }
     }
 
     private fun updateJob() {
-        with(bluetoothLeService) {
+        with(bluetoothLeService ?: return) {
             if (device?.job != null && device?.job?.length!! > 0) {
                 binding.jobLabel.visibility = View.VISIBLE
                 binding.job.text = device?.job

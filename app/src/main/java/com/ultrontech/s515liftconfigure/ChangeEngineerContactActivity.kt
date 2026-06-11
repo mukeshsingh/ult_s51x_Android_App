@@ -1,10 +1,15 @@
 package com.ultrontech.s515liftconfigure
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.IntentFilter
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsetsController
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.bluetooth.setContact
 import com.ultrontech.s515liftconfigure.databinding.ActivityChangeEngineerContactBinding
@@ -16,6 +21,53 @@ class ChangeEngineerContactActivity : LangSupportBaseActivity() {
     private var liftId: String? = null
     val numberSlot = 4
     var phone: PhoneContact? = null
+    private var seeding = false
+    private var userEdited = false
+
+    private val deviceUpdateReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            when (intent?.action) {
+                BluetoothLeService.ACTION_UPDATE_PHONE_SLOT,
+                BluetoothLeService.ACTION_CLEAR_PHONE_SLOT -> {
+                    // The slot data often arrives after this screen opens; re-seed the
+                    // fields as long as the user has not started editing - otherwise a
+                    // confirm on the empty form wipes the configured contact.
+                    if (!userEdited) seedFromDevice()
+                }
+            }
+        }
+    }
+
+    private val editWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        override fun afterTextChanged(s: Editable?) {
+            if (!seeding) userEdited = true
+        }
+    }
+
+    private fun seedFromDevice() {
+        phone = BluetoothLeService.service?.device?.number4
+        seeding = true
+        binding.edtEngineerName.setText(phone?.contactName)
+        binding.edtEngineerPhone.setText(phone?.number)
+        seeding = false
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val filter = IntentFilter().apply {
+            addAction(BluetoothLeService.ACTION_UPDATE_PHONE_SLOT)
+            addAction(BluetoothLeService.ACTION_CLEAR_PHONE_SLOT)
+        }
+        LocalBroadcastManager.getInstance(applicationContext).registerReceiver(deviceUpdateReceiver, filter)
+        if (!userEdited) seedFromDevice()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LocalBroadcastManager.getInstance(applicationContext).unregisterReceiver(deviceUpdateReceiver)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,10 +83,9 @@ class ChangeEngineerContactActivity : LangSupportBaseActivity() {
 
         liftId = intent.extras?.getString(HomeActivity.INTENT_LIFT_ID)
 
-        phone = BluetoothLeService.service?.device?.number4
-
-        binding.edtEngineerName.setText(phone?.contactName)
-        binding.edtEngineerPhone.setText(phone?.number)
+        seedFromDevice()
+        binding.edtEngineerName.addTextChangedListener(editWatcher)
+        binding.edtEngineerPhone.addTextChangedListener(editWatcher)
 
         binding.btnConfirmEngineerContact.setOnClickListener {
             with(BluetoothLeService.service) {

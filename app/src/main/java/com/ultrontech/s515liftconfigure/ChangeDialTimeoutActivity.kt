@@ -1,11 +1,15 @@
 package com.ultrontech.s515liftconfigure
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsetsController
 import android.widget.SeekBar
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityChangeDialTimeoutBinding
 import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
@@ -13,6 +17,17 @@ import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 class ChangeDialTimeoutActivity : LangSupportBaseActivity() {
     private lateinit var binding: ActivityChangeDialTimeoutBinding
     private var value = 5
+    private var userAdjusted = false
+
+    private val deviceUpdateReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == BluetoothLeService.ACTION_UPDATE_PHONE_CONFIG && !userAdjusted) {
+                // The device value often arrives after this screen opens; re-seed
+                // the picker as long as the user has not started adjusting it.
+                seedFromDevice()
+            }
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -35,6 +50,7 @@ class ChangeDialTimeoutActivity : LangSupportBaseActivity() {
             }
 
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                if (fromUser) userAdjusted = true
                 // TODO Auto-generated method stub
                 binding.dialTimeoutValue.text = "${progress}\""
                 value = progress
@@ -54,22 +70,20 @@ class ChangeDialTimeoutActivity : LangSupportBaseActivity() {
         }
 
         binding.plus.setOnClickListener {
+            userAdjusted = true
             if (value < 50) value += 1
             binding.dialTimeoutSlider.progress = value
             binding.dialTimeoutValue.text = "${value}\""
         }
 
         binding.minus.setOnClickListener {
+            userAdjusted = true
             if (value > 5) value -= 1
             binding.dialTimeoutSlider.progress = value
             binding.dialTimeoutValue.text = "${value}\""
         }
 
-        with(BluetoothLeService.service?.device) {
-            value = this?.callDialTimeout ?: 1
-            binding.dialTimeoutValue.text = "${value}\""
-            binding.dialTimeoutSlider.progress = value
-        }
+        seedFromDevice()
 
         // ****************** Option Menu Start ******************
         binding.toolbar.optionBtn.setOnClickListener {
@@ -111,5 +125,25 @@ class ChangeDialTimeoutActivity : LangSupportBaseActivity() {
             }
         }
         // ****************** Option Menu End ******************
+    }
+
+    private fun seedFromDevice() {
+            with(BluetoothLeService.service?.device) {
+                value = this?.callDialTimeout ?: 1
+                binding.dialTimeoutValue.text = "${value}\""
+                binding.dialTimeoutSlider.progress = value
+            }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LocalBroadcastManager.getInstance(applicationContext)
+            .registerReceiver(deviceUpdateReceiver, IntentFilter(BluetoothLeService.ACTION_UPDATE_PHONE_CONFIG))
+        if (!userAdjusted) seedFromDevice()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LocalBroadcastManager.getInstance(applicationContext).unregisterReceiver(deviceUpdateReceiver)
     }
 }

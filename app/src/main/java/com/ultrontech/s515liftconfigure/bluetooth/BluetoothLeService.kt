@@ -33,6 +33,8 @@ class BluetoothLeService : Service() {
     lateinit var mAccessAuthKey: String
     var device: Device? = null
     private var mSessionId: String? = null
+    // Written from binder threads, the main thread, and the GSM worker thread.
+    @Volatile
     private var mBusy = false
     var lifts = listOf<ScanDisplayItem>()
 
@@ -404,36 +406,37 @@ class BluetoothLeService : Service() {
                         LiftBT.ssidsCharUUID -> processSSIDList(data)
                         LiftBT.gsmCharUUID -> processGsmDetail(data)
 
+                        // Note for the chain below: mBusy was already cleared by
+                        // onCharacteristicRead before this handler was posted. Clearing it
+                        // again here clobbered the busy flag of any operation issued in
+                        // between (auth write, CCCD writes, GSM read), making the next
+                        // chained read collide and silently drop - the firmware revision
+                        // then never arrived.
                         LiftBT.modelNumberCharUUID -> {
                             val cx = data.decodeToString()
                             print("[BT($mAddress)::Char($uuid))] : value updated -> [$cx)]")
                             devices[mAddress]?.modelNumber = cx
-                            mBusy = false
                             refreshScannedList()
                             val service = mBluetoothGatt?.getService(LiftBT.deviceControlServiceUUID)
                             val char = service?.getCharacteristic(LiftBT.manufacturerNameCharUUID)
-                            readCharacteristic(char)
-                            waitIdle(LiftBT.GATT_TIMEOUT)
+                            readCharacteristicWithRetry(char)
                         }
 
                         LiftBT.manufacturerNameCharUUID -> {
                             val cx = data.decodeToString()
                             print("[BT($mAddress)::Char($uuid))] : value updated -> [$cx)]")
                             devices[mAddress]?.manufacturerName = cx
-                            mBusy = false
                             refreshScannedList()
                             val service =
                                 mBluetoothGatt?.getService(LiftBT.deviceControlServiceUUID)
                             val char = service?.getCharacteristic(LiftBT.firmwareRevisionCharUUID)
-                            readCharacteristic(char)
-                            waitIdle(LiftBT.GATT_TIMEOUT)
+                            readCharacteristicWithRetry(char)
                         }
 
                         LiftBT.firmwareRevisionCharUUID -> {
                             val cx = data.decodeToString()
                             print("[BT($mAddress)::Char($uuid))] : value updated for firmwareRevision -> [$cx)]")
                             devices[mAddress]?.firmwareRevision = cx
-                            mBusy = false
                             refreshScannedList()
                         }
 
@@ -446,12 +449,36 @@ class BluetoothLeService : Service() {
         }
     }
 
+    /**
+     * readCharacteristic returns false when another GATT operation is in flight (Android
+     * allows only one) - retrying instead of dropping the read keeps response-driven chains
+     * like modelNumber -> manufacturer -> firmwareRevision alive. Each attempt is paced by
+     * readCharacteristic's internal waitIdle.
+     */
+    private fun readCharacteristicWithRetry(characteristic: BluetoothGattCharacteristic?, attempts: Int = 5): Boolean {
+        if (characteristic == null) return false
+        for (attempt in 1..attempts) {
+            if (readCharacteristic(characteristic) == true) return true
+            Log.w(TAG, "read attempt $attempt failed for ${characteristic.uuid}, gatt busy")
+            // The native stack rejected the read while busy with an op of its own (e.g. a
+            // descriptor write) - give it time to complete before retrying.
+            try { Thread.sleep(150) } catch (_: InterruptedException) {}
+        }
+        return false
+    }
+
     private fun readCharacteristic(characteristic: BluetoothGattCharacteristic?): Boolean? {
         Log.d(TAG, "readCharacteristic check Gatt: " + checkGatt())
 //        if (!checkGatt()) return false
         if (waitIdle(LiftBT.GATT_TIMEOUT)) {
             mBusy = true
-            return checkPermission() && mBluetoothGatt?.readCharacteristic(characteristic) == true
+            val issued = checkPermission() && mBluetoothGatt?.readCharacteristic(characteristic) == true
+            if (!issued) {
+                // No callback will ever arrive for a rejected read - leaving mBusy set
+                // stalls every later operation until an unrelated notify clears it.
+                mBusy = false
+            }
+            return issued
         }
 
         return false
@@ -464,16 +491,21 @@ class BluetoothLeService : Service() {
             if (checkPermission()) {
                 characteristic.let {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        return mBluetoothGatt?.writeCharacteristic(
+                        val status = mBluetoothGatt?.writeCharacteristic(
                                 it,
                                 value,
                                 BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT
                             )
+                        if (status != BluetoothStatusCodes.SUCCESS) mBusy = false
+                        return status
                     } else {
-                        return if (mBluetoothGatt?.writeCharacteristic(it) == true) 0 else 1
+                        val issued = mBluetoothGatt?.writeCharacteristic(it) == true
+                        if (!issued) mBusy = false
+                        return if (issued) 0 else 1
                     }
                 }
             }
+            mBusy = false
         }
         return -1
     }
@@ -557,10 +589,20 @@ class BluetoothLeService : Service() {
     fun updateServices(isEnabled: Boolean) {
         if (isUpdatingServices) return
         isUpdatingServices = true
+        try {
+            updateServicesLocked(isEnabled)
+        } finally {
+            // Without the finally, an exception left the flag set forever and every later
+            // service-discovery pass returned immediately, never linking characteristics.
+            isUpdatingServices = false
+        }
+    }
+
+    private fun updateServicesLocked(isEnabled: Boolean) {
         val services = mBluetoothGatt?.services
 
         if (waitIdle(LiftBT.GATT_TIMEOUT)) setMtu()
-        val device = find(mAddress!!)
+        val device = mAddress?.let { find(it) }
 
 
         services?.forEach { service ->
@@ -665,21 +707,21 @@ class BluetoothLeService : Service() {
                 device?.deviceOK = isEnabled
             }
 
-            if (isEnabled) {
-                val ser = mBluetoothGatt?.getService(LiftBT.deviceControlServiceUUID)
-                val char = ser?.getCharacteristic(LiftBT.modelNumberCharUUID)
-
-                if (waitIdle(LiftBT.GATT_TIMEOUT)) readCharacteristic(char)
-            }
         }
 
         if (isEnabled) {
+            // Start the modelNumber -> manufacturer -> firmwareRevision read chain once,
+            // after the service loop - kicking it off per service started several
+            // overlapping chains whose reads collided and silently died.
+            val ser = mBluetoothGatt?.getService(LiftBT.deviceControlServiceUUID)
+            val char = ser?.getCharacteristic(LiftBT.modelNumberCharUUID)
+            if (char != null) readCharacteristicWithRetry(char)
+
             if (waitIdle(LiftBT.GATT_TIMEOUT)) broadcastUpdate(ACTION_SERVICES_UPDATED);
         } else {
             disconnect()
         }
         refreshScannedList()
-        isUpdatingServices = false
     }
 
     fun isGsmSupported(): Boolean {
@@ -697,10 +739,17 @@ class BluetoothLeService : Service() {
      * CCCD write is forced even if a pre-auth subscription already cached the enabled value.
      * Runs on a worker thread because waitIdle()/readCharacteristic() block on the GATT busy flag.
      */
-    fun requestGsmStatus() {
+    fun requestGsmStatus(startDelayMillis: Long = 0) {
         if (gsmRequestThread?.isAlive == true) return
 
         gsmRequestThread = Thread {
+            // Post-auth callers pass a delay so the device-info read chain
+            // (model -> manufacturer -> firmware) gets the GATT slot first; the GSM state
+            // arrives via notify right after subscription regardless.
+            if (startDelayMillis > 0) {
+                try { Thread.sleep(startDelayMillis) } catch (_: InterruptedException) {}
+            }
+
             val scanned = mAddress?.let { find(it) }
             val characteristic = scanned?.gsmControl
                 ?: mBluetoothGatt?.services?.firstNotNullOfOrNull { it.getCharacteristic(LiftBT.gsmCharUUID) }
@@ -715,11 +764,9 @@ class BluetoothLeService : Service() {
                 if (waitIdle(LiftBT.GATT_TIMEOUT)) setCharacteristicNotification(characteristic, true, force = true)
             }
 
-            for (attempt in 1..3) {
-                if (readCharacteristic(characteristic) == true) return@Thread
-                Log.w(TAG, "[GSM] status read attempt $attempt failed, gatt busy")
+            if (!readCharacteristicWithRetry(characteristic)) {
+                Log.w(TAG, "[GSM] giving up reading GSM status, waiting for notify")
             }
-            Log.w(TAG, "[GSM] giving up reading GSM status, waiting for notify")
         }.apply { start() }
     }
 
@@ -737,7 +784,7 @@ class BluetoothLeService : Service() {
 
     fun close() {
         mBluetoothGatt?.let { gatt ->
-            timer.cancel()
+            if (::timer.isInitialized) timer.cancel()
             if (checkPermission()) {
                 gatt.disconnect()
                 gatt.close()
@@ -751,6 +798,11 @@ class BluetoothLeService : Service() {
             mBusy = true
             val mtuRequest = mBluetoothGatt?.requestMtu(500)
             Log.i(TAG, "MTU Request: $mtuRequest: 500")
+            if (mtuRequest != true) {
+                // A rejected request produces no onMtuChanged callback - clear the busy
+                // flag so the rest of updateServices is not stalled against it.
+                mBusy = false
+            }
         }
     }
 
@@ -790,6 +842,11 @@ class BluetoothLeService : Service() {
 
                         if (ok) {
                             Log.i(TAG, "writeDescriptor: " + characteristic.uuid.toString())
+                        } else {
+                            // Rejected descriptor write produces no callback - clear the
+                            // busy flag so later operations are not stalled against it.
+                            mBusy = false
+                            Log.w(TAG, "writeDescriptor rejected for " + characteristic.uuid.toString())
                         }
                     }
                 }
@@ -820,16 +877,20 @@ class BluetoothLeService : Service() {
     }
 
     fun waitIdle(timeout: Int): Boolean {
-        var timeout = timeout
-        timeout /= 50
-        while (--timeout > 0) {
-            if (mBusy) try {
+        // The previous /50 + pre-decrement loop waited at most timeout-50ms (a 100ms
+        // timeout waited only 50ms) and reported failure even when the bus became idle
+        // during the final sleep. Wait the full budget and return the actual state.
+        var remaining = timeout
+        while (remaining > 0) {
+            if (!mBusy) return true
+            try {
                 Thread.sleep(50)
             } catch (e: InterruptedException) {
                 e.printStackTrace()
-            } else break
+            }
+            remaining -= 50
         }
-        return timeout > 0
+        return !mBusy
     }
 
     fun updatePin(pin: PINNumber) {
@@ -882,7 +943,7 @@ class BluetoothLeService : Service() {
     }
 
     fun setVolume(volume: Int) {
-        broadcastUpdate(ACTION_UPDATING_LIFT_SETTING)
+        broadcastUpdate(ACTION_UPDATING_LIFT_SETTING, clearBusy = false)
         val lift = device?.lift?.let { find(it.liftId) }
         if (lift?.audioControl == null) return
 
@@ -895,7 +956,7 @@ class BluetoothLeService : Service() {
     }
 
     fun setMicrophone(microphone: Int) {
-        broadcastUpdate(ACTION_UPDATING_LIFT_SETTING)
+        broadcastUpdate(ACTION_UPDATING_LIFT_SETTING, clearBusy = false)
         val lift = device?.lift?.let { find(it.liftId) }
         if (lift?.audioControl == null) return
 
@@ -908,7 +969,7 @@ class BluetoothLeService : Service() {
     }
 
     fun setPhoneNumber(phoneNumber : Int, enabled : Boolean, toNumber : String, name : String) {
-        broadcastUpdate(ACTION_UPDATING_LIFT_SETTING)
+        broadcastUpdate(ACTION_UPDATING_LIFT_SETTING, clearBusy = false)
         val lift = device?.lift?.let { find(it.liftId) }
         if (lift?.phoneControl == null) return
 
@@ -940,7 +1001,7 @@ class BluetoothLeService : Service() {
     }
 
     fun setPressDelay(pressDelay: Int) {
-        broadcastUpdate(ACTION_UPDATING_LIFT_SETTING)
+        broadcastUpdate(ACTION_UPDATING_LIFT_SETTING, clearBusy = false)
         val lift = device?.lift?.let { find(it.liftId) }
         if (lift?.phoneConfigControl == null) return
 
@@ -952,7 +1013,7 @@ class BluetoothLeService : Service() {
     }
 
     fun setDialTimeout(dialTimeout : Int) {
-        broadcastUpdate(ACTION_UPDATING_LIFT_SETTING)
+        broadcastUpdate(ACTION_UPDATING_LIFT_SETTING, clearBusy = false)
         val lift = device?.lift?.let { find(it.liftId) }
         if (lift?.phoneConfigControl == null) return
 
@@ -964,7 +1025,7 @@ class BluetoothLeService : Service() {
     }
 
     fun setSimType(simType : SimType) {
-        broadcastUpdate(ACTION_UPDATING_LIFT_SETTING)
+        broadcastUpdate(ACTION_UPDATING_LIFT_SETTING, clearBusy = false)
         val lift = device?.lift?.let { find(it.liftId) }
         if (lift?.phoneConfigControl == null) return
 
@@ -976,7 +1037,7 @@ class BluetoothLeService : Service() {
     }
 
     fun setPin(pin : PINNumber) {
-        broadcastUpdate(ACTION_UPDATING_LIFT_SETTING)
+        broadcastUpdate(ACTION_UPDATING_LIFT_SETTING, clearBusy = false)
         val lift = device?.lift?.let { find(it.liftId) }
         if (lift?.phoneConfigControl == null) return
 
@@ -988,7 +1049,7 @@ class BluetoothLeService : Service() {
         val p5 = (if (pin.length >= 5) pin.digits[4] else 0).toByte()
         val p6 = (if (pin.length >= 6) pin.digits[5] else 0).toByte()
         val p7 = (if (pin.length >= 7) pin.digits[6] else 0).toByte()
-        val p8 = (if (pin.length >= 8) pin.digits[8] else 0).toByte()
+        val p8 = (if (pin.length >= 8) pin.digits[7] else 0).toByte()
 
         val command: ByteArray = byteArrayOf(S515BTCommand.btCmdSetSIMPin.toByte(), (10).toByte(), 0x01, pin.length.toByte(), p1, p2, p3, p4, p5, p6, p7, p8)
         val success = writeCharacteristic(lift.phoneConfigControl!!, value = command)
@@ -1006,7 +1067,7 @@ class BluetoothLeService : Service() {
     }
 
     fun setSSID(ssid: String, passPhase: String, securityType: Int) {
-        broadcastUpdate(ACTION_UPDATING_LIFT_SETTING)
+        broadcastUpdate(ACTION_UPDATING_LIFT_SETTING, clearBusy = false)
         val lift = device?.lift?.let { find(it.liftId) }
         if (lift?.wifiControl == null) return
 
@@ -1021,7 +1082,7 @@ class BluetoothLeService : Service() {
     }
 
     fun setJob(job : String, client : String) {
-        broadcastUpdate(ACTION_UPDATING_LIFT_SETTING)
+        broadcastUpdate(ACTION_UPDATING_LIFT_SETTING, clearBusy = false)
         val lift = device?.lift?.let { find(it.liftId) }
         if (lift?.jobControl == null) return
 
@@ -1103,7 +1164,7 @@ fun BluetoothLeService.processAuth(data : ByteArray, device : ScannedDevice) {
         // GSM status notifications are suppressed until authenticated, so (re)subscribe
         // and read the current state once authentication succeeds.
         if (device.authorised) {
-            requestGsmStatus()
+            requestGsmStatus(startDelayMillis = 1000)
         }
     }
 }
@@ -1121,7 +1182,7 @@ fun BluetoothLeService.processLevel(data : ByteArray) {
 
 fun BluetoothLeService.processInfo(data : ByteArray) {
     Log.d(BluetoothLeService.TAG, "Got data Info: $data")
-    if (data.isNotEmpty()) {
+    if (data.size >= 4) {
         Log.d(BluetoothLeService.TAG, "[INFO] Board information READ: (data.hexEncodedString())")
         val bt = data[1]
         val dip = data[2]
@@ -1142,7 +1203,7 @@ fun BluetoothLeService.processInfo(data : ByteArray) {
 
 fun BluetoothLeService.processPhoneConfig(data : ByteArray) {
     Log.d(BluetoothLeService.TAG, "Got data Phone Config: $data")
-    if (data.isNotEmpty()) {
+    if (data.size >= 14) {
         val callDialTimeout = data[1].toInt()
         val callStartDelay = data[2].toInt()
         val simType = data[3].toInt()
@@ -1198,8 +1259,12 @@ fun BluetoothLeService.processPhone(data : ByteArray) {
 
             if ((flag and 0x01) == 0x00) {
                 broadcastUpdate(BluetoothLeService.ACTION_CLEAR_PHONE_SLOT, (idx + 1).toString() )
+            } else if (data.size < 42 + mult) {
+                Log.w(BluetoothLeService.TAG, "[PHONE] - truncated payload (${data.size} bytes) for slot ${idx + 1}, skipped")
             } else {
-                val numCallCount = data[3 + mult].toInt() shl 8 + data[2 + mult]
+                // Kotlin infix shl binds looser than +, so the unparenthesized form
+                // computed x shl (8 + y); parenthesize and mask both (signed) bytes.
+                val numCallCount = ((data[3 + mult].toInt() and 0xFF) shl 8) + (data[2 + mult].toInt() and 0xFF)
 
                 val n1dtmmin    = data[4 + mult].toInt()
                 val n1dtmhour   = data[5 + mult].toInt()
@@ -1264,7 +1329,7 @@ fun BluetoothLeService.processPhone(data : ByteArray) {
 
 fun BluetoothLeService.processJob(data: ByteArray) {
     Log.d(BluetoothLeService.TAG, "Got data Job: ${String(data, Charsets.UTF_8)}")
-    if (data.isNotEmpty()) {
+    if (data.size >= 61) {
         Log.d(BluetoothLeService.TAG, "[JOB/CLIENT] Job/Client READ: data")
 
         val job = data.copyOfRange(1, 60 + 1).dropLastWhile { it == 0.toByte() }.toByteArray()
@@ -1284,7 +1349,7 @@ fun BluetoothLeService.processJob(data: ByteArray) {
 
 fun BluetoothLeService.processWifiDetail(data: ByteArray) {
     Log.d(BluetoothLeService.TAG, "Got data Wifi Detail: $data")
-    if (data.isNotEmpty()) {
+    if (data.size >= 4) {
 //        val security = data[1]
         val wifiStatus = data[2]
         val ssidLen = data[3].toInt() and 0xFF
@@ -1365,7 +1430,7 @@ fun BluetoothLeService.processGsmDetail(data: ByteArray) {
 
 fun BluetoothLeService.processSSIDList(data: ByteArray) {
     Log.d(BluetoothLeService.TAG, "Got data SSID List: $data")
-    if (data.isNotEmpty()) {
+    if (data.size >= 2) {
          Log.d(BluetoothLeService.TAG, "[SSID List] READ: $data")
 
         val numSSIDs = data[1]

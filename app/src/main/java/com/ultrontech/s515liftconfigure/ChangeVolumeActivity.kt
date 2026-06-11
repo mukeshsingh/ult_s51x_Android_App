@@ -1,11 +1,15 @@
 package com.ultrontech.s515liftconfigure
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsetsController
 import android.widget.SeekBar
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityChangeVolumeBinding
 import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
@@ -13,6 +17,17 @@ import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 class ChangeVolumeActivity : LangSupportBaseActivity() {
     private lateinit var binding: ActivityChangeVolumeBinding
     private var value = 2
+    private var userAdjusted = false
+
+    private val deviceUpdateReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == BluetoothLeService.ACTION_UPDATE_LEVEL && !userAdjusted) {
+                // The device value often arrives after this screen opens; re-seed
+                // the picker as long as the user has not started adjusting it.
+                seedFromDevice()
+            }
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -35,6 +50,7 @@ class ChangeVolumeActivity : LangSupportBaseActivity() {
             }
 
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                if (fromUser) userAdjusted = true
                 // TODO Auto-generated method stub
                 binding.volumeValue.text = progress.toString()
                 value = progress
@@ -47,12 +63,14 @@ class ChangeVolumeActivity : LangSupportBaseActivity() {
         }
 
         binding.plus.setOnClickListener {
+            userAdjusted = true
             if (value < 5) value += 1
             binding.volumeSlider.progress = value
             binding.volumeValue.text = value.toString()
         }
 
         binding.minus.setOnClickListener {
+            userAdjusted = true
             if (value > 1) value -= 1
             binding.volumeSlider.progress = value
             binding.volumeValue.text = value.toString()
@@ -70,11 +88,7 @@ class ChangeVolumeActivity : LangSupportBaseActivity() {
             finish()
         }
 
-        with(BluetoothLeService.service?.device) {
-            value = this?.volumeLevel ?: 1
-            binding.volumeValue.text = value.toString()
-            binding.volumeSlider.progress = value
-        }
+        seedFromDevice()
 
         // ****************** Option Menu Start ******************
         binding.toolbar.optionBtn.setOnClickListener {
@@ -116,5 +130,25 @@ class ChangeVolumeActivity : LangSupportBaseActivity() {
             }
         }
         // ****************** Option Menu End ******************
+    }
+
+    private fun seedFromDevice() {
+            with(BluetoothLeService.service?.device) {
+                value = this?.volumeLevel ?: 1
+                binding.volumeValue.text = value.toString()
+                binding.volumeSlider.progress = value
+            }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LocalBroadcastManager.getInstance(applicationContext)
+            .registerReceiver(deviceUpdateReceiver, IntentFilter(BluetoothLeService.ACTION_UPDATE_LEVEL))
+        if (!userAdjusted) seedFromDevice()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LocalBroadcastManager.getInstance(applicationContext).unregisterReceiver(deviceUpdateReceiver)
     }
 }

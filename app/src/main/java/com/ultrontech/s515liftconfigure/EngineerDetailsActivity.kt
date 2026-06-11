@@ -98,7 +98,8 @@ class EngineerDetailsActivity : LangSupportBaseActivity() {
     private lateinit var volume: TextView
     private lateinit var microphone: TextView
 
-    private val bluetoothLeService: BluetoothLeService = BluetoothLeService.service!!
+    // Resolved lazily: the singleton is null when the activity is restored after process death.
+    private val bluetoothLeService: BluetoothLeService? get() = BluetoothLeService.service
 
     private val bottomSheetEditLiftFrag = EditLiftFragment()
     private val editBoardDetailsFragment = EditBoardDetailFragment()
@@ -225,7 +226,7 @@ class EngineerDetailsActivity : LangSupportBaseActivity() {
         img5 = findViewById(R.id.img5)
 
         btnRemove.setOnClickListener {
-            bluetoothLeService.device?.lift?.let { it1 ->
+            bluetoothLeService?.device?.lift?.let { it1 ->
                 S515LiftConfigureApp.profileStore.remove(it1)
                 finish()
             }
@@ -340,7 +341,7 @@ class EngineerDetailsActivity : LangSupportBaseActivity() {
             val lift = S515LiftConfigureApp.profileStore.find(liftId!!)
             if (lift != null) {
                 var device = Device(lift = lift)
-                bluetoothLeService.link(device)
+                bluetoothLeService?.link(device)
 
                 liftName.text = lift?.liftName ?: ""
             }
@@ -369,14 +370,14 @@ class EngineerDetailsActivity : LangSupportBaseActivity() {
         microphoneContainer.visibility = visibility
     }
     private fun updateConnectState() {
-        with(bluetoothLeService) {
+        with(bluetoothLeService ?: return) {
             when(device?.connectionState) {
                 LiftConnectionState.connected_noauth -> {
                     deviceStatus.text = resources.getString(R.string.device_connected_no_auth)
                     btnConnect.visibility = View.VISIBLE
                     btnEdit.visibility = View.GONE
                     showHideCards(View.GONE)
-                    device?.lift?.let { bluetoothLeService.authorise(it) }
+                    device?.lift?.let { authorise(it) }
                 }
                 LiftConnectionState.connected_auth -> {
                     deviceStatus.text = resources.getString(R.string.device_connected)
@@ -402,7 +403,7 @@ class EngineerDetailsActivity : LangSupportBaseActivity() {
     }
 
     fun updateWifiDetail() {
-        with(bluetoothLeService) {
+        with(bluetoothLeService ?: return) {
             if (device?.connectedSSID != null) {
                 ssidConfiguredLabel.text = resources.getString(R.string.ssid_configured)
                 wifiSsid.visibility = View.VISIBLE
@@ -431,35 +432,24 @@ class EngineerDetailsActivity : LangSupportBaseActivity() {
     }
 
     fun updateInfo() {
-        with(bluetoothLeService) {
-            if (device?.commsBoard != null) {
-                if (device?.commsBoard!!.capabilities.getAll()[0].rawValue == 1u) {
-                    capGSM.background = ResourcesCompat.getDrawable(resources, R.drawable.green_rounded_bg, theme)
-                } else {
-                    capGSM.background = ResourcesCompat.getDrawable(resources, R.drawable.grey_rounded_bg, theme)
-                }
-                if (device?.commsBoard!!.capabilities.getAll()[0].rawValue == 2u) {
-                    capDiagnostics.background = ResourcesCompat.getDrawable(resources, R.drawable.green_rounded_bg, theme)
-                } else {
-                    capDiagnostics.background = ResourcesCompat.getDrawable(resources, R.drawable.grey_rounded_bg, theme)
-                }
-                if (device?.commsBoard!!.capabilities.getAll()[0].rawValue == 4u) {
-                    capWifi.background = ResourcesCompat.getDrawable(resources, R.drawable.green_rounded_bg, theme)
-                } else {
-                    capWifi.background = ResourcesCompat.getDrawable(resources, R.drawable.grey_rounded_bg, theme)
-                }
+        with(bluetoothLeService ?: return) {
+            val capabilities = device?.commsBoard?.capabilities ?: return
 
-                if (device?.commsBoard!!.capabilities.getAll()[0].rawValue == 8u) {
-                    capWifiAP.background = ResourcesCompat.getDrawable(resources, R.drawable.green_rounded_bg, theme)
-                } else {
-                    capWifiAP.background = ResourcesCompat.getDrawable(resources, R.drawable.grey_rounded_bg, theme)
-                }
-            }
+            fun bullet(enabled: Boolean) = ResourcesCompat.getDrawable(
+                resources,
+                if (enabled) R.drawable.green_rounded_bg else R.drawable.grey_rounded_bg,
+                theme
+            )
+
+            capGSM.background = bullet(capabilities.contains(BoardCapabilitySet.gsm))
+            capDiagnostics.background = bullet(capabilities.contains(BoardCapabilitySet.diagnostics))
+            capWifi.background = bullet(capabilities.contains(BoardCapabilitySet.wifi))
+            capWifiAP.background = bullet(capabilities.contains(BoardCapabilitySet.wifi_softap))
         }
     }
 
     fun updateJob() {
-        with(bluetoothLeService) {
+        with(bluetoothLeService ?: return) {
             if (device?.job != null && device?.job?.length!! > 0) {
                 jobLabel.visibility= View.VISIBLE
                 job.text = device?.job
@@ -485,7 +475,7 @@ class EngineerDetailsActivity : LangSupportBaseActivity() {
     }
 
     private fun updatePhoneConfig() {
-        with(bluetoothLeService) {
+        with(bluetoothLeService ?: return) {
             if (device?.simType != null) {
                 simType.text = Util.getSimTypeName(device?.simType!!)
             }
@@ -815,7 +805,7 @@ class EngineerDetailsActivity : LangSupportBaseActivity() {
                     finish()
                 }
                 BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED -> {
-                    bluetoothLeService.updateServices(true)
+                    bluetoothLeService?.updateServices(true)
                 }
                 BluetoothLeService.ACTION_SERVICES_UPDATED -> {
                     linkDevice()

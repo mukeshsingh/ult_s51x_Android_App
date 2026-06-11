@@ -1,6 +1,9 @@
 package com.ultrontech.s515liftconfigure
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,6 +16,7 @@ import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -43,6 +47,25 @@ class ChangeSimInformationActivity : LangSupportBaseActivity() {
     private var isPinRequired: Boolean = false
     private var pinLength: Int = 6
     private var currentView: Int = 1
+    private var lastSeededSimType: Int = 0
+
+    private val deviceUpdateReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == BluetoothLeService.ACTION_UPDATE_PHONE_CONFIG) {
+                // The SIM type often arrives after this screen opens; re-seed the wheel
+                // as long as the user has not moved it - otherwise confirming on the
+                // default selection downgrades the device's SIM type to Unknown.
+                if (loopView.selectedItem == lastSeededSimType) {
+                    seedSimTypeFromDevice()
+                }
+            }
+        }
+    }
+
+    private fun seedSimTypeFromDevice() {
+        lastSeededSimType = BluetoothLeService.service?.device?.simType?.ordinal ?: 0
+        loopView.selectedItem = lastSeededSimType
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -150,7 +173,7 @@ class ChangeSimInformationActivity : LangSupportBaseActivity() {
                 SimType.ModemSimTypeInstallerProvided), Util.getSimTypeName(SimType.ModemSimTypeUserContract), Util.getSimTypeName(
                 SimType.ModemSimTypeUserPAYG)))
         Log.d(TAG, ">>>>>>>>>>>>>>>>>>>>>> SIM Type: ${BluetoothLeService.service?.device}")
-        loopView.selectedItem = BluetoothLeService.service?.device?.simType?.ordinal ?: 0
+        seedSimTypeFromDevice()
         binding.txtPinLength.text = pinLength.toString()
 
         binding.footer.btnHome.setOnClickListener {
@@ -218,6 +241,17 @@ class ChangeSimInformationActivity : LangSupportBaseActivity() {
             }
         }
         // ****************** Option Menu End ******************
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LocalBroadcastManager.getInstance(applicationContext)
+            .registerReceiver(deviceUpdateReceiver, IntentFilter(BluetoothLeService.ACTION_UPDATE_PHONE_CONFIG))
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LocalBroadcastManager.getInstance(applicationContext).unregisterReceiver(deviceUpdateReceiver)
     }
 
     override fun onSupportNavigateUp(): Boolean {

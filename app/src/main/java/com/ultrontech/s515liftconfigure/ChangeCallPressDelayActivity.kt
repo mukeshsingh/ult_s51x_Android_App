@@ -1,11 +1,15 @@
 package com.ultrontech.s515liftconfigure
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsetsController
 import android.widget.SeekBar
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ultrontech.s515liftconfigure.bluetooth.BluetoothLeService
 import com.ultrontech.s515liftconfigure.databinding.ActivityChangeCallPressDelayBinding
 import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
@@ -13,6 +17,17 @@ import com.ultrontech.s515liftconfigure.util.EdgeToEdgeUtils
 class ChangeCallPressDelayActivity : LangSupportBaseActivity() {
     private lateinit var binding: ActivityChangeCallPressDelayBinding
     private var value = 1
+    private var userAdjusted = false
+
+    private val deviceUpdateReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == BluetoothLeService.ACTION_UPDATE_PHONE_CONFIG && !userAdjusted) {
+                // The device value often arrives after this screen opens; re-seed
+                // the picker as long as the user has not started adjusting it.
+                seedFromDevice()
+            }
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChangeCallPressDelayBinding.inflate(layoutInflater)
@@ -34,6 +49,7 @@ class ChangeCallPressDelayActivity : LangSupportBaseActivity() {
             }
 
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                if (fromUser) userAdjusted = true
                 // TODO Auto-generated method stub
                 binding.callPressValue.text = "${progress}\""
                 value = progress
@@ -41,12 +57,14 @@ class ChangeCallPressDelayActivity : LangSupportBaseActivity() {
         })
 
         binding.plus.setOnClickListener {
+            userAdjusted = true
             if (value < 5) value += 1
             binding.callPressSlider.progress = value
             binding.callPressValue.text = "${value}\""
         }
 
         binding.minus.setOnClickListener {
+            userAdjusted = true
             if (value > 1) value -= 1
             binding.callPressSlider.progress = value
             binding.callPressValue.text = "${value}\""
@@ -64,11 +82,7 @@ class ChangeCallPressDelayActivity : LangSupportBaseActivity() {
             finish()
         }
 
-        with(BluetoothLeService.service?.device) {
-            value = this?.callPressDelay ?: 1
-            binding.callPressValue.text = "${value}\""
-            binding.callPressSlider.progress = value
-        }
+        seedFromDevice()
 
         // ****************** Option Menu Start ******************
         binding.toolbar.optionBtn.setOnClickListener {
@@ -110,5 +124,25 @@ class ChangeCallPressDelayActivity : LangSupportBaseActivity() {
             }
         }
         // ****************** Option Menu End ******************
+    }
+
+    private fun seedFromDevice() {
+            with(BluetoothLeService.service?.device) {
+                value = this?.callPressDelay ?: 1
+                binding.callPressValue.text = "${value}\""
+                binding.callPressSlider.progress = value
+            }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LocalBroadcastManager.getInstance(applicationContext)
+            .registerReceiver(deviceUpdateReceiver, IntentFilter(BluetoothLeService.ACTION_UPDATE_PHONE_CONFIG))
+        if (!userAdjusted) seedFromDevice()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LocalBroadcastManager.getInstance(applicationContext).unregisterReceiver(deviceUpdateReceiver)
     }
 }
