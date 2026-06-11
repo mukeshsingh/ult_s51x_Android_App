@@ -134,4 +134,12 @@
     <string name="ssid_configured">Configuré pour le SSID du réseau Wi-Fi</string>
     <string name="wifi_available_status">Le Wi-Fi est disponible sur l\'appareil</string>
     <string name="wifi_not_available_status">Le Wi-Fi n\'est pas disponible sur l\'appareil</string>
+    <string name="sim_status">État de la SIM</string>
+    <string name="gsm_network">Réseau</string>
+    <string name="gsm_mobile_network_state">État du réseau mobile</string>
+    <string name="gsm_service_state">État du service</string>
+    <string name="gsm_ims_registration_status">Statut d\'enregistrement IMS</string>
+    <string name="gsm_signal_strength">Intensité du signal</string>
+    <string name="gsm_mobile_network_type">Type de réseau mobile</string>
+    <string name="gsm_unknown">Inconnu</string>
 </resources>

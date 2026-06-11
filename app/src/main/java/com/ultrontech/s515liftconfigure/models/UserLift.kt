@@ -143,6 +143,14 @@ data class Device (
     var connectedSSID    : String?      = null,
     var simPin           : PhoneSimPin? = null,
 
+    var gsmConnected        : Boolean   = false,
+    var gsmNetworkState     : String?   = null,
+    var gsmVoiceNetworkType : String?   = null,
+    var gsmServiceState     : String?   = null,
+    var gsmImsStatus        : String?   = null,
+    var gsmSignalStrength   : Int?      = null,
+    var gsmOperator         : String?   = null,
+
     var lift    : UserLift? = null
 ) {
     fun noPreviousCalls(): Boolean {

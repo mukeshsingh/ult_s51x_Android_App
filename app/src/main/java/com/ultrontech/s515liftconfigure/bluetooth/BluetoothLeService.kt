@@ -402,6 +402,7 @@ class BluetoothLeService : Service() {
                         LiftBT.jobCharUUID -> processJob(data)
                         LiftBT.wifiCharUUID -> processWifiDetail(data)
                         LiftBT.ssidsCharUUID -> processSSIDList(data)
+                        LiftBT.gsmCharUUID -> processGsmDetail(data)
 
                         LiftBT.modelNumberCharUUID -> {
                             val cx = data.decodeToString()
@@ -621,6 +622,11 @@ class BluetoothLeService : Service() {
                             device?.ssisListControl = characteristic
                             linked += 1
                         }
+                        LiftBT.gsmCharUUID -> {
+                            Log.d(TAG, "[BT::Characteristic] - Found GSM status control")
+                            device?.gsmControl = characteristic
+                            linked += 1
+                        }
                     }
 
                     val props = characteristic.properties
@@ -676,8 +682,49 @@ class BluetoothLeService : Service() {
         isUpdatingServices = false
     }
 
-    fun broadcastUpdate(action: String, data: String? = null) {
-        mBusy = false
+    fun isGsmSupported(): Boolean {
+        val scanned = mAddress?.let { find(it) }
+        return scanned?.gsmControl != null ||
+                mBluetoothGatt?.services?.any { it.getCharacteristic(LiftBT.gsmCharUUID) != null } == true
+    }
+
+    private var gsmRequestThread: Thread? = null
+
+    /**
+     * Subscribes to and reads the GSM status characteristic.
+     * The board requires authentication first - an unauthenticated read returns a single 0x11 byte
+     * which processGsmDetail discards, and notifications are suppressed until authenticated, so the
+     * CCCD write is forced even if a pre-auth subscription already cached the enabled value.
+     * Runs on a worker thread because waitIdle()/readCharacteristic() block on the GATT busy flag.
+     */
+    fun requestGsmStatus() {
+        if (gsmRequestThread?.isAlive == true) return
+
+        gsmRequestThread = Thread {
+            val scanned = mAddress?.let { find(it) }
+            val characteristic = scanned?.gsmControl
+                ?: mBluetoothGatt?.services?.firstNotNullOfOrNull { it.getCharacteristic(LiftBT.gsmCharUUID) }
+                    ?.also { scanned?.gsmControl = it }
+
+            if (characteristic == null) {
+                Log.d(TAG, "[GSM] characteristic not available on this board")
+                return@Thread
+            }
+
+            if (characteristic.properties and BluetoothGattCharacteristic.PROPERTY_NOTIFY > 0) {
+                if (waitIdle(LiftBT.GATT_TIMEOUT)) setCharacteristicNotification(characteristic, true, force = true)
+            }
+
+            for (attempt in 1..3) {
+                if (readCharacteristic(characteristic) == true) return@Thread
+                Log.w(TAG, "[GSM] status read attempt $attempt failed, gatt busy")
+            }
+            Log.w(TAG, "[GSM] giving up reading GSM status, waiting for notify")
+        }.apply { start() }
+    }
+
+    fun broadcastUpdate(action: String, data: String? = null, clearBusy: Boolean = true) {
+        if (clearBusy) mBusy = false
         val intent = Intent(action)
         if (data != null) intent.putExtra(ACTION_GATT_READ_DATA, data)
         LocalBroadcastManager.getInstance(this.applicationContext).sendBroadcast(intent)
@@ -708,11 +755,13 @@ class BluetoothLeService : Service() {
     }
 
     private fun setCharacteristicNotification(
-        characteristic: BluetoothGattCharacteristic, enable: Boolean
+        characteristic: BluetoothGattCharacteristic, enable: Boolean, force: Boolean = false
     ): Boolean {
         if (!checkGatt()) return false
         var ok = false
-        if (!isNotificationEnabled(characteristic)) {
+        // isNotificationEnabled reads the locally cached descriptor value, which a pre-auth
+        // subscription attempt already set - force bypasses it to re-write the CCCD on the device.
+        if (force || !isNotificationEnabled(characteristic)) {
             if (checkPermission() && waitIdle(LiftBT.GATT_TIMEOUT_FOR_NOTIFICATIONS)) {
                 mBluetoothGatt?.setCharacteristicNotification(characteristic, enable)
                 val clientConfig = characteristic.getDescriptor(LiftBT.CLIENT_CHARACTERISTIC_CONFIG)
@@ -1027,6 +1076,7 @@ class BluetoothLeService : Service() {
         const val ACTION_UPDATE_JOB = "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_UPDATE_JOB"
         const val ACTION_UPDATE_WIFI_DETAIL = "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_UPDATE_WIFI_DETAIL"
         const val ACTION_UPDATE_SSID_LIST = "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_UPDATE_SSID_LIST"
+        const val ACTION_UPDATE_GSM_DETAIL = "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_UPDATE_GSM_DETAIL"
         const val ACTION_LIFT_LIST_UPDATED = "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_LIFT_LIST_UPDATED"
         const val ACTION_SERVICES_UPDATED = "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_SERVICES_UPDATED"
         const val ACTION_UPDATING_LIFT_SETTING = "com.ultrontech.s515liftconfigure.bluetooth.le.ACTION_UPDATING_LIFT_SETTING"
@@ -1049,6 +1099,12 @@ fun BluetoothLeService.processAuth(data : ByteArray, device : ScannedDevice) {
 
         broadcastUpdate(BluetoothLeService.ACTION_UPDATE_AUTHENTICATION, device.authorised.toString())
         updateCount += 1
+
+        // GSM status notifications are suppressed until authenticated, so (re)subscribe
+        // and read the current state once authentication succeeds.
+        if (device.authorised) {
+            requestGsmStatus()
+        }
     }
 }
 
@@ -1253,6 +1309,58 @@ fun BluetoothLeService.processWifiDetail(data: ByteArray) {
     } else {
          Log.d(BluetoothLeService.TAG, "[Wifi] - no data received")
     }
+}
+
+/*
+ * GSM status payload - 98 bytes, fixed, packed:
+ *  byte  0      auth marker, must be 0x55 (an unauthenticated read returns a single 0x11 byte)
+ *  bytes 1-16   mobile network state    (null terminated, zero padded)
+ *  bytes 17-32  mobile voice network type
+ *  bytes 33-48  service state
+ *  bytes 49-64  IMS registration status
+ *  byte  65     signal strength in dBm  (signed; 0 = not yet reported)
+ *  bytes 66-97  network operator name   (UTF-8, null terminated, zero padded)
+ */
+fun BluetoothLeService.processGsmDetail(data: ByteArray) {
+    Log.d(BluetoothLeService.TAG, "Got data GSM Detail: ${data.size} bytes")
+
+    if (data.size < 98 || data[0].toUInt() != BluetoothLeService.DataOK) {
+        Log.d(BluetoothLeService.TAG, "[GSM] - invalid or unauthenticated payload, discarded")
+        return
+    }
+
+    fun field(from: Int, to: Int): String? {
+        val value = String(
+            data.copyOfRange(from, to).takeWhile { it != 0.toByte() }.toByteArray(),
+            Charsets.UTF_8
+        ).trim()
+        return value.ifEmpty { null }
+    }
+
+    val networkState = field(1, 17)
+
+    device?.apply {
+        gsmNetworkState = networkState
+        gsmVoiceNetworkType = field(17, 33)
+        gsmServiceState = field(33, 49)
+        gsmImsStatus = field(49, 65)
+        gsmSignalStrength = data[65].toInt()
+        gsmOperator = field(66, 98)
+        gsmConnected = networkState.equals("Connected", ignoreCase = true) ||
+                networkState.equals("Roaming", ignoreCase = true)
+
+        Log.d(
+            BluetoothLeService.TAG,
+            "[GSM] state=$gsmNetworkState, type=$gsmVoiceNetworkType, " +
+            "service=$gsmServiceState, ims=$gsmImsStatus, " +
+            "signal=$gsmSignalStrength dBm, operator=$gsmOperator"
+        )
+    }
+
+    // GSM notifies arrive unsolicited on every state change: do not clear the busy flag owned by
+    // an unrelated in-flight GATT operation, and do not bump updateCount - settings screens use it
+    // to confirm their own pending writes.
+    broadcastUpdate(BluetoothLeService.ACTION_UPDATE_GSM_DETAIL, clearBusy = false)
 }
 
 fun BluetoothLeService.processSSIDList(data: ByteArray) {

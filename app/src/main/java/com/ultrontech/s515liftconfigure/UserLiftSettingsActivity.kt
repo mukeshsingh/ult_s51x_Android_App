@@ -23,7 +23,8 @@ import kotlinx.coroutines.Job
 class UserLiftSettingsActivity : LangSupportBaseActivity() {
     private lateinit var binding: ActivityUserLiftSettingsBinding
     private var liftId: String? = null
-    private val bluetoothLeService: BluetoothLeService = BluetoothLeService.service!!
+    // Resolved lazily: the singleton is null when the activity is restored after process death.
+    private val bluetoothLeService: BluetoothLeService? get() = BluetoothLeService.service
     private lateinit var liftName: TextView
     private lateinit var successFragment: SuccessAddLiftFragment
     private var hasEngineerCapability: Boolean = false
@@ -31,6 +32,12 @@ class UserLiftSettingsActivity : LangSupportBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (BluetoothLeService.service == null) {
+            // Restored after process death: no BLE session to show settings for.
+            finish()
+            return
+        }
 
         binding = ActivityUserLiftSettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -59,6 +66,11 @@ class UserLiftSettingsActivity : LangSupportBaseActivity() {
         }
         binding.wifi.setOnClickListener {
             val intent = Intent(this, ChangeWifiActivity::class.java)
+            intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
+            startActivity(intent)
+        }
+        binding.simStatus.setOnClickListener {
+            val intent = Intent(this, SimStatusActivity::class.java)
             intent.putExtra(HomeActivity.INTENT_LIFT_ID, liftId)
             startActivity(intent)
         }
@@ -141,7 +153,7 @@ class UserLiftSettingsActivity : LangSupportBaseActivity() {
         }
         binding.confirmRemoveLift.btnYesRemove.setOnClickListener {
             binding.confirmRemoveLift.llRemovePopup.visibility = View.GONE
-            bluetoothLeService.device?.lift?.let { it1 ->
+            bluetoothLeService?.device?.lift?.let { it1 ->
                 S515LiftConfigureApp.profileStore.remove(it1)
                 finish()
             }
@@ -223,6 +235,19 @@ class UserLiftSettingsActivity : LangSupportBaseActivity() {
 
         LocalBroadcastManager.getInstance(applicationContext).registerReceiver(deviceUpdateReceiver, updateIntentFilter())
         startTimerToCheckUpdate(10000)
+        updateSimStatusVisibility()
+    }
+
+    /**
+     * The SIM status row only makes sense for boards exposing the GSM characteristic
+     * (older firmware and non-GSM boards do not have it).
+     */
+    private fun updateSimStatusVisibility() {
+        runOnUiThread {
+            val visibility = if (bluetoothLeService?.isGsmSupported() == true) View.VISIBLE else View.GONE
+            binding.simStatus.visibility = visibility
+            binding.brSimStatus.visibility = visibility
+        }
     }
 
     fun preventClicks(view: View?) {}
@@ -266,10 +291,10 @@ class UserLiftSettingsActivity : LangSupportBaseActivity() {
     }
 
     private fun updateConnectState() {
-        with(bluetoothLeService) {
+        with(bluetoothLeService ?: return) {
             when(device?.connectionState) {
                 LiftConnectionState.connected_noauth -> {
-                    device?.lift?.let { bluetoothLeService.authorise(it) }
+                    device?.lift?.let { authorise(it) }
                 }
                 LiftConnectionState.connected_auth -> {
                 }
@@ -360,10 +385,11 @@ class UserLiftSettingsActivity : LangSupportBaseActivity() {
                     finish()
                 }
                 BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED -> {
-                    bluetoothLeService.updateServices(true)
+                    bluetoothLeService?.updateServices(true)
                 }
                 BluetoothLeService.ACTION_SERVICES_UPDATED -> {
                     updateConnectState()
+                    updateSimStatusVisibility()
                 }
                 BluetoothLeService.ACTION_GATT_DISCONNECTED -> {
                     if (!isMsgDialogVisible) {

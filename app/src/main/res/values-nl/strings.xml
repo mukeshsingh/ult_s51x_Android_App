@@ -134,4 +134,12 @@
     <string name="ssid_configured">Geconfigureerd voor wifi-netwerk-SSID</string>
     <string name="wifi_available_status">Wifi is beschikbaar op apparaat</string>
     <string name="wifi_not_available_status">Wifi is niet beschikbaar op apparaat</string>
+    <string name="sim_status">SIM-status</string>
+    <string name="gsm_network">Netwerk</string>
+    <string name="gsm_mobile_network_state">Status mobiel netwerk</string>
+    <string name="gsm_service_state">Servicestatus</string>
+    <string name="gsm_ims_registration_status">IMS-registratiestatus</string>
+    <string name="gsm_signal_strength">Signaalsterkte</string>
+    <string name="gsm_mobile_network_type">Type mobiel netwerk</string>
+    <string name="gsm_unknown">Onbekend</string>
 </resources>

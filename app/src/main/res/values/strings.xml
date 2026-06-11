@@ -111,6 +111,15 @@
     <string name="call_reminder_needed">It has been a while since your last call. You should make a test call to ensure correct operation of your SIM card</string>
     <string name="installer_provider">Installer Provider</string>
     <string name="sim_information">SIM Information</string>
+    <string name="sim_status">SIM Status</string>
+    <string name="gsm_network">Network</string>
+    <string name="gsm_mobile_network_state">Mobile network state</string>
+    <string name="gsm_service_state">Service state</string>
+    <string name="gsm_ims_registration_status">IMS Registration Status</string>
+    <string name="gsm_signal_strength">Signal Strength</string>
+    <string name="gsm_mobile_network_type">Mobile Network Type</string>
+    <string name="gsm_unknown">Unknown</string>
+    <string name="gsm_dbm_format">%1$d dBm</string>
     <string name="current_lift_pin_number">Current lift PIN number</string>
     <string name="enter_the_new_pin_number">Enter the new PIN Number</string>
     <string name="pin_required">PIN Required</string>

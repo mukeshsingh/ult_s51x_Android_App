@@ -24,6 +24,7 @@ object LiftBT {
     val infoCharUUID                : UUID = UUID.fromString("FA51B30E-D7E2-4D93-8842-A7C4A57DFA88")
     val wifiCharUUID                : UUID = UUID.fromString("AB54B30E-D7E2-4D93-8842-A7C4A57DFB09")
     val ssidsCharUUID               : UUID = UUID.fromString("AB54B30E-D7E2-4D93-8842-A7C4A57DFB11")
+    val gsmCharUUID                 : UUID = UUID.fromString("AB56B30E-D7E2-4D93-8842-A7C4A57DFB12")
 
     val CLIENT_CHARACTERISTIC_CONFIG: UUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb")
 
@@ -71,6 +72,7 @@ data class ScannedDevice(
     var phoneControl : BluetoothGattCharacteristic? = null
     var phoneConfigControl : BluetoothGattCharacteristic? = null
     var ssisListControl : BluetoothGattCharacteristic? = null
+    var gsmControl : BluetoothGattCharacteristic? = null
     var controlOk : Boolean = false
     var deviceOK : Boolean = false
     var modelNumber : String? = null

@@ -87,6 +87,10 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".SimStatusActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ChangeJobActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
